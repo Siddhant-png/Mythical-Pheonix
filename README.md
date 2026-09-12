@@ -1,4 +1,4 @@
-# MahaSetu (महासेतू)
+# MahaSetu (महासेतू) 
 ### *A Collaborative Sandbox & Accelerated Public Procurement Platform for Government of Maharashtra*
 **Smart India Hackathon (SIH-136) | Organization: Government of Maharashtra | Category: Software**
 
