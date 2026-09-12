@@ -85,7 +85,7 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-amber-300 mb-4 border border-white/10">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>SIH-136 | Maharashtra Public Procurement Reform</span>
+            <span>Maharashtra Public Innovation Procurement Portal</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans'] leading-tight">
             Bridging High-Tech Startups & Established Manufacturers to Government Contracts

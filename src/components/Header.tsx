@@ -44,22 +44,6 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Top MahaGov Saffron-White-Green Tricolor Bar */}
       <div className="h-1.5 w-full bg-gradient-to-r from-[#FF7722] via-white to-[#138808]"></div>
 
-      {/* Official Government Strip */}
-      <div className="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 sm:px-8 flex flex-wrap justify-between items-center border-b border-slate-800">
-        <div className="flex items-center space-x-3">
-          <span className="font-semibold text-white tracking-wide">महाराष्ट्र शासन | Government of Maharashtra</span>
-          <span className="hidden md:inline text-slate-500">|</span>
-          <span className="hidden md:inline text-amber-400 font-medium">Smart India Hackathon Problem Code: SIH-136</span>
-        </div>
-        <div className="flex items-center space-x-4 text-slate-400">
-          <span className="hidden sm:inline">DPIIT & GFR-149 Procurement Relaxation Enabled</span>
-          <div className="flex items-center space-x-1.5 bg-slate-800 px-2.5 py-0.5 rounded border border-slate-700 text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span className="text-[11px] font-medium">Sandbox v2.4 Live</span>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navigation Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

@@ -249,7 +249,7 @@ export function App() {
                 MahaSetu (महासेतू) Public Procurement Architecture
               </div>
               <p className="text-slate-500 text-[11px]">
-                Built for Smart India Hackathon | Problem Code: SIH-136 (Government of Maharashtra)
+                Accelerated Innovation Procurement Mechanism | Government of Maharashtra
               </p>
             </div>
           </div>
