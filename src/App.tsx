@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Header } from './components/Header';
+import { Header, NavTab } from './components/Header';
 import { ProblemDashboard } from './views/ProblemDashboard';
 import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
 import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
 import { ScaleRegistry } from './views/ScaleRegistry';
+import { StandardTemplatesVault } from './views/StandardTemplatesVault';
+import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { 
   INITIAL_PROBLEMS, 
   MANUFACTURERS, 
@@ -18,7 +20,7 @@ import { Problem, Collaboration, Pilot, Procurement, ScaleAdoption } from './typ
 import { ShieldCheck, CheckCircle2, Award, Heart } from 'lucide-react';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<'problems' | 'collab' | 'dept-upload' | 'pilots' | 'scale'>('problems');
+  const [activeTab, setActiveTab] = useState<NavTab>('problems');
   const [userRole, setUserRole] = useState<'startup' | 'dept' | 'manufacturer'>('startup');
 
   // Core Application State
@@ -147,6 +149,14 @@ export function App() {
           />
         )}
 
+        {activeTab === 'discovery' && (
+          <StartupDiscoveryHub
+            currentStartup={CURRENT_STARTUP}
+            problems={problems}
+            userRole={userRole}
+          />
+        )}
+
         {activeTab === 'collab' && (
           <ManufacturerCollabHub
             manufacturers={MANUFACTURERS}
@@ -178,6 +188,12 @@ export function App() {
             procurements={procurements}
             scaleAdoptions={scaleAdoptions}
             onAdoptSolution={handleAdoptSolution}
+            userRole={userRole}
+          />
+        )}
+
+        {activeTab === 'templates' && (
+          <StandardTemplatesVault
             userRole={userRole}
           />
         )}
@@ -214,3 +230,4 @@ export function App() {
 }
 
 export default App;
+

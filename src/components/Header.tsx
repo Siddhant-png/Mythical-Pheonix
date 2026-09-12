@@ -7,12 +7,17 @@ import {
   Repeat, 
   ShieldCheck, 
   ChevronDown,
-  Sparkles
+  Sparkles,
+  FileCheck,
+  SearchCheck,
+  Scale
 } from 'lucide-react';
 
+export type NavTab = 'problems' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates';
+
 interface HeaderProps {
-  activeTab: 'problems' | 'collab' | 'dept-upload' | 'pilots' | 'scale';
-  setActiveTab: (tab: 'problems' | 'collab' | 'dept-upload' | 'pilots' | 'scale') => void;
+  activeTab: NavTab;
+  setActiveTab: (tab: NavTab) => void;
   userRole: 'startup' | 'dept' | 'manufacturer';
   setUserRole: (role: 'startup' | 'dept' | 'manufacturer') => void;
   activeCollabCount: number;
@@ -120,6 +125,18 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
+            onClick={() => setActiveTab('discovery')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'discovery'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <SearchCheck className="w-4 h-4 text-emerald-400" />
+            <span>Discovery & DPIIT Panel</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('collab')}
             className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 relative ${
               activeTab === 'collab'
@@ -171,8 +188,21 @@ export const Header: React.FC<HeaderProps> = ({
             <Repeat className="w-4 h-4 text-sky-400" />
             <span>Cross-Dept Scale Registry</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('templates')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'templates'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Scale className="w-4 h-4 text-amber-300" />
+            <span>Standard Templates & Legal Vault</span>
+          </button>
         </nav>
       </div>
     </header>
   );
 };
+
