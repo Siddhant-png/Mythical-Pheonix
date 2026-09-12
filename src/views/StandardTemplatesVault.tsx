@@ -16,8 +16,10 @@ import {
   Check
 } from 'lucide-react';
 
+import { UserRole } from '../types';
+
 interface StandardTemplatesVaultProps {
-  userRole: 'startup' | 'dept' | 'manufacturer';
+  userRole: UserRole;
 }
 
 export const StandardTemplatesVault: React.FC<StandardTemplatesVaultProps> = ({ userRole }) => {

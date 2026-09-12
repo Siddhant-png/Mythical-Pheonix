@@ -10,13 +10,13 @@ import {
   Sparkles,
   MapPin
 } from 'lucide-react';
-import { Procurement, ScaleAdoption } from '../types';
+import { Procurement, ScaleAdoption, UserRole } from '../types';
 
 interface ScaleRegistryProps {
   procurements: Procurement[];
   scaleAdoptions: ScaleAdoption[];
   onAdoptSolution: (adoption: ScaleAdoption) => void;
-  userRole: 'startup' | 'dept' | 'manufacturer';
+  userRole: UserRole;
 }
 
 export const ScaleRegistry: React.FC<ScaleRegistryProps> = ({

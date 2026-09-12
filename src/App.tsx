@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Header, NavTab } from './components/Header';
+import { AuthModal } from './components/AuthModal';
 import { ProblemDashboard } from './views/ProblemDashboard';
 import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
@@ -7,6 +8,7 @@ import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
 import { ScaleRegistry } from './views/ScaleRegistry';
 import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
+import { CivicShortsFeed } from './views/CivicShortsFeed';
 import { 
   INITIAL_PROBLEMS, 
   MANUFACTURERS, 
@@ -16,12 +18,24 @@ import {
   INITIAL_PROCUREMENTS,
   INITIAL_SCALE_ADOPTIONS 
 } from './data/mockData';
-import { Problem, Collaboration, Pilot, Procurement, ScaleAdoption } from './types';
+import { Problem, Collaboration, Pilot, Procurement, ScaleAdoption, UserRole, AuthUser } from './types';
 import { ShieldCheck, CheckCircle2, Award, Heart } from 'lucide-react';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
-  const [userRole, setUserRole] = useState<'startup' | 'dept' | 'manufacturer'>('startup');
+  const [userRole, setUserRole] = useState<UserRole>('startup');
+
+  // Authentication State
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<AuthUser | null>({
+    id: 'user-default',
+    name: 'Aarav Deshmukh',
+    email: 'aarav@drishtiedge.in',
+    role: 'startup',
+    isVerified: true,
+    verificationBadge: 'DPIIT Certified Startup (DIPP-MH-98442)',
+    dpiitNo: 'DIPP-MH-2023-98442'
+  });
 
   // Core Application State
   const [problems, setProblems] = useState<Problem[]>(INITIAL_PROBLEMS);
@@ -38,6 +52,12 @@ export function App() {
     setTimeout(() => {
       setToastMessage(null);
     }, 3500);
+  };
+
+  const handleLoginSuccess = (user: AuthUser) => {
+    setCurrentUser(user);
+    setUserRole(user.role);
+    showToast(`Welcome ${user.name}! Verified as ${user.verificationBadge}`);
   };
 
   // Handlers
@@ -125,6 +145,8 @@ export function App() {
         userRole={userRole}
         setUserRole={setUserRole}
         activeCollabCount={collaborations.length}
+        currentUser={currentUser}
+        onOpenAuthModal={() => setAuthModalOpen(true)}
       />
 
       {/* Floating Notification Toast */}
@@ -146,6 +168,14 @@ export function App() {
               setActiveTab('collab');
             }}
             onSubmitApplication={handleSubmitApplication}
+          />
+        )}
+
+        {activeTab === 'feed' && (
+          <CivicShortsFeed
+            userRole={userRole}
+            currentUserName={currentUser?.name || 'Anonymous Citizen'}
+            onNavigateToTenders={() => setActiveTab('problems')}
           />
         )}
 
@@ -199,6 +229,14 @@ export function App() {
         )}
       </main>
 
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+        initialRole={userRole}
+      />
+
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -230,4 +268,5 @@ export function App() {
 }
 
 export default App;
+
 

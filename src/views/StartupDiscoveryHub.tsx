@@ -18,12 +18,12 @@ import {
   Zap,
   Filter
 } from 'lucide-react';
-import { Startup, Problem, Application } from '../types';
+import { Startup, Problem, Application, UserRole } from '../types';
 
 interface StartupDiscoveryHubProps {
   currentStartup: Startup;
   problems: Problem[];
-  userRole: 'startup' | 'dept' | 'manufacturer';
+  userRole: UserRole;
   onSelectProblemForApplication?: (problem: Problem) => void;
 }
 

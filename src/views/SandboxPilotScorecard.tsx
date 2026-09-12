@@ -12,13 +12,13 @@ import {
   Sparkles,
   ArrowUpRight
 } from 'lucide-react';
-import { Pilot, Procurement } from '../types';
+import { Pilot, Procurement, UserRole } from '../types';
 
 interface SandboxPilotScorecardProps {
   pilots: Pilot[];
   procurements: Procurement[];
   onGeneratePO: (pilotId: string, poValue: number) => void;
-  userRole: 'startup' | 'dept' | 'manufacturer';
+  userRole: UserRole;
 }
 
 export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
