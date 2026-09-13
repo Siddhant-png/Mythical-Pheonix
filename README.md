@@ -99,3 +99,6 @@ The database is built with PostgreSQL and enforces critical business logic:
 5. **Step 5: Cross-Department Scale Registry**
    - Go to **"Cross-Dept Scale Registry"**.
    - Demonstrate how a municipal corporation in Nashik or Nagpur adopts the solution with 1-click requisition, saving 4 months of repetitive tendering.
+## Contributors
+
+- Abhishek Koundal
