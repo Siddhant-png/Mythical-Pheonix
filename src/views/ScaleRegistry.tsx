@@ -62,19 +62,18 @@ export const ScaleRegistry: React.FC<ScaleRegistryProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Hero Strip */}
-      <div className="bg-gradient-to-r from-govblue-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-govblue-800">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-sky-500/20 text-sky-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-sky-400/30">
-            <Repeat className="w-3.5 h-3.5 text-sky-400" />
-            <span>Scale Across Maharashtra</span>
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.22)] relative overflow-hidden border border-govblue-700/80">
+        <div className="max-w-3xl relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-sky-200 mb-4 border border-white/10">
+            <Repeat className="w-3.5 h-3.5 text-sky-300" />
+            <span>Scale across Maharashtra</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-            "Procure Once, Deploy Anywhere" Scale Registry
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            Procure once, deploy anywhere.
           </h2>
-          <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-            The biggest waste in public administration is running identical 6-month tenders in every municipality. On MahaSetu, when a solution completes a successful pilot in one department, it receives <strong>State-Wide Verified Vendor Status</strong>, allowing any other Maharashtra department, municipal corporation, or Zilla Parishad to adopt it via add-on purchase orders.
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            The biggest waste in public administration is repeating the same tender cycle across municipalities. On MahaSetu, a tested solution receives state-wide verified vendor status, allowing other departments to adopt it quickly through add-on purchase orders.
           </p>
         </div>
       </div>
@@ -88,6 +87,13 @@ export const ScaleRegistry: React.FC<ScaleRegistryProps> = ({
           </div>
         </div>
 
+        {procurements.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-sm">
+            <Repeat className="w-9 h-9 text-slate-300 mx-auto mb-3" />
+            <div className="font-bold text-slate-700">No verified procurements are available yet</div>
+            <p className="text-xs text-slate-500 mt-1">Once a pilot is approved, it will appear here for direct department adoption.</p>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {procurements.map((proc) => {
             const adoptions = scaleAdoptions.filter(s => s.procurementId === proc.id);
@@ -145,6 +151,7 @@ export const ScaleRegistry: React.FC<ScaleRegistryProps> = ({
             );
           })}
         </div>
+        )}
       </div>
 
       {/* Live State-Wide Adoption Feed */}

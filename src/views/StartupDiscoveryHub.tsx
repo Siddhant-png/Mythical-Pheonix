@@ -180,19 +180,18 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
   };
 
   return (
-    <div className="space-y-8">
-      {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-emerald-950 via-slate-900 to-govblue-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-emerald-800/40">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-emerald-400/30">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Startup Discovery & Screening Architecture</span>
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.2)] relative overflow-hidden border border-govblue-700/80">
+        <div className="max-w-3xl relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-emerald-100 mb-4 border border-white/10">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+            <span>Startup discovery & screening architecture</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-            DPIIT Verification, Expert Panel Matrix & Milestone Escrow
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            DPIIT verification, expert scoring, and protected milestones.
           </h2>
-          <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-            Ensure 100% legal compliance and speed. Instant DPIIT startup verification waives prior turnover requirements under GFR Rule 149. Expert panels evaluate proposals side-by-side on transparent 100-point matrices, while milestone payments are protected by automated escrow triggers.
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            Ensure 100% legal compliance and speed. Instant DPIIT verification waives prior turnover requirements under GFR Rule 149, while expert panels evaluate proposals on transparent 100-point matrices and milestone payments remain protected by escrow triggers.
           </p>
         </div>
       </div>
@@ -322,7 +321,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
       {activeSubTab === 'dpiit' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Lookup Card */}
-          <div className="lg:col-span-1 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div className="lg:col-span-1 bg-brand-panel rounded-2xl border border-brand-border p-6 shadow-sm space-y-4">
             <div>
               <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">Live Government Integration</span>
               <h3 className="text-base font-bold text-slate-900">Startup India / DPIIT Lookup</h3>

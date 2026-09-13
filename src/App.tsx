@@ -232,7 +232,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-['Inter',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
       <Header
         activeTab={activeTab}
