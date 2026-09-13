@@ -302,7 +302,7 @@ export const DepartmentPostProblem: React.FC<DepartmentPostProblemProps> = ({
               className="flex items-center space-x-2 bg-govblue-900 hover:bg-govblue-800 text-white font-bold px-6 py-2.5 rounded-xl shadow-md transition text-xs"
             >
               <PlusCircle className="w-4 h-4" />
-              <span>Publish Challenge on MahaSetu Portal</span>
+              <span>Publish Challenge on Converge Portal</span>
             </button>
           </div>
         </form>

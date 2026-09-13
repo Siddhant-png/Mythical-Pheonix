@@ -24,6 +24,11 @@ import {
 } from './data/mockData';
 
 import {
+  STARTUP_PROFILES,
+  DEFAULT_STARTUP_PROFILE
+} from './data/startupProfiles';
+
+import {
   Problem,
   Collaboration,
   Pilot,
@@ -237,6 +242,12 @@ export function App() {
     setSelectedStartupId(null);
   };
 
+  // Open my startup profile
+  const handleOpenMyProfile = () => {
+    setSelectedStartupId(myProfileId);
+    setActiveTab('discovery');
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
@@ -268,9 +279,9 @@ export function App() {
       {/* Main Content Area */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         {/* Startup Profile Page */}
-        {activeTab === 'discovery' && selectedStartupId ? (
+        {(activeTab === 'discovery' && selectedStartupId) || activeTab === 'profiles' ? (
           <StartupProfile
-            startupId={selectedStartupId}
+            startupId={selectedStartupId || selectedProfileId}
             onBack={handleCloseStartupProfile}
           />
         ) : null}
@@ -365,12 +376,12 @@ export function App() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-8">
           <div className="flex items-center space-x-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 font-bold text-amber-400">
-              MS
+              CV
             </div>
 
             <div>
               <div className="text-sm font-bold text-white">
-                MahaSetu (महासेतू) Public Procurement Architecture
+                Converge (कन्व्हर्ज) Public Procurement Architecture
               </div>
 
               <p className="text-[11px] text-slate-500">

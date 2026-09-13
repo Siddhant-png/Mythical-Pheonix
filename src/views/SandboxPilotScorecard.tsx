@@ -266,7 +266,7 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
                   </div>
 
                   <p className="text-[11px] text-slate-300">
-                    Vendor is now cataloged in the <strong>MahaSetu Cross-Department Scale Registry</strong>. Other state departments can procure this solution without repetitive tendering.
+                    Vendor is now cataloged in the <strong>Converge Cross-Department Scale Registry</strong>. Other state departments can procure this solution without repetitive tendering.
                   </p>
                 </div>
               ) : (

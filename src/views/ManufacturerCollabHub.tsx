@@ -94,7 +94,7 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
             Startup innovation, manufacturer scale, one compliant path to market.
           </h2>
           <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
-            Government tenders traditionally require high turnover and prior deployment records. By forming a legally bound consortium on MahaSetu under an auto-drafted mutual NDA, the manufacturer provides the financial solvency and production capacity while your startup leads technology.
+            Government tenders traditionally require high turnover and prior deployment records. By forming a legally bound consortium on Converge under an auto-drafted mutual NDA, the manufacturer provides the financial solvency and production capacity while your startup leads technology.
           </p>
         </div>
       </div>

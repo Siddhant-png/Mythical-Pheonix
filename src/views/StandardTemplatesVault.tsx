@@ -178,7 +178,7 @@ export const StandardTemplatesVault: React.FC<StandardTemplatesVaultProps> = ({ 
             <div className="bg-slate-900 text-white p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800">
               <div>
                 <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
-                  MahaSetu Regulatory Standard Template
+                  Converge Regulatory Standard Template
                 </span>
                 <h3 className="text-base font-bold mt-0.5">{currentTpl.title}</h3>
                 <p className="text-xs text-slate-400">{currentTpl.category}</p>
@@ -414,7 +414,7 @@ export const StandardTemplatesVault: React.FC<StandardTemplatesVaultProps> = ({ 
                     <p className="text-slate-700 leading-relaxed text-[11px]">
                       1. <strong>{manufacturerName}</strong> pledges its audited annual turnover to satisfy tender financial pre-qualification bars.<br />
                       2. Manufacturer receives non-exclusive fabrication and hardware assembly rights strictly bound to public tender contracts issued by {deptName}.<br />
-                      3. All contracts generated on MahaSetu are bound by SHA-256 cryptographic checksums and digital e-Sign audit logs.
+                      3. All contracts generated on Converge are bound by SHA-256 cryptographic checksums and digital e-Sign audit logs.
                     </p>
                   </div>
                 </div>

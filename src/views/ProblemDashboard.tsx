@@ -83,10 +83,6 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
       <div className="bg-gradient-to-br from-govblue-900 via-govblue-800 to-slate-950 rounded-[28px] p-7 sm:p-10 text-white shadow-[0_20px_60px_rgba(11,37,69,0.26)] relative overflow-hidden border border-govblue-700/80">
         <div className="absolute top-0 right-0 w-96 h-96 bg-saffron-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full text-[11px] font-semibold text-sky-100 mb-4 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5 text-saffron-300" />
-            <span>Maharashtra Public Innovation Procurement Portal</span>
-          </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
             Bridging startups, manufacturers, and government delivery.
           </h2>

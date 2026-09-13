@@ -120,7 +120,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-bold font-heading">MahaSetu Single Sign-On</span>
+                <span className="text-sm font-bold font-heading">Converge Single Sign-On</span>
                 <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono font-bold border border-emerald-400/30">
                   SSO v3.1 Verified
                 </span>
@@ -364,7 +364,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
             <h3 className="text-base font-bold text-emerald-900">Identity Verified & Session Active!</h3>
             <p className="text-xs text-emerald-700">
-              Welcome back, <strong>{name}</strong>. Accessing MahaSetu Innovation Portal.
+              Welcome back, <strong>{name}</strong>. Accessing Converge Innovation Portal.
             </p>
           </div>
         )}

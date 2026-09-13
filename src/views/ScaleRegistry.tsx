@@ -73,7 +73,7 @@ export const ScaleRegistry: React.FC<ScaleRegistryProps> = ({
             Procure once, deploy anywhere.
           </h2>
           <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
-            The biggest waste in public administration is repeating the same tender cycle across municipalities. On MahaSetu, a tested solution receives state-wide verified vendor status, allowing other departments to adopt it quickly through add-on purchase orders.
+            The biggest waste in public administration is repeating the same tender cycle across municipalities. On Converge, a tested solution receives state-wide verified vendor status, allowing other departments to adopt it quickly through add-on purchase orders.
           </p>
         </div>
       </div>

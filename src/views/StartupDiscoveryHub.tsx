@@ -432,7 +432,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Once a sandbox pilot achieves a verified score of ≥80%, MahaSetu automatically pushes the product passport and pre-approved PO pricing directly into the national <strong>GeM Innovation Runway Catalog</strong>.
+                    Once a sandbox pilot achieves a verified score of ≥80%, Converge automatically pushes the product passport and pre-approved PO pricing directly into the national <strong>GeM Innovation Runway Catalog</strong>.
                   </p>
                 </div>
               </div>

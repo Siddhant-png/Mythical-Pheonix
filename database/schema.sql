@@ -1,5 +1,5 @@
 -- =============================================================================
--- MahaSetu (महासेतू) - PostgreSQL Production Database Schema
+-- Converge (कन्व्हर्ज) - PostgreSQL Production Database Schema
 -- SIH Problem Code: SIH-136 / Government of Maharashtra
 -- =============================================================================
 

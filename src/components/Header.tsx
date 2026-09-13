@@ -58,11 +58,8 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h1 className="text-xl font-extrabold tracking-tight text-brand-text font-heading">
-                  Maha<span className="text-saffron-600">Setu</span>
+                  Converge
                 </h1>
-                <span className="text-[11px] bg-saffron-100 text-saffron-800 font-bold px-2 py-0.5 rounded-full border border-saffron-300">
-                  महासेतू
-                </span>
               </div>
               <p className="text-xs text-brand-textMuted font-medium">
                 Public Innovation & Accelerated Procurement Portal
