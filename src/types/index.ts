@@ -8,6 +8,53 @@ export type ProblemSector =
 
 export type ProblemStatus = 'OPEN' | 'EVALUATION' | 'PILOTING' | 'PROCURED' | 'CLOSED';
 
+export type UserRole = 'startup' | 'dept' | 'manufacturer' | 'citizen';
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  isVerified: boolean;
+  verificationBadge: string; // e.g. "Govt Officer Verified (PWD)", "DPIIT Certified Startup", "Aadhaar Verified Citizen"
+  departmentCode?: string;
+  dpiitNo?: string;
+  citizenId?: string;
+  gstNumber?: string;
+  avatarUrl?: string;
+}
+
+export interface CivicComment {
+  id: string;
+  authorName: string;
+  authorRole: UserRole;
+  text: string;
+  timestamp: string;
+  upvotes: number;
+}
+
+export interface CivicIdeaPost {
+  id: string;
+  title: string;
+  authorName: string;
+  authorRole: UserRole;
+  authorBadge: string;
+  category: ProblemSector | 'Civic Improvement' | 'Public Safety';
+  content: string;
+  mediaType: 'video' | 'image' | 'text';
+  mediaUrl?: string;
+  thumbnailUrl?: string;
+  upvotes: number;
+  downvotes: number;
+  userVote: 'UP' | 'DOWN' | null;
+  comments: CivicComment[];
+  tags: string[];
+  urgency: 'CRITICAL' | 'HIGH' | 'MEDIUM';
+  deptEndorsed: boolean;
+  targetDept?: string;
+  createdAt: string;
+}
+
 export interface Department {
   id: string;
   name: string;
@@ -154,3 +201,4 @@ export interface ScaleAdoption {
   addonContractValue: number;
   deploymentLocation: string;
 }
+
