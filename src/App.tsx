@@ -137,7 +137,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-['Inter',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
       <Header
         activeTab={activeTab}
@@ -151,14 +151,14 @@ export function App() {
 
       {/* Floating Notification Toast */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center space-x-3 text-xs animate-bounce">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 bg-neutral-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-neutral-700 flex items-center space-x-3 text-xs animate-bounce">
+          <CheckCircle2 className="w-5 h-5 text-success-600 shrink-0" />
           <span className="font-semibold">{toastMessage}</span>
         </div>
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         {activeTab === 'problems' && (
           <ProblemDashboard
             problems={problems}
@@ -238,7 +238,7 @@ export function App() {
       />
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+      <footer className="bg-neutral-900 text-neutral-400 text-xs py-8 border-t border-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-bold border border-slate-700">

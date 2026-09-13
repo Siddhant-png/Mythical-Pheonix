@@ -10,9 +10,11 @@ import {
   Sliders, 
   Check, 
   Sparkles,
-  ArrowUpRight
+  ArrowUpRight,
+  CircleDot
 } from 'lucide-react';
 import { Pilot, Procurement, UserRole } from '../types';
+import { formatINRMoney } from '../utils/format';
 
 interface SandboxPilotScorecardProps {
   pilots: Pilot[];
@@ -68,19 +70,18 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-slate-800">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-purple-400/30">
-            <FlaskConical className="w-3.5 h-3.5 text-purple-400" />
-            <span>De-Risking Public Procurement</span>
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.2)] relative overflow-hidden border border-govblue-700/80">
+        <div className="max-w-3xl relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-violet-200 mb-4 border border-white/10">
+            <FlaskConical className="w-3.5 h-3.5 text-violet-300" />
+            <span>De-risking public procurement</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-            Sandbox Trials & Automated KPI Scorecards
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            Sandbox trials & automated KPI scorecards.
           </h2>
-          <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-            Instead of risky upfront multi-crore tenders, finalists prove performance in an isolated, government-supervised live sandbox corridor. Achieving a verified score of <strong>80%+</strong> automatically triggers a simplified direct Purchase Order (Auto-PO).
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            Instead of risky upfront multi-crore tenders, finalists prove performance in a monitored live sandbox corridor. A verified score of 80%+ automatically triggers a simplified direct purchase order and faster deployment.
           </p>
         </div>
       </div>
@@ -109,11 +110,12 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       hasPO 
                         ? (isSelected ? 'bg-emerald-500 text-white' : 'bg-emerald-100 text-emerald-800')
                         : (isSelected ? 'bg-purple-400 text-slate-900' : 'bg-purple-100 text-purple-800')
                     }`}>
+                      <CircleDot className="w-2.5 h-2.5 fill-current" />
                       {hasPO ? 'PROCURED (PO ISSUED)' : (pilot.status === 'RUNNING' ? 'TRIAL IN PROGRESS' : 'PASSED')}
                     </span>
                     <span className={`text-xs font-mono font-bold ${isSelected ? 'text-amber-300' : 'text-slate-600'}`}>
@@ -174,32 +176,45 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
               </div>
 
               <div className="space-y-3">
-                {selectedPilot.scorecards.map((card, idx) => (
-                  <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="font-bold text-slate-800 text-xs block">{card.metric}</span>
-                        <span className="text-[11px] text-slate-500">
-                          Min Requirement: <strong className="text-slate-700">{card.target}</strong> | Field Result: <strong className="text-govblue-800">{card.achieved}</strong>
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-xs font-extrabold text-slate-900">{scores[idx] ?? card.score} / 100</span>
-                      </div>
-                    </div>
+                {selectedPilot.scorecards.map((card, idx) => {
+                  const currentMetricScore = scores[idx] ?? card.score;
+                  const barColor = currentMetricScore >= 80 ? 'from-success-500 to-success-600' : 'from-warning-500 to-warning-600';
+                  const barText = currentMetricScore >= 80 ? 'text-success-700' : 'text-warning-700';
 
-                    {userRole === 'dept' && (
-                      <input
-                        type="range"
-                        min="50"
-                        max="100"
-                        value={scores[idx] ?? card.score}
-                        onChange={(e) => setScores({ ...scores, [idx]: Number(e.target.value) })}
-                        className="w-full accent-govblue-900 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
-                      />
-                    )}
-                  </div>
-                ))}
+                  return (
+                    <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <span className="font-bold text-slate-800 text-xs block">{card.metric}</span>
+                          <span className="text-[11px] text-slate-500">
+                            Min Requirement: <strong className="text-slate-700">{card.target}</strong> | Field Result: <strong className="text-govblue-800">{card.achieved}</strong>
+                          </span>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className={`text-xs font-extrabold ${barText}`}>{currentMetricScore} / 100</span>
+                        </div>
+                      </div>
+
+                      <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full bg-gradient-to-r ${barColor}`}
+                          style={{ width: `${Math.min(currentMetricScore, 100)}%` }}
+                        />
+                      </div>
+
+                      {userRole === 'dept' && (
+                        <input
+                          type="range"
+                          min="50"
+                          max="100"
+                          value={currentMetricScore}
+                          onChange={(e) => setScores({ ...scores, [idx]: Number(e.target.value) })}
+                          className="w-full accent-govblue-900 cursor-pointer h-1.5 bg-slate-200 rounded-lg appearance-none"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -241,7 +256,7 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
                     <div>
                       <span className="text-slate-400 block text-[10px]">SANCTION VALUE</span>
                       <span className="text-white font-bold">
-                        ₹{(((existingPO || poGenerated)?.finalPoValue || 0) / 100000).toFixed(1)} Lakhs
+                        {formatINRMoney(((existingPO || poGenerated)?.finalPoValue || 0))}
                       </span>
                     </div>
                     <div>

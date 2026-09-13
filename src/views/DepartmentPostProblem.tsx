@@ -74,29 +74,28 @@ export const DepartmentPostProblem: React.FC<DepartmentPostProblemProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      {/* Header Info */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <div className="flex items-center space-x-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-govblue-900 text-white flex items-center justify-center">
-            <Building2 className="w-5 h-5 text-amber-400" />
+    <div className="max-w-7xl mx-auto space-y-8 font-body">
+      <div className="bg-gradient-to-r from-govblue-50 via-white to-slate-50 rounded-[28px] border border-govblue-100/80 p-7 shadow-[0_16px_38px_rgba(15,23,42,0.06)]">
+        <div className="flex items-center space-x-4 mb-2">
+          <div className="w-12 h-12 rounded-2xl bg-govblue-900 text-white flex items-center justify-center shadow-[0_12px_24px_rgba(11,37,69,0.24)]">
+            <Building2 className="w-5 h-5 text-saffron-300" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-slate-900 font-['Plus_Jakarta_Sans']">
-              Department Problem Upload & Sandbox Intake Form
+            <h2 className="text-3xl font-extrabold tracking-[-0.04em] text-slate-900 font-heading">
+              Department problem upload
             </h2>
-            <p className="text-xs text-slate-500">
-              Transform unstructured 80-page tender PDFs into live, filterable challenges with automated sandbox KPIs
+            <p className="text-sm text-slate-600 mt-1">
+              Transform legacy tender PDFs into live, searchable challenges with objective sandbox KPIs and clean procurement workflow.
             </p>
           </div>
         </div>
       </div>
 
       {isSuccess ? (
-        <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-8 text-center space-y-4">
-          <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-          <h3 className="text-xl font-bold text-emerald-900">Challenge Successfully Published!</h3>
-          <p className="text-xs text-emerald-700 max-w-md mx-auto">
+        <div className="bg-success-50 border border-success-300 rounded-2xl p-8 text-center space-y-4">
+          <CheckCircle2 className="w-12 h-12 text-success-600 mx-auto" />
+          <h3 className="text-xl font-bold text-success-900">Challenge Successfully Published!</h3>
+          <p className="text-xs text-success-700 max-w-md mx-auto">
             Your problem statement has been indexed into the searchable dashboard. Eligible DPIIT startups and verified manufacturers can now discover it and execute teaming agreements.
           </p>
           <div className="pt-2">
@@ -110,7 +109,7 @@ export const DepartmentPostProblem: React.FC<DepartmentPostProblemProps> = ({
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6 text-xs">
+        <form onSubmit={handleSubmit} className="bg-brand-panel rounded-2xl border border-brand-border p-6 shadow-sm space-y-6 text-xs">
           {/* Department and Sector */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>

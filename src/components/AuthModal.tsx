@@ -107,8 +107,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs relative">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 font-body">
+      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs relative font-body">
         {/* Top Decorative Bar */}
         <div className="h-2 w-full bg-gradient-to-r from-govblue-900 via-amber-500 to-emerald-600"></div>
 
@@ -120,7 +120,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="text-sm font-bold font-['Plus_Jakarta_Sans']">MahaSetu Single Sign-On</span>
+                <span className="text-sm font-bold font-heading">MahaSetu Single Sign-On</span>
                 <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono font-bold border border-emerald-400/30">
                   SSO v3.1 Verified
                 </span>
