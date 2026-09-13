@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { 
   Search, 
   ShieldCheck, 
@@ -16,7 +16,8 @@ import {
   Check, 
   UserCheck, 
   Zap,
-  Filter
+  Filter,
+  X
 } from 'lucide-react';
 import { Startup, Problem, Application, UserRole } from '../types';
 
@@ -33,7 +34,29 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
   userRole,
   onSelectProblemForApplication
 }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'dpiit' | 'eval-panel' | 'escrow'>('dpiit');
+  const [activeSubTab, setActiveSubTab] = useState<'discovery' | 'dpiit' | 'eval-panel' | 'escrow'>('discovery');
+
+  // Startup Discovery state
+  const [discoverySearch, setDiscoverySearch] = useState('');
+  const [discoverySector, setDiscoverySector] = useState('all');
+  const [discoveryStage, setDiscoveryStage] = useState('all');
+  const [selectedStartup, setSelectedStartup] = useState<any | null>(null);
+
+  // Local demo data for the Startup Discovery panel.
+  const discoveryStartups = [
+    { id: 'startup-1', name: 'Drishti Edge Technologies Pvt Ltd', sector: 'AI & Computer Vision', stage: 'Growth', location: 'Pune, Maharashtra', dpiitVerified: true, description: 'Edge AI and computer vision solutions for infrastructure inspection and public-sector deployments.', score: 95, tags: ['Edge AI', 'Computer Vision', 'IoT'] },
+    { id: 'startup-2', name: 'AquaPulse Sensing Technologies', sector: 'CleanTech', stage: 'Early', location: 'Mumbai, Maharashtra', dpiitVerified: true, description: 'Smart acoustic sensing and LoRaWAN technology for detecting water pipeline leakage.', score: 89, tags: ['LoRaWAN', 'Smart Sensors', 'Water'] },
+    { id: 'startup-3', name: 'CivicGrid Analytics', sector: 'GovTech', stage: 'Growth', location: 'Nagpur, Maharashtra', dpiitVerified: false, description: 'Data analytics and citizen feedback tools for improving municipal service delivery.', score: 82, tags: ['Analytics', 'CivicTech', 'Dashboards'] },
+    { id: 'startup-4', name: 'GreenRoute Mobility', sector: 'CleanTech', stage: 'Early', location: 'Nashik, Maharashtra', dpiitVerified: true, description: 'Fleet optimization and charging intelligence for electric public transportation.', score: 86, tags: ['EV', 'Mobility', 'Optimization'] }
+  ];
+
+  const filteredStartups = useMemo(() => discoveryStartups.filter((startup) => {
+    const search = discoverySearch.toLowerCase();
+    const matchesSearch = !search || `${startup.name} ${startup.sector} ${startup.location} ${startup.tags.join(' ')}`.toLowerCase().includes(search);
+    const matchesSector = discoverySector === 'all' || startup.sector === discoverySector;
+    const matchesStage = discoveryStage === 'all' || startup.stage === discoveryStage;
+    return matchesSearch && matchesSector && matchesStage;
+  }), [discoverySearch, discoverySector, discoveryStage]);
 
   // DPIIT Verification Simulator state
   const [dpiitInput, setDpiitInput] = useState('DIPP-MH-2023-98442');
@@ -166,7 +189,19 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
       </div>
 
       {/* Sub-Navigation Tabs */}
-      <div className="flex space-x-2 border-b border-slate-200 pb-2">
+      <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+        <button
+          onClick={() => setActiveSubTab('discovery')}
+          className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold transition ${
+            activeSubTab === 'discovery'
+              ? 'bg-govblue-900 text-white shadow-md'
+              : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+          }`}
+        >
+          <Search className="w-4 h-4 text-emerald-400" />
+          <span>Startup Discovery</span>
+        </button>
+
         <button
           onClick={() => setActiveSubTab('dpiit')}
           className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold transition ${
@@ -203,6 +238,69 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
           <span>Milestone Escrow & Payment Tracker</span>
         </button>
       </div>
+
+      {/* SUB TAB 0: STARTUP DISCOVERY */}
+      {activeSubTab === 'discovery' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+              <div>
+                <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">AI-powered startup directory</span>
+                <h3 className="text-xl font-extrabold text-slate-900">Discover & Screen Startups</h3>
+                <p className="text-xs text-slate-500 mt-1">Search verified and emerging startups by sector, stage, and readiness score.</p>
+              </div>
+              <div className="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2">{filteredStartups.length} startups found</div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-400" />
+                <input value={discoverySearch} onChange={(e) => setDiscoverySearch(e.target.value)} placeholder="Search startups, sectors..." className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500" />
+              </div>
+              <select value={discoverySector} onChange={(e) => setDiscoverySector(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs">
+                <option value="all">All sectors</option>
+                <option value="AI & Computer Vision">AI & Computer Vision</option>
+                <option value="CleanTech">CleanTech</option>
+                <option value="GovTech">GovTech</option>
+              </select>
+              <select value={discoveryStage} onChange={(e) => setDiscoveryStage(e.target.value)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs">
+                <option value="all">All stages</option>
+                <option value="Early">Early stage</option>
+                <option value="Growth">Growth stage</option>
+              </select>
+            </div>
+
+            {filteredStartups.length === 0 ? (
+              <div className="text-center py-12 text-sm text-slate-500">No startups match your filters.</div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredStartups.map((startup) => (
+                  <div key={startup.id} className="border border-slate-200 rounded-2xl p-5 hover:border-emerald-300 transition space-y-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0"><Building2 className="w-5 h-5 text-emerald-700" /></div>
+                        <div><h4 className="text-sm font-extrabold text-slate-900">{startup.name}</h4><p className="text-xs text-slate-500 mt-1">{startup.location}</p></div>
+                      </div>
+                      <span className="text-lg font-black text-emerald-700">{startup.score}</span>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">{startup.description}</p>
+                    <div className="flex flex-wrap gap-1.5">{startup.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold">{tag}</span>)}</div>
+                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100"><span className="text-[10px] font-bold text-slate-500">{startup.dpiitVerified ? '✓ DPIIT verified' : 'Verification pending'} · {startup.stage}</span><button onClick={() => setSelectedStartup(startup)} className="text-xs font-bold text-emerald-700 hover:text-emerald-900">View profile →</button></div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {selectedStartup && (
+            <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-lg">
+              <div className="flex items-start justify-between gap-4"><div><span className="text-[10px] uppercase tracking-wider text-emerald-300 font-bold">Startup profile</span><h3 className="text-xl font-extrabold mt-1">{selectedStartup.name}</h3></div><button onClick={() => setSelectedStartup(null)} aria-label="Close profile"><X className="w-5 h-5" /></button></div>
+              <p className="text-sm text-slate-300 mt-3">{selectedStartup.description}</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">{[['Sector', selectedStartup.sector], ['Stage', selectedStartup.stage], ['Location', selectedStartup.location], ['Readiness', `${selectedStartup.score}/100`]].map(([label, value]) => <div key={label} className="rounded-xl bg-white/10 p-3"><span className="block text-[10px] text-slate-400 uppercase font-bold">{label}</span><span className="block text-xs font-bold mt-1">{value}</span></div>)}</div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* SUB TAB 1: DPIIT & GeM VERIFICATION SIMULATOR */}
       {activeSubTab === 'dpiit' && (
@@ -499,3 +597,4 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
     </div>
   );
 };
+
