@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+
 import { Header, NavTab } from './components/Header';
 import { AuthModal } from './components/AuthModal';
+
 import { ProblemDashboard } from './views/ProblemDashboard';
 import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
@@ -8,25 +10,36 @@ import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
 import { ScaleRegistry } from './views/ScaleRegistry';
 import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
+import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
-import { StartupProfilePage } from './components/startup-profile/StartupProfilePage';
-import { 
-  INITIAL_PROBLEMS, 
-  MANUFACTURERS, 
-  CURRENT_STARTUP, 
+
+import {
+  INITIAL_PROBLEMS,
+  MANUFACTURERS,
+  CURRENT_STARTUP,
   INITIAL_COLLABORATIONS,
   INITIAL_PILOTS,
   INITIAL_PROCUREMENTS,
-  INITIAL_SCALE_ADOPTIONS 
+  INITIAL_SCALE_ADOPTIONS
 } from './data/mockData';
-import { STARTUP_PROFILES, DEFAULT_STARTUP_PROFILE } from './data/startupProfiles';
-import { Problem, Collaboration, Pilot, Procurement, ScaleAdoption, UserRole, AuthUser } from './types';
-import { ShieldCheck, CheckCircle2, Award, Heart } from 'lucide-react';
+
+import {
+  Problem,
+  Collaboration,
+  Pilot,
+  Procurement,
+  ScaleAdoption,
+  UserRole,
+  AuthUser
+} from './types';
+
+import { CheckCircle2 } from 'lucide-react';
 
 type ProfileMode = 'my' | 'public';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
+
   const [userRole, setUserRole] = useState<UserRole>('startup');
   const [startupProfiles, setStartupProfiles] = useState(STARTUP_PROFILES);
   const [selectedProfileId, setSelectedProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
@@ -35,6 +48,7 @@ export function App() {
 
   // Authentication State
   const [authModalOpen, setAuthModalOpen] = useState(false);
+
   const [currentUser, setCurrentUser] = useState<AuthUser | null>({
     id: 'user-default',
     name: 'Aarav Deshmukh',
@@ -45,18 +59,34 @@ export function App() {
     dpiitNo: 'DIPP-MH-2023-98442'
   });
 
+  // Startup profile state
+  const [selectedStartupId, setSelectedStartupId] = useState<string | null>(
+    null
+  );
+
   // Core Application State
   const [problems, setProblems] = useState<Problem[]>(INITIAL_PROBLEMS);
-  const [collaborations, setCollaborations] = useState<Collaboration[]>(INITIAL_COLLABORATIONS);
+
+  const [collaborations, setCollaborations] = useState<Collaboration[]>(
+    INITIAL_COLLABORATIONS
+  );
+
   const [pilots, setPilots] = useState<Pilot[]>(INITIAL_PILOTS);
-  const [procurements, setProcurements] = useState<Procurement[]>(INITIAL_PROCUREMENTS);
-  const [scaleAdoptions, setScaleAdoptions] = useState<ScaleAdoption[]>(INITIAL_SCALE_ADOPTIONS);
-  
+
+  const [procurements, setProcurements] = useState<Procurement[]>(
+    INITIAL_PROCUREMENTS
+  );
+
+  const [scaleAdoptions, setScaleAdoptions] = useState<ScaleAdoption[]>(
+    INITIAL_SCALE_ADOPTIONS
+  );
+
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
+  const showToast = (message: string) => {
+    setToastMessage(message);
+
     setTimeout(() => {
       setToastMessage(null);
     }, 3500);
@@ -65,114 +95,159 @@ export function App() {
   const handleLoginSuccess = (user: AuthUser) => {
     setCurrentUser(user);
     setUserRole(user.role);
-    const matchingProfile = startupProfiles.find((profile) => profile.email === user.email);
-    if (matchingProfile) {
-      setMyProfileId(matchingProfile.id);
-    }
+
     showToast(`Welcome ${user.name}! Verified as ${user.verificationBadge}`);
   };
 
-  const currentUserProfile = startupProfiles.find((profile) => profile.id === myProfileId) || DEFAULT_STARTUP_PROFILE;
-
-  const openProfile = (profileId: string, mode: ProfileMode = 'public') => {
-    setSelectedProfileId(profileId);
-    setProfileMode(mode);
-    setActiveTab('profiles');
-  };
-
-  const handleOpenMyProfile = () => {
-    openProfile(currentUserProfile.id, 'my');
-  };
-
-  const handleSaveProfile = (updatedProfile: typeof DEFAULT_STARTUP_PROFILE) => {
-    setStartupProfiles((profiles) => profiles.map((profile) => (
-      profile.id === updatedProfile.id ? updatedProfile : profile
-    )));
-    showToast('Profile changes saved successfully.');
-  };
-
-  // Handlers
+  // Collaboration handler
   const handleAddNewCollaboration = (newCollab: Collaboration) => {
-    setCollaborations([newCollab, ...collaborations]);
-    showToast(`Consortium formed with ${newCollab.manufacturerName}! Mutual NDA executed.`);
+    setCollaborations(previousCollaborations => [
+      newCollab,
+      ...previousCollaborations
+    ]);
+
+    showToast(
+      `Consortium formed with ${newCollab.manufacturerName}! Mutual NDA executed.`
+    );
   };
 
+  // Problem creation handler
   const handleProblemCreated = (newProblem: Problem) => {
-    setProblems([newProblem, ...problems]);
-    showToast(`Challenge "${newProblem.title.slice(0, 30)}..." published!`);
+    setProblems(previousProblems => [newProblem, ...previousProblems]);
+
+    showToast(
+      `Challenge "${newProblem.title.slice(0, 30)}..." published!`
+    );
   };
 
+  // Application submission handler
   const handleSubmitApplication = (
-    problemId: string, 
-    isCollab: boolean, 
-    bidAmount: number, 
+    problemId: string,
+    isCollab: boolean,
+    bidAmount: number,
     summary: string
   ) => {
-    const targetProb = problems.find(p => p.id === problemId);
-    if (!targetProb) return;
+    const targetProblem = problems.find(problem => problem.id === problemId);
 
-    // Create a new pilot entry for this application
+    if (!targetProblem) {
+      return;
+    }
+
     const newPilot: Pilot = {
       id: `pilot-${Date.now()}`,
       applicationId: `app-${Date.now()}`,
-      problemTitle: targetProb.title,
-      applicantName: isCollab 
+      problemTitle: targetProblem.title,
+
+      applicantName: isCollab
         ? `${CURRENT_STARTUP.companyName} + Sahyadri Electronics (Consortium)`
         : `${CURRENT_STARTUP.companyName} (Solo)`,
+
       isCollab,
-      sandboxEnvironment: `${targetProb.deptName} - Testbed Sector Alpha`,
+
+      sandboxEnvironment: `${targetProblem.deptName} - Testbed Sector Alpha`,
+
       startDate: new Date().toISOString().split('T')[0],
       endDate: '2026-10-30',
+
       aggregateScore: isCollab ? 91 : 85,
+
       status: 'RUNNING',
-      evaluatorRemarks: isCollab 
+
+      evaluatorRemarks: isCollab
         ? 'Consortium application backed by verified manufacturer GST turnover and valid DPIIT certificate.'
         : 'Solo startup application under DPIIT relaxation framework.',
-      scorecards: targetProb.kpiBenchmarks.map(k => ({
-        metric: k.metric,
-        target: k.minTarget,
+
+      scorecards: targetProblem.kpiBenchmarks.map(kpi => ({
+        metric: kpi.metric,
+        target: kpi.minTarget,
         achieved: 'In Progress (Active Sandbox)',
         score: isCollab ? 92 : 86,
         passed: true
       }))
     };
 
-    setPilots([newPilot, ...pilots]);
-    showToast(isCollab ? 'Joint Consortium Application Submitted!' : 'Solo Application Submitted!');
+    setPilots(previousPilots => [newPilot, ...previousPilots]);
+
+    showToast(
+      isCollab
+        ? 'Joint Consortium Application Submitted!'
+        : 'Solo Application Submitted!'
+    );
   };
 
+  // Purchase order handler
   const handleGeneratePO = (pilotId: string, poValue: number) => {
-    const targetPilot = pilots.find(p => p.id === pilotId);
-    if (!targetPilot) return;
+    const targetPilot = pilots.find(pilot => pilot.id === pilotId);
+
+    if (!targetPilot) {
+      return;
+    }
 
     const newPO: Procurement = {
       id: `proc-${Date.now()}`,
-      pilotId: pilotId,
+      pilotId,
       problemTitle: targetPilot.problemTitle,
       vendorName: targetPilot.applicantName,
-      poNumber: `MAHA-GOV-PO-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+
+      poNumber: `MAHA-GOV-PO-2026-${Math.floor(
+        1000 + Math.random() * 9000
+      )}`,
+
       finalPoValue: poValue,
-      gfrRuleReference: 'GFR-2017 Rule 149 / Maharashtra Startup Policy Sec 4.2',
+
+      gfrRuleReference:
+        'GFR-2017 Rule 149 / Maharashtra Startup Policy Sec 4.2',
+
       deliveryTimelineWeeks: 6,
+
       issuedAt: new Date().toISOString().split('T')[0],
+
       adoptionsCount: 0
     };
 
-    setProcurements([newPO, ...procurements]);
-    showToast(`Purchase Order ${newPO.poNumber} issued to ${targetPilot.applicantName}!`);
+    setProcurements(previousProcurements => [
+      newPO,
+      ...previousProcurements
+    ]);
+
+    showToast(
+      `Purchase Order ${newPO.poNumber} issued to ${targetPilot.applicantName}!`
+    );
   };
 
+  // Scale adoption handler
   const handleAdoptSolution = (newAdoption: ScaleAdoption) => {
-    setScaleAdoptions([newAdoption, ...scaleAdoptions]);
-    showToast(`Solution replicated for ${newAdoption.adoptingDeptName}!`);
+    setScaleAdoptions(previousAdoptions => [
+      newAdoption,
+      ...previousAdoptions
+    ]);
+
+    showToast(
+      `Solution replicated for ${newAdoption.adoptingDeptName}!`
+    );
+  };
+
+  // Open startup profile
+  const handleOpenStartupProfile = (startupId: string) => {
+    setSelectedStartupId(startupId);
+  };
+
+  // Close startup profile
+  const handleCloseStartupProfile = () => {
+    setSelectedStartupId(null);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-['Inter',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
       <Header
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={tab => {
+          setActiveTab(tab);
+
+          // Close startup profile when changing main navigation
+          setSelectedStartupId(null);
+        }}
         userRole={userRole}
         setUserRole={setUserRole}
         activeCollabCount={collaborations.length}
@@ -183,26 +258,37 @@ export function App() {
 
       {/* Floating Notification Toast */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center space-x-3 text-xs animate-bounce">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-3 rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-xs text-white shadow-2xl animate-bounce">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
+
           <span className="font-semibold">{toastMessage}</span>
         </div>
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+        {/* Startup Profile Page */}
+        {activeTab === 'discovery' && selectedStartupId ? (
+          <StartupProfile
+            startupId={selectedStartupId}
+            onBack={handleCloseStartupProfile}
+          />
+        ) : null}
+
+        {/* Problem Dashboard */}
         {activeTab === 'problems' && (
           <ProblemDashboard
             problems={problems}
             collaborations={collaborations}
             currentStartup={CURRENT_STARTUP}
-            onOpenCollabHub={(problem) => {
+            onOpenCollabHub={() => {
               setActiveTab('collab');
             }}
             onSubmitApplication={handleSubmitApplication}
           />
         )}
 
+        {/* Civic Feed */}
         {activeTab === 'feed' && (
           <CivicShortsFeed
             userRole={userRole}
@@ -211,46 +297,17 @@ export function App() {
           />
         )}
 
-        {activeTab === 'discovery' && (
+        {/* Startup Discovery */}
+        {activeTab === 'discovery' && !selectedStartupId && (
           <StartupDiscoveryHub
             currentStartup={CURRENT_STARTUP}
             problems={problems}
             userRole={userRole}
-            onSelectStartupProfile={(startupName) => {
-              const matchedProfile = startupProfiles.find((profile) => profile.companyName === startupName);
-              if (matchedProfile) {
-                openProfile(matchedProfile.id, 'public');
-              }
-            }}
+            onOpenStartupProfile={handleOpenStartupProfile}
           />
         )}
 
-        {activeTab === 'profiles' && (
-          <div className="space-y-5">
-            <div className="flex flex-wrap gap-2">
-              {startupProfiles.map((profile) => (
-                <button
-                  key={profile.id}
-                  type="button"
-                  onClick={() => openProfile(profile.id, profile.id === currentUserProfile.id ? 'my' : 'public')}
-                  className={`rounded-full border px-3 py-2 text-xs font-bold transition ${
-                    selectedProfileId === profile.id
-                      ? 'border-slate-900 bg-slate-900 text-white shadow'
-                      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  {profile.id === currentUserProfile.id ? `${profile.companyName} (My Profile)` : profile.companyName}
-                </button>
-              ))}
-            </div>
-            <StartupProfilePage
-              profile={startupProfiles.find((profile) => profile.id === selectedProfileId) || currentUserProfile}
-              mode={selectedProfileId === currentUserProfile.id ? 'my' : profileMode}
-              onSaveProfile={handleSaveProfile}
-            />
-          </div>
-        )}
-
+        {/* Manufacturer Collaboration */}
         {activeTab === 'collab' && (
           <ManufacturerCollabHub
             manufacturers={MANUFACTURERS}
@@ -261,6 +318,7 @@ export function App() {
           />
         )}
 
+        {/* Department Problem Upload */}
         {activeTab === 'dept-upload' && (
           <DepartmentPostProblem
             onProblemCreated={handleProblemCreated}
@@ -268,6 +326,7 @@ export function App() {
           />
         )}
 
+        {/* Sandbox Pilots */}
         {activeTab === 'pilots' && (
           <SandboxPilotScorecard
             pilots={pilots}
@@ -277,6 +336,7 @@ export function App() {
           />
         )}
 
+        {/* Scale Registry */}
         {activeTab === 'scale' && (
           <ScaleRegistry
             procurements={procurements}
@@ -286,14 +346,13 @@ export function App() {
           />
         )}
 
+        {/* Standard Templates */}
         {activeTab === 'templates' && (
-          <StandardTemplatesVault
-            userRole={userRole}
-          />
+          <StandardTemplatesVault userRole={userRole} />
         )}
       </main>
 
-      {/* Auth Modal */}
+      {/* Authentication Modal */}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
@@ -302,23 +361,26 @@ export function App() {
       />
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-slate-800 bg-slate-900 py-8 text-xs text-slate-400">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-8">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-bold border border-slate-700">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 font-bold text-amber-400">
               MS
             </div>
+
             <div>
-              <div className="text-white font-bold text-sm">
+              <div className="text-sm font-bold text-white">
                 MahaSetu (महासेतू) Public Procurement Architecture
               </div>
-              <p className="text-slate-500 text-[11px]">
-                Accelerated Innovation Procurement Mechanism | Government of Maharashtra
+
+              <p className="text-[11px] text-slate-500">
+                Accelerated Innovation Procurement Mechanism | Government of
+                Maharashtra
               </p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-6 text-[11px]">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] md:gap-6">
             <span>DPIIT Startup India Aligned</span>
             <span>•</span>
             <span>GFR 2017 Rule 149 / 173</span>

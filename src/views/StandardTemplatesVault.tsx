@@ -92,19 +92,18 @@ export const StandardTemplatesVault: React.FC<StandardTemplatesVaultProps> = ({ 
   const currentTpl = templates.find(t => t.id === selectedTemplateId) || templates[0];
 
   return (
-    <div className="space-y-8">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-govblue-900 via-slate-900 to-govblue-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-govblue-800">
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.22)] relative overflow-hidden border border-govblue-700/80">
         <div className="max-w-3xl relative z-10">
-          <div className="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-amber-400/30">
-            <Scale className="w-3.5 h-3.5" />
-            <span>Standardized Legal & Operational Templates</span>
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-sky-100 mb-4 border border-white/10">
+            <Scale className="w-3.5 h-3.5 text-saffron-300" />
+            <span>Standardized legal & operational templates</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-            Innovation Procurement Framework & Legal Vault
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            A cleaner legal foundation for procurement.
           </h2>
-          <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-            Eliminate legal ambiguity and long contract drafting delays. Access standardized, legally vetted templates for outcome-based challenges, mutual NDAs, sandbox pilot agreements, cybersecurity checklists, and GFR fast-track procurement orders.
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            Eliminate ambiguity and drafting delays. Access vetted templates for challenge publishing, mutual NDAs, sandbox agreements, cybersecurity review, and GFR fast-track procurement pathways.
           </p>
         </div>
       </div>

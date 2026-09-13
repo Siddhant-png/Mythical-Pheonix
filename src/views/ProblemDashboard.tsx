@@ -78,44 +78,43 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
       {/* Hero Showcase Banner */}
-      <div className="bg-gradient-to-br from-govblue-900 via-govblue-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-govblue-800">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="bg-gradient-to-br from-govblue-900 via-govblue-800 to-slate-950 rounded-[28px] p-7 sm:p-10 text-white shadow-[0_20px_60px_rgba(11,37,69,0.26)] relative overflow-hidden border border-govblue-700/80">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-saffron-400/10 rounded-full blur-3xl pointer-events-none"></div>
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-amber-300 mb-4 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full text-[11px] font-semibold text-sky-100 mb-4 border border-white/10">
+            <Sparkles className="w-3.5 h-3.5 text-saffron-300" />
             <span>Maharashtra Public Innovation Procurement Portal</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans'] leading-tight">
-            Bridging High-Tech Startups & Established Manufacturers to Government Contracts
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            Bridging startups, manufacturers, and government delivery.
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-            Eliminating turnover & balance-sheet barriers for DPIIT startups. Form joint consortiums under verified Mutual NDAs, trial your innovations in Government sandboxes, and scale across Maharashtra state departments.
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            Eliminating turnover and balance-sheet barriers for DPIIT startups. Form joint consortiums under verified mutual NDAs, trial your innovations in government sandboxes, and scale across Maharashtra departments.
           </p>
         </div>
 
-        {/* The 4-Stage Visual Pipeline */}
         <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <span className="text-amber-400 font-bold block mb-0.5">Stage 1</span>
-            <span className="font-semibold text-white">Problem Definition</span>
-            <p className="text-[11px] text-slate-400 mt-1">Departments post structured requirements (No PDFs)</p>
+          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+            <span className="text-saffron-300 font-bold block mb-1.5">Stage 1</span>
+            <span className="font-semibold text-white block">Problem Definition</span>
+            <p className="text-[11px] text-slate-400 mt-2">Departments post structured requirements without PDF friction.</p>
           </div>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <span className="text-amber-400 font-bold block mb-0.5">Stage 2</span>
-            <span className="font-semibold text-white">Consortium & M-NDA</span>
-            <p className="text-[11px] text-slate-400 mt-1">Startups pair with manufacturers to unlock eligibility</p>
+          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+            <span className="text-saffron-300 font-bold block mb-1.5">Stage 2</span>
+            <span className="font-semibold text-white block">Consortium & M-NDA</span>
+            <p className="text-[11px] text-slate-400 mt-2">Startups pair with manufacturers to unlock eligibility.</p>
           </div>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <span className="text-amber-400 font-bold block mb-0.5">Stage 3</span>
-            <span className="font-semibold text-white">Sandbox Trial</span>
-            <p className="text-[11px] text-slate-400 mt-1">Milestone-driven testbeds & objective scorecards</p>
+          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+            <span className="text-saffron-300 font-bold block mb-1.5">Stage 3</span>
+            <span className="font-semibold text-white block">Sandbox Trial</span>
+            <p className="text-[11px] text-slate-400 mt-2">Milestone-driven testbeds and objective scorecards.</p>
           </div>
-          <div className="bg-white/5 rounded-xl p-3 border border-white/10">
-            <span className="text-amber-400 font-bold block mb-0.5">Stage 4</span>
-            <span className="font-semibold text-white">Auto-PO & Scale</span>
-            <p className="text-[11px] text-slate-400 mt-1">Instant procurement PO & multi-dept adoption</p>
+          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
+            <span className="text-saffron-300 font-bold block mb-1.5">Stage 4</span>
+            <span className="font-semibold text-white block">Auto-PO & Scale</span>
+            <p className="text-[11px] text-slate-400 mt-2">Instant procurement PO and multi-department adoption.</p>
           </div>
         </div>
       </div>
@@ -146,17 +145,19 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
         </div>
 
         {/* Right Column: Problem Cards Catalog */}
-        <div className="lg:col-span-3 space-y-4">
+        <div className="lg:col-span-3 space-y-5">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-bold text-slate-900">Active State Tenders & Challenges</h3>
-              <p className="text-xs text-slate-500">Showing {filteredProblems.length} available opportunities</p>
+              <h3 className="text-2xl font-extrabold tracking-[-0.03em] text-brand-text font-heading">Active state tenders & challenges</h3>
+              <p className="text-sm text-brand-textMuted mt-1">Showing {filteredProblems.length} available opportunities</p>
             </div>
           </div>
 
           {filteredProblems.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-              <Building2 className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+            <div className="bg-brand-panel rounded-2xl border border-brand-border p-12 text-center">
+              <div className="w-14 h-14 rounded-full bg-govblue-50 border border-govblue-200 mx-auto flex items-center justify-center mb-4">
+                <Building2 className="w-7 h-7 text-govblue-700" />
+              </div>
               <div className="font-bold text-slate-700">No challenges match your filters</div>
               <p className="text-xs text-slate-500 mt-1">Try relaxing your budget ceiling or sector selection</p>
             </div>

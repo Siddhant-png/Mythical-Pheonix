@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenMyProfile
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
+    <header className="sticky top-0 z-40 bg-brand-panel border-b border-brand-border shadow-sm font-body">
       {/* Top MahaGov Saffron-White-Green Tricolor Bar */}
       <div className="h-1.5 w-full bg-gradient-to-r from-[#FF7722] via-white to-[#138808]"></div>
 
@@ -53,18 +53,18 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Logo & Brand Identity */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('problems')}>
             <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-govblue-900 to-govblue-700 text-white flex items-center justify-center shadow-md border border-govblue-500/20">
-              <ShieldCheck className="w-6 h-6 text-amber-400" />
+              <ShieldCheck className="w-6 h-6 text-saffron-400" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-extrabold tracking-tight text-slate-900 font-['Plus_Jakarta_Sans']">
+                <h1 className="text-xl font-extrabold tracking-tight text-brand-text font-heading">
                   Maha<span className="text-saffron-600">Setu</span>
                 </h1>
-                <span className="text-[11px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-300">
+                <span className="text-[11px] bg-saffron-100 text-saffron-800 font-bold px-2 py-0.5 rounded-full border border-saffron-300">
                   महासेतू
                 </span>
               </div>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-brand-textMuted font-medium">
                 Public Innovation & Accelerated Procurement Portal
               </p>
             </div>
@@ -73,10 +73,10 @@ export const Header: React.FC<HeaderProps> = ({
           {/* User Persona & Authentication Bar */}
           <div className="flex items-center space-x-3 flex-wrap gap-y-2">
             {/* Role Switcher */}
-            <div className="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <div className="flex items-center space-x-1 bg-neutral-100 p-1 rounded-xl border border-brand-border">
               <button
                 onClick={() => setUserRole('dept')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                   userRole === 'dept'
                     ? 'bg-white text-govblue-800 shadow-sm font-semibold border border-govblue-200'
                     : 'text-slate-600 hover:text-slate-900'
@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
               <button
                 onClick={() => setUserRole('startup')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                   userRole === 'startup'
                     ? 'bg-white text-saffron-700 shadow-sm font-semibold border border-saffron-200'
                     : 'text-slate-600 hover:text-slate-900'
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
               <button
                 onClick={() => setUserRole('citizen')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                   userRole === 'citizen'
                     ? 'bg-white text-emerald-700 shadow-sm font-semibold border border-emerald-200'
                     : 'text-slate-600 hover:text-slate-900'
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
               <button
                 onClick={() => setUserRole('manufacturer')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all ${
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
                   userRole === 'manufacturer'
                     ? 'bg-white text-slate-800 shadow-sm font-semibold border border-slate-300'
                     : 'text-slate-600 hover:text-slate-900'
@@ -118,8 +118,8 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Auth Sign In / Verified Badge Button */}
             <button
-              onClick={currentUser ? onOpenMyProfile : onOpenAuthModal}
-              className="inline-flex items-center space-x-1.5 bg-govblue-900 hover:bg-govblue-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow transition shrink-0"
+              onClick={onOpenAuthModal}
+              className="inline-flex items-center space-x-1.5 bg-govblue-900 hover:bg-govblue-800 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow transition-all duration-200 hover:-translate-y-0.5 shrink-0"
             >
               {currentUser?.isVerified ? (
                 <>
@@ -140,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="flex space-x-1 mt-4 overflow-x-auto pb-1 scrollbar-none">
           <button
             onClick={() => setActiveTab('problems')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
               activeTab === 'problems'
                 ? 'bg-govblue-900 text-white shadow'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'

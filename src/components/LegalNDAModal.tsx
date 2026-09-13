@@ -59,8 +59,8 @@ export const LegalNDAModal: React.FC<LegalNDAModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-      <div className="relative bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 font-body">
+      <div className="relative bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh] font-body">
         {/* Modal Header */}
         <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-900 text-white p-5 flex items-center justify-between border-b border-slate-700">
           <div className="flex items-center space-x-3">

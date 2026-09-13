@@ -11,7 +11,8 @@ import {
   Check, 
   Lock,
   Stamp,
-  ExternalLink
+  ExternalLink,
+  CircleDot
 } from 'lucide-react';
 import { Manufacturer, Problem, Startup, Collaboration } from '../types';
 import { LegalNDAModal } from '../components/LegalNDAModal';
@@ -82,26 +83,25 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
   };
 
   return (
-    <div className="space-y-8">
-      {/* Top Banner explaining the Unlocking of Eligibility */}
-      <div className="bg-gradient-to-r from-amber-600 via-saffron-600 to-amber-700 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-white/20 px-3 py-1 rounded-full text-xs font-bold text-amber-100 mb-3 backdrop-blur-md">
-            <Handshake className="w-4 h-4 text-amber-200" />
-            <span>Turnover & Credibility Unlock Module</span>
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.2)] relative overflow-hidden border border-govblue-700/80">
+        <div className="max-w-3xl relative z-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-sky-100 mb-4 backdrop-blur-sm border border-white/10">
+            <Handshake className="w-4 h-4 text-saffron-300" />
+            <span>Turnover & credibility unlock module</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-            Startup Innovation + Manufacturer Scale
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+            Startup innovation, manufacturer scale, one compliant path to market.
           </h2>
-          <p className="mt-2 text-sm text-amber-100 leading-relaxed">
-            Government tenders traditionally require ₹5Cr+ annual audited turnover and prior deployment track records. By forming a legally bound Consortium on MahaSetu under an auto-drafted <strong>Mutual NDA</strong>, the manufacturer provides the financial solvency and production capacity, while your startup leads the technical innovation.
+          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+            Government tenders traditionally require high turnover and prior deployment records. By forming a legally bound consortium on MahaSetu under an auto-drafted mutual NDA, the manufacturer provides the financial solvency and production capacity while your startup leads technology.
           </p>
         </div>
       </div>
 
       {/* Active Consortiums Panel */}
       {collaborations.length > 0 && (
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <div className="bg-brand-panel rounded-2xl border border-brand-border p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-2">
               <Stamp className="w-5 h-5 text-emerald-600" />
@@ -171,6 +171,13 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
           </div>
         </div>
 
+        {filteredMfrs.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-sm">
+            <Factory className="w-9 h-9 text-slate-300 mx-auto mb-3" />
+            <div className="font-bold text-slate-700">No manufacturers match that filter</div>
+            <p className="text-xs text-slate-500 mt-1">Try a different capability search keyword or clear the current filters.</p>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {filteredMfrs.map((mfr) => {
             const isAlreadyTeamed = collaborations.some(
@@ -193,12 +200,13 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
                         <div className="text-[11px] text-slate-500 font-mono">GST: {mfr.gstNumber}</div>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
                       mfr.openToCollaborate 
                         ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
                         : 'bg-slate-100 text-slate-500'
                     }`}>
-                      {mfr.openToCollaborate ? '● Open to Partner' : 'At Capacity'}
+                      <CircleDot className="w-2.5 h-2.5 fill-current" />
+                      {mfr.openToCollaborate ? 'Open to Partner' : 'At Capacity'}
                     </span>
                   </div>
 
@@ -263,6 +271,7 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
             );
           })}
         </div>
+        )}
       </div>
 
       {/* Render Legal NDA Modal */}
