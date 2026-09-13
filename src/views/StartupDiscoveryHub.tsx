@@ -26,13 +26,15 @@ interface StartupDiscoveryHubProps {
   problems: Problem[];
   userRole: UserRole;
   onSelectProblemForApplication?: (problem: Problem) => void;
+  onSelectStartupProfile?: (startupName: string) => void;
 }
 
 export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
   currentStartup,
   problems,
   userRole,
-  onSelectProblemForApplication
+  onSelectProblemForApplication,
+  onSelectStartupProfile
 }) => {
   const [activeSubTab, setActiveSubTab] = useState<'discovery' | 'dpiit' | 'eval-panel' | 'escrow'>('discovery');
 
@@ -285,7 +287,10 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
                     </div>
                     <p className="text-xs text-slate-600 leading-relaxed">{startup.description}</p>
                     <div className="flex flex-wrap gap-1.5">{startup.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold">{tag}</span>)}</div>
-                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100"><span className="text-[10px] font-bold text-slate-500">{startup.dpiitVerified ? '✓ DPIIT verified' : 'Verification pending'} · {startup.stage}</span><button onClick={() => setSelectedStartup(startup)} className="text-xs font-bold text-emerald-700 hover:text-emerald-900">View profile →</button></div>
+                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100"><span className="text-[10px] font-bold text-slate-500">{startup.dpiitVerified ? '✓ DPIIT verified' : 'Verification pending'} · {startup.stage}</span><button onClick={() => {
+                      setSelectedStartup(startup);
+                      onSelectStartupProfile?.(startup.name);
+                    }} className="text-xs font-bold text-emerald-700 hover:text-emerald-900">View profile →</button></div>
                   </div>
                 ))}
               </div>

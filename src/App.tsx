@@ -9,6 +9,7 @@ import { ScaleRegistry } from './views/ScaleRegistry';
 import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
+import { StartupProfilePage } from './components/startup-profile/StartupProfilePage';
 import { 
   INITIAL_PROBLEMS, 
   MANUFACTURERS, 
@@ -18,12 +19,19 @@ import {
   INITIAL_PROCUREMENTS,
   INITIAL_SCALE_ADOPTIONS 
 } from './data/mockData';
+import { STARTUP_PROFILES, DEFAULT_STARTUP_PROFILE } from './data/startupProfiles';
 import { Problem, Collaboration, Pilot, Procurement, ScaleAdoption, UserRole, AuthUser } from './types';
 import { ShieldCheck, CheckCircle2, Award, Heart } from 'lucide-react';
+
+type ProfileMode = 'my' | 'public';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
   const [userRole, setUserRole] = useState<UserRole>('startup');
+  const [startupProfiles, setStartupProfiles] = useState(STARTUP_PROFILES);
+  const [selectedProfileId, setSelectedProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [myProfileId, setMyProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [profileMode, setProfileMode] = useState<ProfileMode>('public');
 
   // Authentication State
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -57,7 +65,30 @@ export function App() {
   const handleLoginSuccess = (user: AuthUser) => {
     setCurrentUser(user);
     setUserRole(user.role);
+    const matchingProfile = startupProfiles.find((profile) => profile.email === user.email);
+    if (matchingProfile) {
+      setMyProfileId(matchingProfile.id);
+    }
     showToast(`Welcome ${user.name}! Verified as ${user.verificationBadge}`);
+  };
+
+  const currentUserProfile = startupProfiles.find((profile) => profile.id === myProfileId) || DEFAULT_STARTUP_PROFILE;
+
+  const openProfile = (profileId: string, mode: ProfileMode = 'public') => {
+    setSelectedProfileId(profileId);
+    setProfileMode(mode);
+    setActiveTab('profiles');
+  };
+
+  const handleOpenMyProfile = () => {
+    openProfile(currentUserProfile.id, 'my');
+  };
+
+  const handleSaveProfile = (updatedProfile: typeof DEFAULT_STARTUP_PROFILE) => {
+    setStartupProfiles((profiles) => profiles.map((profile) => (
+      profile.id === updatedProfile.id ? updatedProfile : profile
+    )));
+    showToast('Profile changes saved successfully.');
   };
 
   // Handlers
@@ -147,6 +178,7 @@ export function App() {
         activeCollabCount={collaborations.length}
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
+        onOpenMyProfile={handleOpenMyProfile}
       />
 
       {/* Floating Notification Toast */}
@@ -184,7 +216,39 @@ export function App() {
             currentStartup={CURRENT_STARTUP}
             problems={problems}
             userRole={userRole}
+            onSelectStartupProfile={(startupName) => {
+              const matchedProfile = startupProfiles.find((profile) => profile.companyName === startupName);
+              if (matchedProfile) {
+                openProfile(matchedProfile.id, 'public');
+              }
+            }}
           />
+        )}
+
+        {activeTab === 'profiles' && (
+          <div className="space-y-5">
+            <div className="flex flex-wrap gap-2">
+              {startupProfiles.map((profile) => (
+                <button
+                  key={profile.id}
+                  type="button"
+                  onClick={() => openProfile(profile.id, profile.id === currentUserProfile.id ? 'my' : 'public')}
+                  className={`rounded-full border px-3 py-2 text-xs font-bold transition ${
+                    selectedProfileId === profile.id
+                      ? 'border-slate-900 bg-slate-900 text-white shadow'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                  }`}
+                >
+                  {profile.id === currentUserProfile.id ? `${profile.companyName} (My Profile)` : profile.companyName}
+                </button>
+              ))}
+            </div>
+            <StartupProfilePage
+              profile={startupProfiles.find((profile) => profile.id === selectedProfileId) || currentUserProfile}
+              mode={selectedProfileId === currentUserProfile.id ? 'my' : profileMode}
+              onSaveProfile={handleSaveProfile}
+            />
+          </div>
         )}
 
         {activeTab === 'collab' && (
