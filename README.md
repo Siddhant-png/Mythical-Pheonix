@@ -1,6 +1,4 @@
-# MahaSetu (महासेतू) 
-### *A Collaborative Sandbox & Accelerated Public Procurement Platform for Government of Maharashtra*
-**Smart India Hackathon (SIH-136) | Organization: Government of Maharashtra | Category: Software**
+
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://temporary-quick-fiddle-2rtjxzb.vercel.app)
 [![Built with React](https://img.shields.io/badge/Frontend-React%20%2B%20Tailwind-blue?style=for-the-badge&logo=react)](https://temporary-quick-fiddle-2rtjxzb.vercel.app)
@@ -101,3 +99,6 @@ The database is built with PostgreSQL and enforces critical business logic:
 5. **Step 5: Cross-Department Scale Registry**
    - Go to **"Cross-Dept Scale Registry"**.
    - Demonstrate how a municipal corporation in Nashik or Nagpur adopts the solution with 1-click requisition, saving 4 months of repetitive tendering.
+## Contributors
+
+- Abhishek Koundal
