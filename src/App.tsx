@@ -35,10 +35,16 @@ import {
 
 import { CheckCircle2 } from 'lucide-react';
 
+type ProfileMode = 'my' | 'public';
+
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
 
   const [userRole, setUserRole] = useState<UserRole>('startup');
+  const [startupProfiles, setStartupProfiles] = useState(STARTUP_PROFILES);
+  const [selectedProfileId, setSelectedProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [myProfileId, setMyProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [profileMode, setProfileMode] = useState<ProfileMode>('public');
 
   // Authentication State
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -247,6 +253,7 @@ export function App() {
         activeCollabCount={collaborations.length}
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
+        onOpenMyProfile={handleOpenMyProfile}
       />
 
       {/* Floating Notification Toast */}

@@ -14,11 +14,12 @@ import {
   Flame,
   UserCheck,
   LogIn,
-  User
+  User,
+  Rocket
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates';
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -28,6 +29,7 @@ interface HeaderProps {
   activeCollabCount: number;
   currentUser: AuthUser | null;
   onOpenAuthModal: () => void;
+  onOpenMyProfile: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -37,7 +39,8 @@ export const Header: React.FC<HeaderProps> = ({
   setUserRole,
   activeCollabCount,
   currentUser,
-  onOpenAuthModal
+  onOpenAuthModal,
+  onOpenMyProfile
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-brand-panel border-b border-brand-border shadow-sm font-body">
@@ -169,6 +172,18 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <SearchCheck className="w-4 h-4 text-emerald-400" />
             <span>Discovery & DPIIT Panel</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('profiles')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'profiles'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Rocket className="w-4 h-4 text-violet-400" />
+            <span>Startup Profiles</span>
           </button>
 
           <button
