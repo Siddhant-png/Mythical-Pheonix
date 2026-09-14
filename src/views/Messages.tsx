@@ -226,7 +226,9 @@ export function Messages() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] px-4 py-6 sm:px-6 lg:px-8">
+    
+      <div className="w-full max-w-none px-4 py-6 sm:px-6 lg:px-8">
+        
       {/* Page Heading */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-slate-900">Messages</h1>
@@ -238,7 +240,8 @@ export function Messages() {
       </div>
 
       {/* Main Messaging Layout */}
-      <div className="grid min-h-[650px] grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm lg:grid-cols-[290px_1fr] xl:grid-cols-[290px_1fr_320px]">
+      
+        <div className="grid w-full min-h-[650px] grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_300px]">
         {/* Conversation Sidebar */}
         <aside className="border-b border-slate-200 lg:border-b-0 lg:border-r">
           <div className="border-b border-slate-200 p-4">
@@ -370,13 +373,15 @@ export function Messages() {
                     }`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm sm:max-w-[70%] ${
+                      
+                        className={`w-fit max-w-[90%] rounded-2xl px-5 py-4 shadow-sm ${
                         message.sender === 'me'
                           ? 'rounded-br-md bg-blue-600 text-white'
                           : 'rounded-bl-md border border-slate-200 bg-white text-slate-800'
                       }`}
                     >
-                      <p className="text-sm leading-relaxed">
+                     
+                        <p className="text-base leading-relaxed break-words">
                         {message.text}
                       </p>
 
@@ -708,4 +713,7 @@ export function Messages() {
       )}
     </div>
   );
-}
+ 
+};
+
+export default Messages;
