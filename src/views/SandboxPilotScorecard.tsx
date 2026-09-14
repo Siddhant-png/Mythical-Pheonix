@@ -47,11 +47,12 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
   };
 
   const currentScore = calculateTotalScore();
-  const isPassed = currentScore >= 80;
+  const isPassed = selectedPilot.status === 'PASSED' && currentScore >= 80;
 
   const existingPO = procurements.find(p => p.pilotId === selectedPilot.id);
 
   const handleIssuePO = () => {
+    if (!isPassed) return;
     const poVal = 3800000;
     onGeneratePO(selectedPilot.id, poVal);
     const mockPO: Procurement = {
@@ -273,12 +274,14 @@ export const SandboxPilotScorecard: React.FC<SandboxPilotScorecardProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <div>
                     <div className="font-bold text-slate-900 text-xs">
-                      {isPassed ? 'Threshold Reached (Score ≥ 80)' : 'Awaiting Benchmark Threshold'}
+                      {isPassed ? 'Pilot validated: procurement threshold reached' : selectedPilot.status === 'RUNNING' ? 'Pilot validation still in progress' : 'Awaiting benchmark validation'}
                     </div>
                     <div className="text-[11px] text-slate-500">
                       {isPassed 
-                        ? 'Eligible for instant direct procurement under Maharashtra Startup Policy'
-                        : 'Increase scores to meet minimum threshold of 80 to unlock auto-PO'}
+                        ? 'Eligible for a mock procurement order under the existing demo workflow.'
+                        : selectedPilot.status === 'RUNNING'
+                          ? 'The pilot must be marked PASSED before procurement can be issued.'
+                          : 'The pilot must be PASSED with a minimum score of 80 to unlock procurement.'}
                     </div>
                   </div>
 

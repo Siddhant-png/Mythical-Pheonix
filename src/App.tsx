@@ -10,6 +10,8 @@ import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
 import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
 import { ScaleRegistry } from './views/ScaleRegistry';
+import { TierRegistry } from './views/TierRegistry';
+import { ProcurementDashboard } from './views/ProcurementDashboard';
 import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
@@ -21,6 +23,7 @@ import {
   saveUserInterestsToApi,
   fetchProblemsFromApi
 } from './services/api';
+import { ProcurementDraft } from './components/procurement/ProcurementCreationForm';
 
 import {
   INITIAL_PROBLEMS,
@@ -28,6 +31,7 @@ import {
   CURRENT_STARTUP,
   INITIAL_COLLABORATIONS,
   INITIAL_PILOTS,
+  INITIAL_APPLICATIONS,
   INITIAL_PROCUREMENTS,
   INITIAL_SCALE_ADOPTIONS
 } from './data/mockData';
@@ -43,6 +47,8 @@ import {
   Pilot,
   Procurement,
   ScaleAdoption,
+  Application,
+  ProcurementStatus,
   UserRole,
   AuthUser
 } from './types';
@@ -138,6 +144,8 @@ export function App() {
 
   const [pilots, setPilots] = useState<Pilot[]>(INITIAL_PILOTS);
 
+  const [applications, setApplications] = useState<Application[]>(INITIAL_APPLICATIONS);
+
   const [procurements, setProcurements] = useState<Procurement[]>(
     INITIAL_PROCUREMENTS
   );
@@ -198,9 +206,25 @@ export function App() {
       return;
     }
 
+    const applicationId = `app-${Date.now()}`;
+    const pilotId = `pilot-${Date.now()}`;
+    const newApplication: Application = {
+      id: applicationId,
+      problemId,
+      type: isCollab ? 'COLLABORATION' : 'SOLO',
+      startupId: CURRENT_STARTUP.id,
+      applicantName: isCollab
+        ? `${CURRENT_STARTUP.companyName} + Sahyadri Electronics`
+        : CURRENT_STARTUP.companyName,
+      proposalSummary: summary,
+      bidAmount,
+      status: 'PILOT_APPROVED',
+      submittedAt: new Date().toISOString().split('T')[0]
+    };
+
     const newPilot: Pilot = {
-      id: `pilot-${Date.now()}`,
-      applicationId: `app-${Date.now()}`,
+      id: pilotId,
+      applicationId,
       problemTitle: targetProblem.title,
 
       applicantName: isCollab
@@ -232,6 +256,7 @@ export function App() {
     };
 
     setPilots(previousPilots => [newPilot, ...previousPilots]);
+    setApplications(previousApplications => [newApplication, ...previousApplications]);
 
     showToast(
       isCollab
@@ -244,7 +269,8 @@ export function App() {
   const handleGeneratePO = (pilotId: string, poValue: number) => {
     const targetPilot = pilots.find(pilot => pilot.id === pilotId);
 
-    if (!targetPilot) {
+    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80) {
+      showToast('Procurement is blocked until pilot validation is PASSED with a score of 80 or higher.');
       return;
     }
 
@@ -267,7 +293,8 @@ export function App() {
 
       issuedAt: new Date().toISOString().split('T')[0],
 
-      adoptionsCount: 0
+      adoptionsCount: 0,
+      status: 'PENDING_DELIVERY'
     };
 
     setProcurements(previousProcurements => [
@@ -278,6 +305,27 @@ export function App() {
     showToast(
       `Purchase Order ${newPO.poNumber} issued to ${targetPilot.applicantName}!`
     );
+  };
+
+  const handleCreateProcurement = (draft: ProcurementDraft) => {
+    const targetPilot = pilots.find(pilot => pilot.id === draft.pilotId);
+    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80 || procurements.some(procurement => procurement.pilotId === draft.pilotId)) {
+      showToast('This solution is not eligible for a new procurement order.');
+      return;
+    }
+
+    const newProcurement: Procurement = {
+      id: `proc-${Date.now()}`,
+      ...draft,
+      status: 'PENDING_DELIVERY'
+    };
+    setProcurements(previousProcurements => [newProcurement, ...previousProcurements]);
+    showToast(`Procurement order ${newProcurement.poNumber} created successfully.`);
+  };
+
+  const handleUpdateProcurementStatus = (procurementId: string, status: ProcurementStatus) => {
+    setProcurements(previousProcurements => previousProcurements.map(procurement => procurement.id === procurementId ? { ...procurement, status } : procurement));
+    showToast(`Procurement status updated to ${status.replace('_', ' ').toLowerCase()}.`);
   };
 
   // Scale adoption handler
@@ -446,6 +494,28 @@ export function App() {
                 scaleAdoptions={scaleAdoptions}
                 onAdoptSolution={handleAdoptSolution}
                 userRole={userRole}
+              />
+            )}
+
+            {activeTab === 'tiers' && (
+              <TierRegistry
+                applications={applications}
+                pilots={pilots}
+                procurements={procurements}
+                scaleAdoptions={scaleAdoptions}
+              />
+            )}
+
+            {activeTab === 'procurement' && (
+              <ProcurementDashboard
+                problems={problems}
+                applications={applications}
+                pilots={pilots}
+                procurements={procurements}
+                scaleAdoptions={scaleAdoptions}
+                userRole={userRole}
+                onCreateProcurement={handleCreateProcurement}
+                onUpdateProcurementStatus={handleUpdateProcurementStatus}
               />
             )}
 

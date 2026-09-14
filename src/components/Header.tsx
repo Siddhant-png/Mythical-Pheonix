@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-  ShieldCheck, 
-  UserCheck, 
+import {
+  ShieldCheck,
+  UserCheck,
   LogIn,
   Building2,
   Flame,
@@ -12,10 +12,11 @@ import {
   FlaskConical,
   Repeat,
   Scale
+  , Milestone
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'account';
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'tiers' | 'procurement' | 'templates' | 'account';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -73,41 +74,37 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center space-x-1 bg-neutral-100 p-1 rounded-xl border border-brand-border">
               <button
                 onClick={() => setUserRole('dept')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
-                  userRole === 'dept'
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'dept'
                     ? 'bg-white text-govblue-800 shadow-sm font-semibold border border-govblue-200'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 🏛️ Govt Officer
               </button>
               <button
                 onClick={() => setUserRole('startup')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
-                  userRole === 'startup'
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'startup'
                     ? 'bg-white text-saffron-700 shadow-sm font-semibold border border-saffron-200'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 🚀 Startup
               </button>
               <button
                 onClick={() => setUserRole('citizen')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
-                  userRole === 'citizen'
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'citizen'
                     ? 'bg-white text-emerald-700 shadow-sm font-semibold border border-emerald-200'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 👥 Citizen
               </button>
               <button
                 onClick={() => setUserRole('manufacturer')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${
-                  userRole === 'manufacturer'
+                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'manufacturer'
                     ? 'bg-white text-slate-800 shadow-sm font-semibold border border-slate-300'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 🏭 Manufacturer
               </button>
@@ -127,11 +124,10 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenMyProfile}
               title="Open My Full Account Profile"
-              className={`relative w-10 h-10 rounded-full flex items-center justify-center font-black text-xs transition-all duration-200 shadow-md ${
-                activeTab === 'account'
+              className={`relative w-10 h-10 rounded-full flex items-center justify-center font-black text-xs transition-all duration-200 shadow-md ${activeTab === 'account'
                   ? 'bg-slate-900 text-white ring-4 ring-saffron-400 ring-offset-2 scale-105'
                   : 'bg-gradient-to-br from-govblue-900 via-slate-900 to-govblue-800 text-white hover:ring-2 hover:ring-saffron-400 hover:scale-105'
-              }`}
+                }`}
             >
               <span>{userInitials}</span>
               <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" title="Verified Session Active" />
@@ -166,10 +162,34 @@ export const Header: React.FC<HeaderProps> = ({
             Alliances
           </button>
           <button
+            onClick={() => setActiveTab('tiers')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Tiers
+          </button>
+          <button
+            onClick={() => setActiveTab('procurement')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'procurement' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Procurement
+          </button>
+          <button
             onClick={() => setActiveTab('dept-upload')}
             className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'dept-upload' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
             Post Problem
+          </button>
+          <button
+            onClick={() => setActiveTab('tiers')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Tiers
+          </button>
+          <button
+            onClick={() => setActiveTab('procurement')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'procurement' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Procurement
           </button>
         </div>
       </div>

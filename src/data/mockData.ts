@@ -1,4 +1,4 @@
-import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption } from '../types';
 
 export interface UserInterest {
   id: string;
@@ -359,6 +359,60 @@ export const INITIAL_PILOTS: Pilot[] = [
       { metric: 'Inference Latency at 60 km/h', target: '< 45 ms', achieved: '38 ms on Jetson Orin', score: 90, passed: true },
       { metric: 'IP67 Environmental Seal Under Heavy Rain', target: 'Zero ingress', achieved: 'Passed 100%', score: 85, passed: true }
     ]
+  },
+  {
+    id: 'pilot-303',
+    applicationId: 'app-903',
+    problemTitle: 'Portable Non-Invasive HbA1c & Diabetic Retinopathy Screener for Rural PHCs',
+    applicantName: 'CivicGrid Analytics',
+    isCollab: false,
+    sandboxEnvironment: 'Public Health Department - Satara Rural PHC Network',
+    startDate: '2026-08-04',
+    endDate: '2026-09-10',
+    aggregateScore: 86,
+    status: 'PASSED',
+    evaluatorRemarks: 'Completed supervised field evaluation with consistent screening accuracy and acceptable per-patient test duration. Awaiting procurement order.',
+    scorecards: [
+      { metric: 'Clinical Sensitivity & Specificity', target: '>= 95%', achieved: '96.1%', score: 88, passed: true },
+      { metric: 'Test Duration per Patient', target: '< 3 minutes', achieved: '2.4 minutes', score: 84, passed: true },
+      { metric: 'Battery Standby on Single Charge', target: '>= 8 hours', achieved: '9.2 hours', score: 86, passed: true }
+    ]
+  }
+];
+
+export const INITIAL_APPLICATIONS: Application[] = [
+  {
+    id: 'app-901',
+    problemId: 'prob-104',
+    type: 'SOLO',
+    startupId: 'startup-aquapulse',
+    applicantName: 'AquaPulse Sensing Technologies',
+    proposalSummary: 'Acoustic sensing and LoRaWAN network for precision leak localization.',
+    bidAmount: 3650000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-12'
+  },
+  {
+    id: 'app-902',
+    problemId: 'prob-101',
+    type: 'COLLABORATION',
+    startupId: 'startup-drishti',
+    applicantName: 'Drishti Edge Technologies + Sahyadri Electronics',
+    proposalSummary: 'Edge vision stack with ruggedized hardware for road defect indexing.',
+    bidAmount: 3800000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-08-26'
+  },
+  {
+    id: 'app-903',
+    problemId: 'prob-103',
+    type: 'SOLO',
+    startupId: 'startup-civicgrid',
+    applicantName: 'CivicGrid Analytics',
+    proposalSummary: 'Portable screening workflow for rural primary health centres.',
+    bidAmount: 5200000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-28'
   }
 ];
 
@@ -373,7 +427,8 @@ export const INITIAL_PROCUREMENTS: Procurement[] = [
     gfrRuleReference: 'GFR-2017 Rule 149 / Maharashtra State Startup Policy Sec 4.2 (Prior Experience & Turnover Waived)',
     deliveryTimelineWeeks: 6,
     issuedAt: '2026-09-02',
-    adoptionsCount: 3
+    adoptionsCount: 3,
+    status: 'COMPLETED'
   }
 ];
 
