@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Header, NavTab } from './components/Header';
 import { AuthModal } from './components/AuthModal';
@@ -14,6 +14,13 @@ import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
+import { SelfAccountProfile } from './views/SelfAccountProfile';
+
+import {
+  fetchUserInterestsFromApi,
+  saveUserInterestsToApi,
+  fetchProblemsFromApi
+} from './services/api';
 
 import {
   INITIAL_PROBLEMS,
@@ -59,6 +66,42 @@ export function App() {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [maxBudget, setMaxBudget] = useState(10000000);
   const [collabOnly, setCollabOnly] = useState(false);
+
+  // User Selected Domain Interests State
+  const [selectedInterestIds, setSelectedInterestIds] = useState<string[]>([
+    'ai-vision',
+    'agri-drones',
+    'medtech',
+    'clean-water'
+  ]);
+
+  // Load backend data on mount
+  useEffect(() => {
+    async function initBackendData() {
+      const interests = await fetchUserInterestsFromApi();
+      setSelectedInterestIds(interests);
+
+      const loadedProblems = await fetchProblemsFromApi();
+      if (loadedProblems.length > 0) {
+        setProblems(loadedProblems);
+      }
+    }
+    initBackendData();
+  }, []);
+
+  const handleToggleInterest = (id: string) => {
+    setSelectedInterestIds(prev => {
+      const isSelected = prev.includes(id);
+      const next = isSelected ? prev.filter(item => item !== id) : [...prev, id];
+      saveUserInterestsToApi(next);
+      showToast(
+        isSelected
+          ? 'Interest removed from Left Navigation Bar.'
+          : 'Interest added to Left Navigation Bar!'
+      );
+      return next;
+    });
+  };
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -261,8 +304,8 @@ export function App() {
 
   // Open my startup profile
   const handleOpenMyProfile = () => {
-    setSelectedStartupId(myProfileId);
-    setActiveTab('discovery');
+    setSelectedStartupId(null);
+    setActiveTab('account');
   };
 
   return (
@@ -304,6 +347,7 @@ export function App() {
                 setActiveTab(tab);
                 setSelectedStartupId(null);
               }}
+              onOpenStartupProfile={handleOpenStartupProfile}
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               selectedSector={selectedSector}
@@ -315,19 +359,12 @@ export function App() {
               collabOnly={collabOnly}
               setCollabOnly={setCollabOnly}
               onResetFilters={handleResetFilters}
+              selectedInterestIds={selectedInterestIds}
             />
           </div>
 
           {/* Center Column (Content Exploration & Problems) */}
           <div className="lg:col-span-8 xl:col-span-8 min-w-0 space-y-6">
-            {/* Startup Profile Page */}
-            {(activeTab === 'discovery' && selectedStartupId) || activeTab === 'profiles' ? (
-              <StartupProfile
-                startupId={selectedStartupId || selectedProfileId}
-                onBack={handleCloseStartupProfile}
-              />
-            ) : null}
-
             {/* Problem Dashboard */}
             {activeTab === 'problems' && (
               <ProblemDashboard
@@ -356,14 +393,21 @@ export function App() {
               />
             )}
 
-            {/* Startup Discovery */}
-            {activeTab === 'discovery' && !selectedStartupId && (
-              <StartupDiscoveryHub
-                currentStartup={CURRENT_STARTUP}
-                problems={problems}
-                userRole={userRole}
-                onOpenStartupProfile={handleOpenStartupProfile}
-              />
+            {/* Startup Profiles & Discovery Hub */}
+            {(activeTab === 'discovery' || activeTab === 'profiles') && (
+              selectedStartupId ? (
+                <StartupProfile
+                  startupId={selectedStartupId}
+                  onBack={handleCloseStartupProfile}
+                />
+              ) : (
+                <StartupDiscoveryHub
+                  currentStartup={CURRENT_STARTUP}
+                  problems={problems}
+                  userRole={userRole}
+                  onOpenStartupProfile={handleOpenStartupProfile}
+                />
+              )
             )}
 
             {/* Manufacturer Collaboration */}
@@ -408,6 +452,26 @@ export function App() {
             {/* Standard Templates */}
             {activeTab === 'templates' && (
               <StandardTemplatesVault userRole={userRole} />
+            )}
+
+            {/* Self Account & Detailed Profile Page */}
+            {activeTab === 'account' && (
+              <SelfAccountProfile
+                currentUser={currentUser}
+                currentStartup={CURRENT_STARTUP}
+                problems={problems}
+                collaborations={collaborations}
+                pilots={pilots}
+                procurements={procurements}
+                userRole={userRole}
+                setUserRole={setUserRole}
+                onNavigate={(tab) => {
+                  setActiveTab(tab);
+                  setSelectedStartupId(null);
+                }}
+                selectedInterestIds={selectedInterestIds}
+                onToggleInterest={handleToggleInterest}
+              />
             )}
           </div>
 

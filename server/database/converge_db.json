@@ -1,0 +1,141 @@
+{
+  "problems": [
+    {
+      "id": "prob-101",
+      "deptId": "dept-maha-pwd",
+      "deptName": "Public Works Department (PWD), Govt of Maharashtra",
+      "title": "AI-Powered Computer Vision for Automated Pothole & Road Quality Indexing",
+      "description": "Development of an edge-computing vehicular camera system that automatically maps, classifies, and estimates asphalt deterioration and potholes along state highways in real-time with GPS coordinates.",
+      "sector": "Smart Automation & AI",
+      "budgetCeiling": 4500000,
+      "deadline": "2026-10-15",
+      "status": "OPEN",
+      "eligibilityCriteria": "DPIIT recognized startups with proven computer vision models OR joint consortium with OEM dashcam/sensor manufacturers.",
+      "kpiBenchmarks": [
+        {
+          "metric": "Detection Accuracy (mAP@0.5)",
+          "minTarget": ">= 92%",
+          "weightage": 35
+        },
+        {
+          "metric": "Inference Latency at 60 km/h",
+          "minTarget": "< 45 ms",
+          "weightage": 35
+        },
+        {
+          "metric": "Ruggedized Ingress Protection",
+          "minTarget": "IP67 Rated",
+          "weightage": 30
+        }
+      ],
+      "preferredMode": "COLLABORATION_RECOMMENDED",
+      "postedDate": "2026-08-20",
+      "heroImage": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=1200&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&auto=format&fit=crop&q=80"
+      ],
+      "videoDuration": "03:45 mins",
+      "videoTitle": "PWD Technical Explainer: Automated Highway Quality Audit",
+      "targetBeneficiaries": [
+        {
+          "title": "Highway Commuters & Drivers",
+          "desc": "Prevents vehicular damage and fatal accidents."
+        },
+        {
+          "title": "PWD District Engineers",
+          "desc": "Eliminates manual physical inspection bias."
+        }
+      ],
+      "whyNeeded": "Manual road quality audits cover less than 12% of Maharashtra road network per year.",
+      "urgencyLevel": "CRITICAL",
+      "urgencyReason": "Monsoon season deterioration requires automated continuous telemetry.",
+      "severityScore": 9.6,
+      "publicImpactMetrics": [
+        {
+          "label": "Accident Reduction",
+          "value": "45%",
+          "subtext": "Target reduction in monsoon fatalities"
+        },
+        {
+          "label": "Audit Speedup",
+          "value": "18x Faster",
+          "subtext": "Continuous coverage vs manual walking surveys"
+        }
+      ],
+      "keywords": [
+        "#ComputerVision",
+        "#EdgeAI",
+        "#PotholeDetection",
+        "#SmartHighways"
+      ]
+    },
+    {
+      "id": "prob-102",
+      "deptId": "dept-maha-agri",
+      "deptName": "Department of Agriculture & Farmer Welfare, Maharashtra",
+      "title": "Precision Micro-Drone Payload for Targeted Bio-Pesticide Spraying in Vidarbha",
+      "description": "Autonomous micro-UAV system with multispectral pest detection to perform hyper-localized bio-pesticide misting on cotton and soybean crops.",
+      "sector": "Agriculture & Allied",
+      "budgetCeiling": 7500000,
+      "deadline": "2026-11-05",
+      "status": "OPEN",
+      "eligibilityCriteria": "DGCA type certified UAV frames OR joint venture with licensed drone manufacturer.",
+      "kpiBenchmarks": [
+        {
+          "metric": "Flight Endurance with 10kg Payload",
+          "minTarget": ">= 25 mins",
+          "weightage": 40
+        },
+        {
+          "metric": "Spray Drift Reduction Efficiency",
+          "minTarget": ">= 80%",
+          "weightage": 35
+        }
+      ],
+      "preferredMode": "COLLABORATION_RECOMMENDED",
+      "postedDate": "2026-09-01",
+      "heroImage": "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=1200&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80"
+      ],
+      "videoDuration": "04:12 mins",
+      "videoTitle": "Agri Dept Challenge: Targeted Bio-Pesticide Payload",
+      "targetBeneficiaries": [
+        {
+          "title": "Vidarbha Farmers",
+          "desc": "Prevents chemical toxicity poisoning."
+        }
+      ],
+      "whyNeeded": "Traditional backpack spraying exposes over 4,00,000 smallholder farmers to chemical toxicity.",
+      "urgencyLevel": "CRITICAL",
+      "urgencyReason": "Seasonal Pink Bollworm infestations require precision localized misting.",
+      "severityScore": 9.4,
+      "publicImpactMetrics": [
+        {
+          "label": "Pesticide Reduction",
+          "value": "70%",
+          "subtext": "Target reduction in chemical volume"
+        }
+      ],
+      "keywords": [
+        "#AgriTech",
+        "#DGCADrone",
+        "#PrecisionSpraying"
+      ]
+    }
+  ],
+  "userInterests": {
+    "default_user": [
+      "ai-vision",
+      "agri-drones",
+      "medtech",
+      "clean-water",
+      "mobility"
+    ]
+  },
+  "pilots": [],
+  "procurements": [],
+  "scaleAdoptions": [],
+  "civicIdeas": []
+}

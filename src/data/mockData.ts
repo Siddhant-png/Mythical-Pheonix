@@ -1,5 +1,25 @@
 import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption } from '../types';
 
+export interface UserInterest {
+  id: string;
+  label: string;
+  count: number;
+  iconName: string;
+  color: string;
+  bg: string;
+  sectorName: string;
+  desc: string;
+}
+
+export const MASTER_INTERESTS: UserInterest[] = [
+  { id: 'ai-vision', label: 'Smart Automation & Edge AI', count: 14, iconName: 'Bot', color: 'text-purple-600', bg: 'bg-purple-100', sectorName: 'Smart Automation & AI', desc: 'Edge AI, Computer Vision, Jetson Orin & Automated Indexing' },
+  { id: 'agri-drones', label: 'AgriTech & Drone Systems', count: 8, iconName: 'Sprout', color: 'text-emerald-600', bg: 'bg-emerald-100', sectorName: 'Agriculture & Allied', desc: 'Precision spraying, Micro-drones, Bio-pesticides & Soil Sensors' },
+  { id: 'medtech', label: 'MedTech & Public Health', count: 11, iconName: 'HeartPulse', color: 'text-red-600', bg: 'bg-red-100', sectorName: 'MedTech & Public Health', desc: 'Non-invasive screeners, Portable ICU, Diagnostic IoT & Telemedicine' },
+  { id: 'clean-water', label: 'Clean Energy & Smart Water', count: 6, iconName: 'Droplets', color: 'text-sky-600', bg: 'bg-sky-100', sectorName: 'Clean Energy & Water', desc: 'Acoustic leak detection, LoRaWAN water meters & Solar Microgrids' },
+  { id: 'mobility', label: 'Smart Mobility & EV Logistics', count: 9, iconName: 'Truck', color: 'text-amber-600', bg: 'bg-amber-100', sectorName: 'Smart Mobility & Logistics', desc: 'EV fleet management, Battery swapping & Traffic AI telemetry' },
+  { id: 'disaster', label: 'Disaster Response & Resilience', count: 5, iconName: 'ShieldAlert', color: 'text-indigo-600', bg: 'bg-indigo-100', sectorName: 'Disaster Management', desc: 'Early flood warning, Seismograph IoT & Emergency Broadcasts' }
+];
+
 export const INITIAL_PROBLEMS: Problem[] = [
   {
     id: 'prob-101',
