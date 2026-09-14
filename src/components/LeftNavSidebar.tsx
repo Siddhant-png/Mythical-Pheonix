@@ -15,7 +15,8 @@ import {
   Zap,
   Filter,
   Search,
-  RotateCcw
+  RotateCcw,
+  MessageCircle
 } from 'lucide-react';
 import { NavTab } from './Header';
 
@@ -64,6 +65,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
     { id: 'feed', label: 'Civic Shorts Feed', icon: Flame, activeTabTarget: 'feed' as NavTab },
     { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
     { id: 'profiles', label: 'Startup Profiles', icon: Rocket, activeTabTarget: 'profiles' as NavTab },
+    { id: 'messages', label: 'Messages', icon: MessageCircle, activeTabTarget: 'messages' as NavTab },
   ];
 
   const interests = [

@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'messages';
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'messages' | 'profiles';
 
 interface HeaderProps {
   activeTab: NavTab;

@@ -412,6 +412,8 @@ export function App() {
         )}
         {/* Messages */}
         {activeTab === 'messages' && <Messages />}
+         </div>
+        </div>
       </main>
 
       {/* Authentication Modal */}
