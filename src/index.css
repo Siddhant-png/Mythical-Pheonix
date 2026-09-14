@@ -21,7 +21,7 @@
   }
 
   body {
-    @apply bg-brand-bg text-brand-text antialiased;
+    @apply bg-slate-50 text-slate-900 antialiased;
     font-family: var(--font-body);
     line-height: 1.6;
     letter-spacing: -0.01em;
