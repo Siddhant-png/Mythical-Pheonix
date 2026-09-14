@@ -70,6 +70,17 @@ export interface KPIBenchmark {
   weightage: number; // Percentage
 }
 
+export interface ProblemBeneficiary {
+  title: string;
+  desc: string;
+}
+
+export interface PublicImpactMetric {
+  label: string;
+  value: string;
+  subtext: string;
+}
+
 export interface Problem {
   id: string;
   deptId: string;
@@ -84,6 +95,18 @@ export interface Problem {
   kpiBenchmarks: KPIBenchmark[];
   preferredMode: 'SOLO_OR_COLLAB' | 'COLLABORATION_RECOMMENDED' | 'SOLO_ONLY';
   postedDate: string;
+  heroImage?: string;
+  galleryImages?: string[];
+  videoExplainerUrl?: string;
+  videoDuration?: string;
+  videoTitle?: string;
+  targetBeneficiaries?: ProblemBeneficiary[];
+  whyNeeded?: string;
+  urgencyLevel?: 'CRITICAL' | 'HIGH' | 'MEDIUM';
+  urgencyReason?: string;
+  severityScore?: number;
+  publicImpactMetrics?: PublicImpactMetric[];
+  keywords?: string[];
 }
 
 export interface Startup {
@@ -200,5 +223,98 @@ export interface ScaleAdoption {
   adoptedOn: string;
   addonContractValue: number;
   deploymentLocation: string;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Startup Profile System (Part 5) — "Instagram × GitHub" showoff profile */
+/* ---------------------------------------------------------------------- */
+
+export type ProfileBannerTheme = 'saffron' | 'emerald' | 'govblue' | 'purple' | 'sunset';
+
+export type ProfileHighlightType = 'DPIIT' | 'PILOT_PASSED' | 'PO_WON' | 'CONSORTIUM' | 'SCALE' | 'AWARD';
+
+export interface ProfileHighlight {
+  id: string;
+  label: string;
+  type: ProfileHighlightType;
+}
+
+export type PinnedWinCategory = 'PILOT' | 'PROCUREMENT' | 'SCALE_ADOPTION' | 'CONSORTIUM';
+
+export interface PinnedWin {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: PinnedWinCategory;
+  statLabel: string;
+  statValue: string;
+  deptName: string;
+  date: string;
+  accentColor: 'emerald' | 'amber' | 'sky' | 'purple' | 'saffron';
+}
+
+export type ProfileTimelineCategory = 'MILESTONE' | 'PILOT' | 'PROCUREMENT' | 'CONSORTIUM' | 'CERT' | 'FUNDING';
+
+export interface ProfileTimelineEvent {
+  id: string;
+  date: string;
+  title: string;
+  description: string;
+  category: ProfileTimelineCategory;
+}
+
+export interface AllianceEntry {
+  id: string;
+  partnerName: string;
+  partnerType: 'Manufacturer' | 'Startup' | 'Department';
+  roleSplit: string;
+  status: 'ACTIVE' | 'NDA_PENDING' | 'COMPLETED';
+  since: string;
+}
+
+export type StartupProjectStatus = 'LIVE' | 'IN PILOT' | 'COMPLETED' | 'IN DEVELOPMENT';
+
+export interface StartupProject {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  status: StartupProjectStatus;
+  demoUrl?: string;
+  githubUrl?: string;
+  isPinned: boolean;
+}
+
+export interface StartupProfileStats {
+  activePilots: number;
+  consortiums: number;
+  poWins: number;
+  scaleAdoptions: number;
+  readinessScore: number;
+}
+
+export interface StartupProfileData {
+  id: string;
+  companyName: string;
+  handle: string;
+  tagline: string;
+  bio: string;
+  location: string;
+  foundedYear: number;
+  dpiitCertNo: string;
+  isDpiitVerified: boolean;
+  bannerTheme: ProfileBannerTheme;
+  avatarInitials: string;
+  website?: string;
+  linkedin?: string;
+  twitter?: string;
+  email: string;
+  techDomains: string[];
+  stats: StartupProfileStats;
+  highlights: ProfileHighlight[];
+  pinnedWins: PinnedWin[];
+  timeline: ProfileTimelineEvent[];
+  alliances: AllianceEntry[];
+  projects?: StartupProject[];
 }
 

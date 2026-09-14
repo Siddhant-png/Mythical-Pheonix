@@ -39,16 +39,16 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onReset
 }) => {
   return (
-    <aside className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-6">
+    <aside className="bg-white/90 rounded-2xl border border-slate-200/80 p-6 shadow-[0_12px_28px_rgba(15,23,42,0.06)] space-y-6 font-body">
       {/* Title & Reset */}
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div className="flex items-center space-x-2 font-bold text-slate-900 text-sm">
+      <div className="flex items-center justify-between pb-3 border-b border-brand-border">
+        <div className="flex items-center space-x-2 font-bold text-brand-text text-sm">
           <Filter className="w-4 h-4 text-govblue-700" />
           <span>Filter Challenges</span>
         </div>
         <button
           onClick={onReset}
-          className="text-xs text-slate-500 hover:text-slate-800 flex items-center space-x-1 hover:underline"
+          className="text-xs text-brand-textMuted hover:text-brand-text flex items-center space-x-1 hover:underline"
         >
           <RotateCcw className="w-3 h-3" />
           <span>Reset</span>
@@ -57,7 +57,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Search Input */}
       <div>
-        <label className="text-xs font-semibold text-slate-700 block mb-1.5">
+        <label className="text-xs font-semibold text-brand-textMuted block mb-1.5">
           Keyword Search
         </label>
         <div className="relative">
@@ -83,7 +83,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition ${
               selectedSector === ''
                 ? 'bg-govblue-50 text-govblue-900 font-bold border border-govblue-200'
-                : 'text-slate-600 hover:bg-slate-50'
+                : 'text-brand-textMuted hover:bg-neutral-50'
             }`}
           >
             <span>All Sectors</span>
@@ -96,7 +96,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition ${
                 selectedSector === sector
                   ? 'bg-govblue-50 text-govblue-900 font-bold border border-govblue-200'
-                  : 'text-slate-600 hover:bg-slate-50'
+                  : 'text-brand-textMuted hover:bg-neutral-50'
               }`}
             >
               <span className="truncate">{sector}</span>

@@ -87,7 +87,7 @@ const startupProfiles: StartupProfileData[] = [
         status: 'In Progress'
       }
     ],
-       achievements: [
+    achievements: [
       'Selected for a public innovation pilot',
       'Built a working AI recommendation prototype',
       'Participated in a civic technology innovation program'
@@ -217,8 +217,12 @@ export function StartupProfile({
   }, [startupId]);
 
   const startup = startupProfiles.find(
-    profile => profile.id === startupId
-  );
+    profile => profile.id === startupId ||
+    (startupId === 'drishti-edge' && profile.id === 'startup-1') ||
+    (startupId === 'aquapulse' && profile.id === 'startup-2') ||
+    (startupId === 'sahakar-tech' && profile.id === 'startup-3') ||
+    (startupId === 'greenroute-mobility' && profile.id === 'startup-4')
+  ) || startupProfiles[0];
 
   if (!startup) {
     return (
@@ -270,8 +274,8 @@ export function StartupProfile({
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h1 className="inline-block rounded-xl bg-white/95 px-4 py-2 text-3xl font-black text-slate-900 shadow-lg backdrop-blur-sm">
-  {startup.name}
-</h1>
+                    {startup.name}
+                  </h1>
 
                   {startup.dpiitVerified && (
                     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">

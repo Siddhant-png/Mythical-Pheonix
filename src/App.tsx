@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Header, NavTab } from './components/Header';
 import { AuthModal } from './components/AuthModal';
+import { LeftNavSidebar } from './components/LeftNavSidebar';
+import { RightNavSidebar } from './components/RightNavSidebar';
 
 import { ProblemDashboard } from './views/ProblemDashboard';
 import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
@@ -25,6 +27,11 @@ import {
 } from './data/mockData';
 
 import {
+  STARTUP_PROFILES,
+  DEFAULT_STARTUP_PROFILE
+} from './data/startupProfiles';
+
+import {
   Problem,
   Collaboration,
   Pilot,
@@ -36,10 +43,31 @@ import {
 
 import { CheckCircle2 } from 'lucide-react';
 
+type ProfileMode = 'my' | 'public';
+
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
 
   const [userRole, setUserRole] = useState<UserRole>('startup');
+  const [startupProfiles, setStartupProfiles] = useState(STARTUP_PROFILES);
+  const [selectedProfileId, setSelectedProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [myProfileId, setMyProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
+  const [profileMode, setProfileMode] = useState<ProfileMode>('public');
+
+  // Global Filter State for Problems
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSector, setSelectedSector] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [maxBudget, setMaxBudget] = useState(10000000);
+  const [collabOnly, setCollabOnly] = useState(false);
+
+  const handleResetFilters = () => {
+    setSearchQuery('');
+    setSelectedSector('');
+    setSelectedStatus('');
+    setMaxBudget(10000000);
+    setCollabOnly(false);
+  };
 
   // Authentication State
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -232,8 +260,14 @@ export function App() {
     setSelectedStartupId(null);
   };
 
+  // Open my startup profile
+  const handleOpenMyProfile = () => {
+    setSelectedStartupId(myProfileId);
+    setActiveTab('discovery');
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-['Inter',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
       <Header
         activeTab={activeTab}
@@ -248,6 +282,7 @@ export function App() {
         activeCollabCount={collaborations.length}
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
+        onOpenMyProfile={handleOpenMyProfile}
       />
 
       {/* Floating Notification Toast */}
@@ -259,92 +294,123 @@ export function App() {
         </div>
       )}
 
-      {/* Main Content Area */}
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
-        {/* Startup Profile Page */}
-        {activeTab === 'discovery' && selectedStartupId ? (
-          <StartupProfile
-            startupId={selectedStartupId}
-            onBack={handleCloseStartupProfile}
-          />
-        ) : null}
+      {/* Main Content Area: Reddit-Style 3-Column Layout */}
+      <main className="mx-auto w-full max-w-[1440px] flex-1 px-3 py-6 sm:px-4 lg:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Left Navigation Bar (Thin Sidebar - Exploring Feeds & Filters) */}
+          <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
+            <LeftNavSidebar
+              activeTab={activeTab}
+              setActiveTab={(tab) => {
+                setActiveTab(tab);
+                setSelectedStartupId(null);
+              }}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              selectedSector={selectedSector}
+              setSelectedSector={setSelectedSector}
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
+              maxBudget={maxBudget}
+              setMaxBudget={setMaxBudget}
+              collabOnly={collabOnly}
+              setCollabOnly={setCollabOnly}
+              onResetFilters={handleResetFilters}
+            />
+          </div>
 
-        {/* Problem Dashboard */}
-        {activeTab === 'problems' && (
-          <ProblemDashboard
-            problems={problems}
-            collaborations={collaborations}
-            currentStartup={CURRENT_STARTUP}
-            onOpenCollabHub={() => {
-              setActiveTab('collab');
-            }}
-            onSubmitApplication={handleSubmitApplication}
-          />
-        )}
+          {/* Center Column (Content Exploration & Problems) */}
+          <div className="lg:col-span-8 xl:col-span-8 min-w-0 space-y-6">
+            {/* Startup Profile Page */}
+            {(activeTab === 'discovery' && selectedStartupId) || activeTab === 'profiles' ? (
+              <StartupProfile
+                startupId={selectedStartupId || selectedProfileId}
+                onBack={handleCloseStartupProfile}
+              />
+            ) : null}
 
-        {/* Civic Feed */}
-        {activeTab === 'feed' && (
-          <CivicShortsFeed
-            userRole={userRole}
-            currentUserName={currentUser?.name || 'Anonymous Citizen'}
-            onNavigateToTenders={() => setActiveTab('problems')}
-          />
-        )}
+            {/* Problem Dashboard */}
+            {activeTab === 'problems' && (
+              <ProblemDashboard
+                problems={problems}
+                collaborations={collaborations}
+                currentStartup={CURRENT_STARTUP}
+                onOpenCollabHub={() => {
+                  setActiveTab('collab');
+                }}
+                onSubmitApplication={handleSubmitApplication}
+                searchQuery={searchQuery}
+                selectedSector={selectedSector}
+                selectedStatus={selectedStatus}
+                maxBudget={maxBudget}
+                collabOnly={collabOnly}
+                onResetFilters={handleResetFilters}
+              />
+            )}
 
-        {/* Startup Discovery */}
-        {activeTab === 'discovery' && !selectedStartupId && (
-          <StartupDiscoveryHub
-            currentStartup={CURRENT_STARTUP}
-            problems={problems}
-            userRole={userRole}
-            onOpenStartupProfile={handleOpenStartupProfile}
-          />
-        )}
+            {/* Civic Feed */}
+            {activeTab === 'feed' && (
+              <CivicShortsFeed
+                userRole={userRole}
+                currentUserName={currentUser?.name || 'Anonymous Citizen'}
+                onNavigateToTenders={() => setActiveTab('problems')}
+              />
+            )}
 
-        {/* Manufacturer Collaboration */}
-        {activeTab === 'collab' && (
-          <ManufacturerCollabHub
-            manufacturers={MANUFACTURERS}
-            problems={problems}
-            startup={CURRENT_STARTUP}
-            collaborations={collaborations}
-            onAddNewCollaboration={handleAddNewCollaboration}
-          />
-        )}
+            {/* Startup Discovery */}
+            {activeTab === 'discovery' && !selectedStartupId && (
+              <StartupDiscoveryHub
+                currentStartup={CURRENT_STARTUP}
+                problems={problems}
+                userRole={userRole}
+                onOpenStartupProfile={handleOpenStartupProfile}
+              />
+            )}
 
-        {/* Department Problem Upload */}
-        {activeTab === 'dept-upload' && (
-          <DepartmentPostProblem
-            onProblemCreated={handleProblemCreated}
-            onNavigateToDirectory={() => setActiveTab('problems')}
-          />
-        )}
+            {/* Manufacturer Collaboration */}
+            {activeTab === 'collab' && (
+              <ManufacturerCollabHub
+                manufacturers={MANUFACTURERS}
+                problems={problems}
+                startup={CURRENT_STARTUP}
+                collaborations={collaborations}
+                onAddNewCollaboration={handleAddNewCollaboration}
+              />
+            )}
 
-        {/* Sandbox Pilots */}
-        {activeTab === 'pilots' && (
-          <SandboxPilotScorecard
-            pilots={pilots}
-            procurements={procurements}
-            onGeneratePO={handleGeneratePO}
-            userRole={userRole}
-          />
-        )}
+            {/* Department Problem Upload */}
+            {activeTab === 'dept-upload' && (
+              <DepartmentPostProblem
+                onProblemCreated={handleProblemCreated}
+                onNavigateToDirectory={() => setActiveTab('problems')}
+              />
+            )}
 
-        {/* Scale Registry */}
-        {activeTab === 'scale' && (
-          <ScaleRegistry
-            procurements={procurements}
-            scaleAdoptions={scaleAdoptions}
-            onAdoptSolution={handleAdoptSolution}
-            userRole={userRole}
-          />
-        )}
+            {/* Sandbox Pilots */}
+            {activeTab === 'pilots' && (
+              <SandboxPilotScorecard
+                pilots={pilots}
+                procurements={procurements}
+                onGeneratePO={handleGeneratePO}
+                userRole={userRole}
+              />
+            )}
+
+            {/* Scale Registry */}
+            {activeTab === 'scale' && (
+              <ScaleRegistry
+                procurements={procurements}
+                scaleAdoptions={scaleAdoptions}
+                onAdoptSolution={handleAdoptSolution}
+                userRole={userRole}
+              />
+            )}
 
         {/* Standard Templates */}
         {activeTab === 'templates' && (
           <StandardTemplatesVault userRole={userRole} />
         )}
-        {/* Messages Page */}
+        {/* Messages */}
         {activeTab === 'messages' && <Messages />}
       </main>
 
@@ -361,12 +427,12 @@ export function App() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-8">
           <div className="flex items-center space-x-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 font-bold text-amber-400">
-              MS
+              CV
             </div>
 
             <div>
               <div className="text-sm font-bold text-white">
-                MahaSetu (महासेतू) Public Procurement Architecture
+                Converge (कन्व्हर्ज) Public Procurement Architecture
               </div>
 
               <p className="text-[11px] text-slate-500">

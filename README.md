@@ -17,7 +17,7 @@ In traditional public procurement, state government departments (like PWD, Healt
 
 **The Trap**: Innovative Indian startups have cutting-edge AI, IoT, and software solutions, but **fail the financial and manufacturing pre-qualification**. Conversely, established manufacturers have scale, factories, and balance sheets, but lack deep-tech agility.
 
-**MahaSetu solves this by engineering a 4-stage pipeline:**
+**Converge solves this by engineering a 4-stage pipeline:**
 ```
 [Structured Problem Intake] 
           ↓
@@ -40,7 +40,7 @@ When hackathon judges ask:
 > *"Why would an early-stage startup share its trade secrets and algorithms with a giant manufacturer? What stops the manufacturer from stealing their IP?"*
 
 **Your Winning Answer**:  
-MahaSetu auto-drafts a standardized **Mutual Non-Disclosure & Consortium Teaming Agreement (M-NDA & CTA)** with:
+Converge auto-drafts a standardized **Mutual Non-Disclosure & Consortium Teaming Agreement (M-NDA & CTA)** with:
 1. **Irrevocable IP Ringfence**: 100% of software algorithms, code, model weights, and patents remain the sole unencumbered property of the Startup.
 2. **Manufacturing Scope Limitation**: The manufacturer receives non-exclusive fabrication and hardware assembly rights strictly bound to this public tender.
 3. **Turnover & Balance Sheet Pledging**: The manufacturer legally pledges its audited turnover to satisfy the tender pre-qualification bar.

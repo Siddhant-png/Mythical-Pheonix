@@ -202,20 +202,19 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-govblue-900 via-slate-900 to-purple-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-govblue-800">
+    <div className="max-w-7xl mx-auto space-y-10 font-body">
+      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.22)] relative overflow-hidden border border-govblue-700/80">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center space-x-2 bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs font-bold mb-3 border border-purple-400/30">
-              <Flame className="w-3.5 h-3.5 text-amber-400" />
-              <span>Public Civic Voice & Idea Upvote System</span>
+            <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-violet-100 mb-4 border border-white/10">
+              <Flame className="w-3.5 h-3.5 text-saffron-300" />
+              <span>Public civic voice and idea upvote system</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-['Plus_Jakarta_Sans']">
-              Civic Pulse Shorts & Reddit Upvote Feed
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+              Civic pulse shorts and issue upvotes.
             </h2>
-            <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-              Democratizing public procurement. Citizens and startups pitch innovative solutions and report urgent civic challenges. High upvotes boost solution priority directly onto Government Nodal Officers' procurement agendas!
+            <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
+              Democratising public procurement. Citizens and startups pitch urgent civic needs and innovative solutions. High upvotes boost issue priority directly onto government nodal officers’ agendas.
             </p>
           </div>
 
@@ -354,7 +353,7 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
               <span className="text-xs text-slate-300 font-medium">by {currentShort.authorName}</span>
             </div>
 
-            <h3 className="text-lg font-extrabold leading-snug font-['Plus_Jakarta_Sans'] drop-shadow-md">
+            <h3 className="text-lg font-extrabold leading-snug font-heading drop-shadow-md">
               {currentShort.title}
             </h3>
 
