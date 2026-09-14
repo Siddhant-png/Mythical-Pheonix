@@ -12,14 +12,17 @@ import {
   Truck,
   ShieldAlert,
   Sparkles,
-  CircleDot
+  CircleDot,
+  Eye
 } from 'lucide-react';
 import { Problem } from '../types';
 import { formatINRMoney } from '../utils/format';
 
 interface ProblemCardProps {
   problem: Problem;
-  onSelectProblem: (problem: Problem) => void;
+  onSelectProblem?: (problem: Problem) => void;
+  onViewDetails?: (problem: Problem) => void;
+  onApply?: (problem: Problem) => void;
   onInitiateCollab: (problem: Problem) => void;
   hasActiveCollab: boolean;
 }
@@ -27,6 +30,8 @@ interface ProblemCardProps {
 export const ProblemCard: React.FC<ProblemCardProps> = ({
   problem,
   onSelectProblem,
+  onViewDetails,
+  onApply,
   onInitiateCollab,
   hasActiveCollab
 }) => {
@@ -71,7 +76,7 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
 
         {/* Title */}
         <h3 
-          onClick={() => onSelectProblem(problem)}
+          onClick={() => onViewDetails ? onViewDetails(problem) : onSelectProblem?.(problem)}
           className="text-base font-bold text-slate-900 group-hover:text-govblue-800 transition cursor-pointer line-clamp-2 leading-snug mb-2 font-heading"
         >
           {problem.title}
@@ -120,10 +125,11 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
       {/* Action Buttons */}
       <div className="border-t border-slate-100 pt-3.5 flex items-center justify-between gap-2">
         <button
-          onClick={() => onSelectProblem(problem)}
-          className="text-xs font-semibold text-brand-textMuted hover:text-brand-text px-3 py-2 rounded-lg hover:bg-neutral-100 transition"
+          onClick={() => onViewDetails ? onViewDetails(problem) : onSelectProblem?.(problem)}
+          className="flex items-center space-x-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-lg transition"
         >
-          View Specs & KPIs
+          <Eye className="w-3.5 h-3.5 text-slate-500" />
+          <span>View</span>
         </button>
 
         <div className="flex items-center space-x-2">
@@ -139,10 +145,10 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
           )}
 
           <button
-            onClick={() => onSelectProblem(problem)}
+            onClick={() => onApply ? onApply(problem) : onSelectProblem?.(problem)}
             className="flex items-center space-x-1 text-xs font-bold text-white bg-govblue-900 hover:bg-govblue-800 px-3.5 py-2 rounded-lg shadow-sm transition"
           >
-            <span>{hasActiveCollab ? 'Submit Joint Bid' : 'Apply'}</span>
+            <span>Apply</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

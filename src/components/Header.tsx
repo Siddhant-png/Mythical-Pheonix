@@ -1,21 +1,17 @@
 import React from 'react';
 import { 
-  Building2, 
-  Handshake, 
-  PlusCircle, 
-  FlaskConical, 
-  Repeat, 
   ShieldCheck, 
-  ChevronDown,
-  Sparkles,
-  FileCheck,
-  SearchCheck,
-  Scale,
-  Flame,
-  UserCheck,
+  UserCheck, 
   LogIn,
-  User,
-  Rocket
+  Building2,
+  Flame,
+  SearchCheck,
+  Rocket,
+  Handshake,
+  PlusCircle,
+  FlaskConical,
+  Repeat,
+  Scale
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
@@ -48,21 +44,21 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="h-1.5 w-full bg-gradient-to-r from-[#FF7722] via-white to-[#138808]"></div>
 
       {/* Main Navigation Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           {/* Logo & Brand Identity */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('problems')}>
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-govblue-900 to-govblue-700 text-white flex items-center justify-center shadow-md border border-govblue-500/20">
-              <ShieldCheck className="w-6 h-6 text-saffron-400" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-govblue-900 to-govblue-700 text-white flex items-center justify-center shadow-md border border-govblue-500/20">
+              <ShieldCheck className="w-5 h-5 text-saffron-400" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-extrabold tracking-tight text-brand-text font-heading">
+                <h1 className="text-lg font-extrabold tracking-tight text-brand-text font-heading">
                   Converge
                 </h1>
               </div>
-              <p className="text-xs text-brand-textMuted font-medium">
-                Public Innovation & Accelerated Procurement Portal
+              <p className="text-[11px] text-brand-textMuted font-medium">
+                Public Innovation & Accelerated Procurement Architecture
               </p>
             </div>
           </div>
@@ -133,124 +129,40 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Action Tabs Bar */}
-        <nav className="flex space-x-1 mt-4 overflow-x-auto pb-1 scrollbar-none">
+        {/* Mobile Horizontal Pill Scrollbar (Visible on small screens only) */}
+        <div className="flex md:hidden space-x-1.5 mt-3 overflow-x-auto pb-1 scrollbar-none text-xs">
           <button
             onClick={() => setActiveTab('problems')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 shrink-0 ${
-              activeTab === 'problems'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'problems' ? 'bg-govblue-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
-            <Building2 className="w-4 h-4" />
-            <span>Problem Directory</span>
+            Problems
           </button>
-
           <button
             onClick={() => setActiveTab('feed')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'feed'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'feed' ? 'bg-govblue-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
-            <Flame className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>Civic Shorts & Upvote Feed</span>
+            Civic Feed
           </button>
-
           <button
             onClick={() => setActiveTab('discovery')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'discovery'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'discovery' ? 'bg-govblue-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
-            <SearchCheck className="w-4 h-4 text-emerald-400" />
-            <span>Discovery & DPIIT Panel</span>
+            Discovery
           </button>
-
-          <button
-            onClick={() => setActiveTab('profiles')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'profiles'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Rocket className="w-4 h-4 text-violet-400" />
-            <span>Startup Profiles</span>
-          </button>
-
           <button
             onClick={() => setActiveTab('collab')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 relative ${
-              activeTab === 'collab'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'collab' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
-            <Handshake className="w-4 h-4 text-amber-400" />
-            <span>Manufacturer Alliances & NDA</span>
-            {activeCollabCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.2 text-[10px] rounded-full bg-amber-500 text-white font-bold">
-                {activeCollabCount}
-              </span>
-            )}
+            Alliances
           </button>
-
           <button
             onClick={() => setActiveTab('dept-upload')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'dept-upload'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'dept-upload' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
-            <PlusCircle className="w-4 h-4 text-emerald-400" />
-            <span>Post Problem (Structured Intake)</span>
+            Post Problem
           </button>
-
-          <button
-            onClick={() => setActiveTab('pilots')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'pilots'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <FlaskConical className="w-4 h-4 text-purple-400" />
-            <span>Sandbox Pilots & Scorecards</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('scale')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'scale'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Repeat className="w-4 h-4 text-sky-400" />
-            <span>Cross-Dept Scale Registry</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('templates')}
-            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-              activeTab === 'templates'
-                ? 'bg-govblue-900 text-white shadow'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Scale className="w-4 h-4 text-amber-300" />
-            <span>Standard Templates & Legal Vault</span>
-          </button>
-        </nav>
+        </div>
       </div>
     </header>
   );
 };
-
-

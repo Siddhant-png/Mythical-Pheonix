@@ -70,6 +70,17 @@ export interface KPIBenchmark {
   weightage: number; // Percentage
 }
 
+export interface ProblemBeneficiary {
+  title: string;
+  desc: string;
+}
+
+export interface PublicImpactMetric {
+  label: string;
+  value: string;
+  subtext: string;
+}
+
 export interface Problem {
   id: string;
   deptId: string;
@@ -84,6 +95,18 @@ export interface Problem {
   kpiBenchmarks: KPIBenchmark[];
   preferredMode: 'SOLO_OR_COLLAB' | 'COLLABORATION_RECOMMENDED' | 'SOLO_ONLY';
   postedDate: string;
+  heroImage?: string;
+  galleryImages?: string[];
+  videoExplainerUrl?: string;
+  videoDuration?: string;
+  videoTitle?: string;
+  targetBeneficiaries?: ProblemBeneficiary[];
+  whyNeeded?: string;
+  urgencyLevel?: 'CRITICAL' | 'HIGH' | 'MEDIUM';
+  urgencyReason?: string;
+  severityScore?: number;
+  publicImpactMetrics?: PublicImpactMetric[];
+  keywords?: string[];
 }
 
 export interface Startup {

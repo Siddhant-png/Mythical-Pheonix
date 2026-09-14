@@ -14,6 +14,29 @@ export const INITIAL_PROBLEMS: Problem[] = [
     eligibilityCriteria: 'DPIIT recognized startups with proven computer vision models OR joint consortium with OEM dashcam/sensor manufacturers with ISO-9001 certification.',
     preferredMode: 'COLLABORATION_RECOMMENDED',
     postedDate: '2026-08-20',
+    heroImage: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:45 mins',
+    videoTitle: 'PWD Technical Explainer: Automated Highway Quality Audit & Edge AI Vision',
+    targetBeneficiaries: [
+      { title: 'Highway Commuters & Drivers', desc: 'Prevents vehicular damage, fatal monsoon accidents, and severe traffic delays.' },
+      { title: 'PWD District Engineers', desc: 'Eliminates manual physical inspection contractors and subjective quality bias.' },
+      { title: 'State Transport (MSRTC)', desc: 'Protects public bus suspension fleets and maintains schedule punctuality.' }
+    ],
+    whyNeeded: 'Manual road quality audits cover less than 12% of Maharashtra’s 3,00,000 km road network per year. Delayed pothole repairs during monsoon months lead to over 3,400 fatal accidents annually and severe state budget leakage.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Monsoon season deterioration requires automated continuous telemetry before major highway resurfacing tenders are finalized.',
+    severityScore: 9.6,
+    publicImpactMetrics: [
+      { label: 'Accident Reduction', value: '45%', subtext: 'Target reduction in pothole-related monsoon fatalities' },
+      { label: 'Audit Speedup', value: '18x Faster', subtext: 'Continuous coverage vs manual walking surveys' },
+      { label: 'Public Budget Savings', value: '₹34 Cr', subtext: 'Annual savings in reactive road repair claims' }
+    ],
+    keywords: ['#ComputerVision', '#EdgeAI', '#PotholeDetection', '#SmartHighways', '#PWDTelemetry', '#GFRRule149', '#DPIITStartup'],
     kpiBenchmarks: [
       { metric: 'Detection Accuracy (mAP@0.5)', minTarget: '>= 92%', weightage: 35 },
       { metric: 'Inference Latency at 60 km/h', minTarget: '< 45 ms', weightage: 35 },
@@ -33,6 +56,29 @@ export const INITIAL_PROBLEMS: Problem[] = [
     eligibilityCriteria: 'DGCA type certified UAV frames OR joint venture between AgriTech software/AI startup and a DGCA-licensed drone manufacturer.',
     preferredMode: 'COLLABORATION_RECOMMENDED',
     postedDate: '2026-09-01',
+    heroImage: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:12 mins',
+    videoTitle: 'Agri Dept Challenge: Targeted Bio-Pesticide Payload & Drone Telemetry',
+    targetBeneficiaries: [
+      { title: 'Vidarbha & Marathwada Cotton Farmers', desc: 'Prevents chemical toxicity poisoning during manual knapsack spraying.' },
+      { title: 'Gram Panchayat Agri Collectives', desc: 'Enables custom hiring service centers (CHC) with shared drone fleets.' },
+      { title: 'Department Soil & Water Officers', desc: 'Reduces toxic chemical runoff into local drinking water reservoirs.' }
+    ],
+    whyNeeded: 'Traditional manual backpack spraying exposes over 4,00,000 smallholder farmers in Vidarbha to toxic organophosphate poisoning annually while wasting 65% of pesticides through indiscriminate overspray.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Seasonal Pink Bollworm infestations require precision localized misting within 48 hours of detection.',
+    severityScore: 9.4,
+    publicImpactMetrics: [
+      { label: 'Pesticide Reduction', value: '70%', subtext: 'Target reduction in chemical volume through precision spot-misting' },
+      { label: 'Crop Yield Increase', value: '+22%', subtext: 'Saved cotton bolls through early multispectral detection' },
+      { label: 'Farmer Health Safety', value: 'Zero Exposure', subtext: '100% remote operator stand-off distance' }
+    ],
+    keywords: ['#AgriTech', '#DGCADrone', '#PrecisionSpraying', '#CottonFarming', '#VidarbhaAgri', '#BioPesticide', '#MultispectralAI'],
     kpiBenchmarks: [
       { metric: 'Flight Endurance with 10kg Payload', minTarget: '>= 25 mins', weightage: 40 },
       { metric: 'Spray Drift Reduction Efficiency', minTarget: '>= 80%', weightage: 35 },
@@ -52,6 +98,29 @@ export const INITIAL_PROBLEMS: Problem[] = [
     eligibilityCriteria: 'CDSCO compliant prototype. Solo startups with clinical trial data or consortium with medical hardware contract manufacturers.',
     preferredMode: 'SOLO_OR_COLLAB',
     postedDate: '2026-08-15',
+    heroImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '02:50 mins',
+    videoTitle: 'Public Health Field Brief: Non-Invasive Diabetic Screener in Primary Health Centres',
+    targetBeneficiaries: [
+      { title: 'Rural Primary Health Patients', desc: 'Allows early diabetes & vision loss screening right in remote villages.' },
+      { title: 'ASHA Workers & PHC Doctors', desc: 'Simple 1-tap operation requiring under 15 minutes of training.' },
+      { title: 'State Non-Communicable Disease Cell', desc: 'Centralized registry mapping diabetic risk hotspots across 36 districts.' }
+    ],
+    whyNeeded: 'Over 68% of diabetic retinopathy cases in rural Maharashtra go undiagnosed until irreversible vision loss occurs, primarily due to lack of trained ophthalmologists and expensive diagnostic equipment at local PHCs.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Rapid rise in non-communicable diseases (NCD) in tribal and sub-district blocks requires immediate point-of-care screening.',
+    severityScore: 9.1,
+    publicImpactMetrics: [
+      { label: 'Screening Cost', value: '₹40/Patient', subtext: 'Vs ₹1,200 at urban private diagnostic labs' },
+      { label: 'Early Detection Rate', value: '4x Higher', subtext: 'Identifies asymptomatic retinopathy stage 1 & 2' },
+      { label: 'PHC Coverage Target', value: '1,800 PHCs', subtext: 'Turnkey deployment across rural health centers' }
+    ],
+    keywords: ['#MedTech', '#DiabeticRetinopathy', '#NonInvasiveDiagnostics', '#CDSCOApproved', '#RuralPHC', '#ASHAWorkers', '#PublicHealthAI'],
     kpiBenchmarks: [
       { metric: 'Clinical Sensitivity & Specificity', minTarget: '>= 95%', weightage: 50 },
       { metric: 'Test Duration per Patient', minTarget: '< 3 minutes', weightage: 30 },
@@ -71,6 +140,28 @@ export const INITIAL_PROBLEMS: Problem[] = [
     eligibilityCriteria: 'Open to eligible startups. Hardware must have BIS/CE certification.',
     preferredMode: 'SOLO_OR_COLLAB',
     postedDate: '2026-07-10',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:15 mins',
+    videoTitle: 'Water Resources Dept: Acoustic Pipeline Leak Detection & NRW Loss Mitigation',
+    targetBeneficiaries: [
+      { title: 'Municipal Water Corporations', desc: 'Recovers up to 38% non-revenue water lost to hidden underground leaks.' },
+      { title: 'Urban & Peri-Urban Citizens', desc: 'Ensures consistent water pressure and prevents sewage contamination into pipelines.' },
+      { title: 'State Jal Jeevan Mission', desc: 'Protects last-mile clean drinking water infrastructure.' }
+    ],
+    whyNeeded: 'Major cities in Maharashtra lose between 30% to 42% of treated potable drinking water through unregistered underground pipe bursts and pinhole fractures before reaching household taps.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Summer water scarcity and reservoir depletion demand instant pinpointing of NRW distribution losses.',
+    severityScore: 8.8,
+    publicImpactMetrics: [
+      { label: 'Water Saved', value: '45 Million Liters/Day', subtext: 'Target recovery across pilot municipal zones' },
+      { label: 'Leak Pinpoint Precision', value: '< 1.5 Meters', subtext: 'Eliminates digging up entire road stretches' },
+      { label: 'Battery Lifespan', value: '5+ Years', subtext: 'Maintenance-free subterranean sensors' }
+    ],
+    keywords: ['#LoRaWAN', '#SmartWaterGrid', '#AcousticSensors', '#NRWLoss', '#JalJeevanMission', '#IoTTelemetry'],
     kpiBenchmarks: [
       { metric: 'Leak Localization Accuracy', minTarget: '<= 1.5 meters', weightage: 40 },
       { metric: 'LoRa Transmission Range in Dense Urban Area', minTarget: '>= 4 km', weightage: 35 },
@@ -90,6 +181,28 @@ export const INITIAL_PROBLEMS: Problem[] = [
     eligibilityCriteria: 'AIS-140 compliance capability. High manufacturing capacity required (5,000+ units/year). Collaboration strongly recommended.',
     preferredMode: 'COLLABORATION_RECOMMENDED',
     postedDate: '2026-09-05',
+    heroImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '05:00 mins',
+    videoTitle: 'MSRTC Safety Challenge: Infrared Eye-Tracking & Blind Spot Collision Avoidance',
+    targetBeneficiaries: [
+      { title: 'MSRTC Bus Passengers', desc: 'Protects millions of night-time intercity bus passengers traveling across Maharashtra.' },
+      { title: 'Long-Distance State Drivers', desc: 'Provides instant haptic and acoustic alerts during microsleep episodes.' },
+      { title: 'Depot Fleet Control Managers', desc: 'Telemetry dashboard flagging high-risk fatigue drivers for mandatory rest schedules.' }
+    ],
+    whyNeeded: 'Over 62% of major night-time accidents involving state transport buses on the Mumbai-Nagpur Samruddhi Expressway and NH-48 stem from driver fatigue and microsleep between 2:00 AM and 5:00 AM.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'High express highway speeds require zero-delay cabin safety intervention.',
+    severityScore: 9.8,
+    publicImpactMetrics: [
+      { label: 'Fatigue Collision Reduction', value: '85%', subtext: 'Prevented night-time highway crashes' },
+      { label: 'Alert Trigger Speed', value: '< 1.2 Seconds', subtext: 'Instant acoustic & seat vibration warning' },
+      { label: 'MSRTC Fleet Target', value: '16,000 Buses', subtext: 'Full state transport fleet retrofit' }
+    ],
+    keywords: ['#AIS140', '#DriverSafety', '#InfraredEyeTracking', '#MicrosleepAlert', '#MSRTCFleet', '#SamruddhiExpressway'],
     kpiBenchmarks: [
       { metric: 'Microsleep Detection Rate (<1.2s closure)', minTarget: '>= 98%', weightage: 45 },
       { metric: 'False Positive Trigger Rate', minTarget: '< 2 per 500 km', weightage: 30 },
