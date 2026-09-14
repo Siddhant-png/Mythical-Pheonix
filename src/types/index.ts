@@ -211,7 +211,10 @@ export interface Procurement {
   deliveryTimelineWeeks: number;
   issuedAt: string;
   adoptionsCount: number;
+  status?: ProcurementStatus;
 }
+
+export type ProcurementStatus = 'ACTIVE' | 'COMPLETED' | 'PENDING_DELIVERY';
 
 export interface ScaleAdoption {
   id: string;
@@ -223,6 +226,37 @@ export interface ScaleAdoption {
   adoptedOn: string;
   addonContractValue: number;
   deploymentLocation: string;
+}
+
+export type StartupTier =
+  | 'IDEA'
+  | 'PILOT_READY'
+  | 'PILOT_VALIDATED'
+  | 'PROCUREMENT_READY'
+  | 'PROCURRED'
+  | 'SCALED';
+
+export type TierProgressState = 'COMPLETED' | 'CURRENT' | 'UPCOMING';
+
+export interface TierDefinition {
+  tier: StartupTier;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  label: string;
+  description: string;
+  requirement: string;
+}
+
+export interface StartupTierStatus {
+  currentTier: StartupTier | null;
+  completedTiers: StartupTier[];
+  upcomingTiers: StartupTier[];
+  stateByTier: Record<StartupTier, TierProgressState>;
+  evidence: {
+    applicationId?: string;
+    pilotId?: string;
+    procurementId?: string;
+    scaleAdoptionIds: string[];
+  };
 }
 
 /* ---------------------------------------------------------------------- */

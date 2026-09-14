@@ -12,10 +12,11 @@ import {
   FlaskConical,
   Repeat,
   Scale
+  , Milestone
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates';
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'tiers' | 'procurement' | 'templates';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -156,10 +157,34 @@ export const Header: React.FC<HeaderProps> = ({
             Alliances
           </button>
           <button
+            onClick={() => setActiveTab('tiers')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Tiers
+          </button>
+          <button
+            onClick={() => setActiveTab('procurement')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'procurement' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Procurement
+          </button>
+          <button
             onClick={() => setActiveTab('dept-upload')}
             className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'dept-upload' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
           >
             Post Problem
+          </button>
+          <button
+            onClick={() => setActiveTab('tiers')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Tiers
+          </button>
+          <button
+            onClick={() => setActiveTab('procurement')}
+            className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'procurement' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
+          >
+            Procurement
           </button>
         </div>
       </div>
