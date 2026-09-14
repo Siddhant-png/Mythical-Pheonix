@@ -12,6 +12,7 @@ import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
+import { Messages } from './views/Messages';
 
 import {
   INITIAL_PROBLEMS,
@@ -343,6 +344,8 @@ export function App() {
         {activeTab === 'templates' && (
           <StandardTemplatesVault userRole={userRole} />
         )}
+        {/* Messages Page */}
+        {activeTab === 'messages' && <Messages />}
       </main>
 
       {/* Authentication Modal */}

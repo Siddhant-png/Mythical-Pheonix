@@ -14,11 +14,12 @@ import {
   Flame,
   UserCheck,
   LogIn,
-  User
+  User,
+  MessageCircle
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates';
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'messages';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -235,6 +236,17 @@ export const Header: React.FC<HeaderProps> = ({
             <Scale className="w-4 h-4 text-amber-300" />
             <span>Standard Templates & Legal Vault</span>
           </button>
+          <button
+  onClick={() => setActiveTab('messages')}
+  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+    activeTab === 'messages'
+      ? 'bg-govblue-900 text-white shadow'
+      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+  }`}
+>
+  <MessageCircle className="w-4 h-4 text-emerald-400" />
+  <span>Messages</span>
+</button>
         </nav>
       </div>
     </header>
