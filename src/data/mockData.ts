@@ -1,4 +1,4 @@
-import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption, AllianceProposal } from '../types';
 
 export const INITIAL_PROBLEMS: Problem[] = [
   {
@@ -235,7 +235,12 @@ export const MANUFACTURERS: Manufacturer[] = [
     contactPerson: 'Rajesh Kulkarni (VP Government Alliances)',
     contactEmail: 'alliances@sahyadripres.com',
     activeConsortiumsCount: 4,
-    rating: 4.9
+    rating: 4.9,
+    category: 'MANUFACTURER',
+    headquarters: 'Pune (Bhosari MIDC), Maharashtra',
+    certifications: ['ISO-9001', 'ISO-14001', 'RoHS', 'CE', 'IP67 Ingress Rated'],
+    establishedYear: 2008,
+    verifiedStatus: 'MIDC Verified High-Tech Industrial Plant'
   },
   {
     id: 'mfr-mahindra-aero',
@@ -244,11 +249,16 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 420000000, // ₹42 Crores
     manufacturingCapacityUnits: 12000,
     openToCollaborate: true,
-    facilitiesSectors: ['Carbon Fiber Fabrication', 'DGCA Drone Airframes', 'Agricultural Payloads'],
+    facilitiesSectors: ['Carbon Fiber Fabrication', 'DGCA Drone Airframes', 'Agricultural Payloads', 'Lithium Battery Packs'],
     contactPerson: 'Sunil Patil (Head of Production)',
     contactEmail: 'spatil@bharatdronesys.com',
     activeConsortiumsCount: 2,
-    rating: 4.8
+    rating: 4.8,
+    category: 'MANUFACTURER',
+    headquarters: 'Nagpur (MIHAN Aerospace SEZ), Maharashtra',
+    certifications: ['DGCA Type Certified', 'AS9100D Aerospace', 'ISO-9001'],
+    establishedYear: 2014,
+    verifiedStatus: 'DGCA Certified UAV Manufacturing Hub'
   },
   {
     id: 'mfr-pune-optics',
@@ -257,11 +267,52 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 280000000, // ₹28 Crores
     manufacturingCapacityUnits: 25000,
     openToCollaborate: true,
-    facilitiesSectors: ['Optical Sensors', 'ISO-13485 Cleanroom', 'Medical Diagnostics Assembly'],
+    facilitiesSectors: ['Optical Sensors', 'ISO-13485 Cleanroom', 'Medical Diagnostics Assembly', 'Sterile Packaging'],
     contactPerson: 'Dr. Meera Joshi (Compliance Director)',
     contactEmail: 'meera.joshi@pratham-med.com',
     activeConsortiumsCount: 3,
-    rating: 4.7
+    rating: 4.7,
+    category: 'MANUFACTURER',
+    headquarters: 'Mumbai (SEEPZ Tech Zone), Maharashtra',
+    certifications: ['ISO-13485 Medical', 'CDSCO Class B/C Compliant', 'WHO-GMP'],
+    establishedYear: 2011,
+    verifiedStatus: 'CDSCO / FDA Registered Medical Device Facility'
+  },
+  {
+    id: 'mfr-mahainfra-epc',
+    companyName: 'MahaInfra System Integrators & Smart Cities EPC Ltd',
+    gstNumber: '27AAECM5542R1ZQ',
+    annualTurnover: 1250000000, // ₹125 Crores (Mega EPC Partner)
+    manufacturingCapacityUnits: 150000,
+    openToCollaborate: true,
+    facilitiesSectors: ['Pan-State Optical Fiber Cabling', 'Highways ITS Installation', '24/7 AMC Command Centre', 'SCADA Integration'],
+    contactPerson: 'Aniket Sawant (Head of EPC Tenders)',
+    contactEmail: 'tenders@mahainfraepc.com',
+    activeConsortiumsCount: 6,
+    rating: 4.9,
+    category: 'SYSTEM_INTEGRATOR',
+    headquarters: 'Navi Mumbai (Belapur), Maharashtra',
+    certifications: ['Class-1 PWD Contractor', 'CMMI Level 5', 'ISO-27001', 'ISO-9001'],
+    establishedYear: 2004,
+    verifiedStatus: 'Class-1 Maharashtra PWD & Smart Cities Empanelled'
+  },
+  {
+    id: 'mfr-arai-sensorlab',
+    companyName: 'ARAI & STQC Sensor Testbeds & Calibration Centre',
+    gstNumber: '27AAETA8812J1ZU',
+    annualTurnover: 450000000, // ₹45 Crores
+    manufacturingCapacityUnits: 5000,
+    openToCollaborate: true,
+    facilitiesSectors: ['NABL Accredited Calibration', 'Automotive AIS-140 Rig Testing', 'EMI/EMC Chamber', 'Environmental Ingress Testing'],
+    contactPerson: 'Dr. Sandeep Phadke (Lead Scientist)',
+    contactEmail: 'phadke.test@arai-calib.gov.in',
+    activeConsortiumsCount: 5,
+    rating: 4.9,
+    category: 'TESTING_LAB',
+    headquarters: 'Pune (Kothrud), Maharashtra',
+    certifications: ['NABL ISO/IEC 17025', 'STQC Empanelled', 'BIS Approved Lab'],
+    establishedYear: 1998,
+    verifiedStatus: 'Govt NABL Accredited Autonomous Testing Lab'
   },
   {
     id: 'mfr-tata-telecom',
@@ -270,11 +321,71 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 190000000, // ₹19 Crores
     manufacturingCapacityUnits: 80000,
     openToCollaborate: false, // Currently at capacity
-    facilitiesSectors: ['LoRa & NB-IoT Gateways', 'Acoustic Transducers', 'Water Metering'],
+    facilitiesSectors: ['LoRa & NB-IoT Gateways', 'Acoustic Transducers', 'Water Metering', 'PCB Pick-and-Place'],
     contactPerson: 'Vikas Shinde',
     contactEmail: 'vikas@westerniot.in',
     activeConsortiumsCount: 1,
-    rating: 4.5
+    rating: 4.5,
+    category: 'MANUFACTURER',
+    headquarters: 'Chhatrapati Sambhaji Nagar (Waluj MIDC), Maharashtra',
+    certifications: ['DoT / TEC Empanelled', 'IP68 Hydrostatic Test', 'ISO-9001'],
+    establishedYear: 2016,
+    verifiedStatus: 'TEC / DoT Approved Telemetry Manufacturer'
+  },
+  {
+    id: 'mfr-solarix-edge',
+    companyName: 'Solarix MicroGrid & Edge Sense Pvt Ltd',
+    gstNumber: '27AASCS6612P1ZN',
+    annualTurnover: 18000000, // ₹1.8 Crores
+    manufacturingCapacityUnits: 10000,
+    openToCollaborate: true,
+    facilitiesSectors: ['Solar MPPT Controllers', 'Low-Power LoRa Mesh Telemetry', 'Substation Edge Gateways'],
+    contactPerson: 'Sneha Chitnis (Co-Founder & CEO)',
+    contactEmail: 'sneha@solarixedge.io',
+    activeConsortiumsCount: 2,
+    rating: 4.6,
+    category: 'STARTUP_CO_BIDDER',
+    headquarters: 'Nashik (Ambad MIDC), Maharashtra',
+    certifications: ['DPIIT Recognized Startup', 'BIS Solar Certified', 'CE'],
+    establishedYear: 2021,
+    verifiedStatus: 'DPIIT Certified CleanTech Startup'
+  }
+];
+
+export const INITIAL_ALLIANCE_PROPOSALS: AllianceProposal[] = [
+  {
+    id: 'prop-101',
+    senderId: 'startup-drishti',
+    senderName: 'Drishti Edge Technologies Pvt Ltd',
+    senderRole: 'startup',
+    recipientId: 'mfr-mahindra-aero',
+    recipientName: 'Bharat Drone Systems & Composite Fab',
+    problemId: 'prob-102',
+    problemTitle: 'Precision Micro-Drone Payload for Targeted Bio-Pesticide Spraying in Vidarbha',
+    proposedRoleSplit: 'Startup: Autonomous multispectral pest detection AI & variable rate spraying telemetry. Partner: DGCA Type-Certified hexacopter airframe & carbon composite tanks.',
+    proposedStartupShare: 65,
+    proposedPartnerShare: 35,
+    turnoverPledged: 420000000,
+    status: 'PENDING',
+    sentAt: '2026-09-10T11:20:00Z',
+    note: 'Requesting consortium pairing for Dept of Agriculture challenge. Your DGCA airframes match the tender eligibility perfectly.'
+  },
+  {
+    id: 'prop-102',
+    senderId: 'mfr-mahainfra-epc',
+    senderName: 'MahaInfra System Integrators & Smart Cities EPC Ltd',
+    senderRole: 'manufacturer',
+    recipientId: 'startup-drishti',
+    recipientName: 'Drishti Edge Technologies Pvt Ltd',
+    problemId: 'prob-105',
+    problemTitle: 'Driver Drowsiness & Blind-Spot Warning System for State Intercity Buses',
+    proposedRoleSplit: 'Partner: Pan-Maharashtra field depot fitment across 5,000 MSRTC buses & 5-year on-ground AMC. Startup: Dual-camera AI edge units & driver behavior dashboard.',
+    proposedStartupShare: 55,
+    proposedPartnerShare: 45,
+    turnoverPledged: 1250000000,
+    status: 'PENDING',
+    sentAt: '2026-09-12T09:45:00Z',
+    note: 'We are bidding for the MSRTC bus safety tender and need your deep-tech facial expression computer vision algorithms to complete our consortium.'
   }
 ];
 
@@ -287,9 +398,13 @@ export const INITIAL_COLLABORATIONS: Collaboration[] = [
     manufacturerName: 'Sahyadri Precision Electronics & Assemblies Ltd',
     problemId: 'prob-101',
     problemTitle: 'AI-Powered Computer Vision for Automated Pothole & Road Quality Indexing',
-    roleSplit: 'Startup: Neural network models, edge inference firmware & GIS mapping portal. Manufacturer: Automotive-grade IP67 camera housing, vibration damping mounts, SMT board assembly & field warranty.',
+    roleSplit: 'Startup: Neural network models, edge inference firmware & GIS mapping portal. Partner: Automotive-grade IP67 camera housing, vibration damping mounts, SMT board assembly & field warranty.',
     status: 'ACTIVE',
     agreedAt: '2026-08-25T14:30:00Z',
+    partnerCategory: 'MANUFACTURER',
+    revenueSplitStartup: 60,
+    revenueSplitPartner: 40,
+    turnoverPledged: 680000000,
     ndaContract: {
       id: 'nda-881',
       collaborationId: 'collab-201',

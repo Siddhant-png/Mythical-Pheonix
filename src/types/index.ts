@@ -121,6 +121,12 @@ export interface Startup {
   activePilotsCount: number;
 }
 
+export type PartnerCategory = 
+  | 'MANUFACTURER' 
+  | 'SYSTEM_INTEGRATOR' 
+  | 'TESTING_LAB' 
+  | 'STARTUP_CO_BIDDER';
+
 export interface Manufacturer {
   id: string;
   companyName: string;
@@ -133,9 +139,35 @@ export interface Manufacturer {
   contactEmail: string;
   activeConsortiumsCount: number;
   rating: number;
+  category?: PartnerCategory;
+  headquarters?: string;
+  certifications?: string[];
+  establishedYear?: number;
+  verifiedStatus?: string;
 }
 
 export type CollabStatus = 'REQUESTED' | 'NDA_PENDING' | 'ACTIVE' | 'REJECTED';
+
+export type ProposalStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED' | 'UNDER_REVIEW';
+
+export interface AllianceProposal {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderRole: UserRole;
+  recipientId: string;
+  recipientName: string;
+  problemId: string;
+  problemTitle: string;
+  proposedRoleSplit: string;
+  proposedStartupShare: number; // e.g. 60
+  proposedPartnerShare: number; // e.g. 40
+  turnoverPledged: number;
+  status: ProposalStatus;
+  sentAt: string;
+  respondedAt?: string;
+  note?: string;
+}
 
 export interface NDAContract {
   id: string;
@@ -159,6 +191,10 @@ export interface Collaboration {
   roleSplit: string;
   status: CollabStatus;
   agreedAt: string | null;
+  partnerCategory?: PartnerCategory;
+  revenueSplitStartup?: number;
+  revenueSplitPartner?: number;
+  turnoverPledged?: number;
   ndaContract?: NDAContract;
 }
 

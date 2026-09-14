@@ -22,7 +22,8 @@ import {
   INITIAL_COLLABORATIONS,
   INITIAL_PILOTS,
   INITIAL_PROCUREMENTS,
-  INITIAL_SCALE_ADOPTIONS
+  INITIAL_SCALE_ADOPTIONS,
+  INITIAL_ALLIANCE_PROPOSALS
 } from './data/mockData';
 
 import {
@@ -37,7 +38,8 @@ import {
   Procurement,
   ScaleAdoption,
   UserRole,
-  AuthUser
+  AuthUser,
+  AllianceProposal
 } from './types';
 
 import { CheckCircle2 } from 'lucide-react';
@@ -103,6 +105,10 @@ export function App() {
     INITIAL_SCALE_ADOPTIONS
   );
 
+  const [proposals, setProposals] = useState<AllianceProposal[]>(
+    INITIAL_ALLIANCE_PROPOSALS
+  );
+
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -131,6 +137,22 @@ export function App() {
     showToast(
       `Consortium formed with ${newCollab.manufacturerName}! Mutual NDA executed.`
     );
+  };
+
+  // Proposal handlers
+  const handleAcceptProposal = (propId: string) => {
+    setProposals(prev => prev.map(p => p.id === propId ? { ...p, status: 'ACCEPTED' as const } : p));
+    showToast('Teaming Proposal Accepted! Ready to execute Mutual NDA.');
+  };
+
+  const handleDeclineProposal = (propId: string) => {
+    setProposals(prev => prev.map(p => p.id === propId ? { ...p, status: 'DECLINED' as const } : p));
+    showToast('Teaming Proposal Declined.');
+  };
+
+  const handleSendProposal = (newProposal: AllianceProposal) => {
+    setProposals(prev => [newProposal, ...prev]);
+    showToast(`Consortium Proposal sent to ${newProposal.recipientName}!`);
   };
 
   // Problem creation handler
@@ -373,7 +395,15 @@ export function App() {
                 problems={problems}
                 startup={CURRENT_STARTUP}
                 collaborations={collaborations}
+                proposals={proposals}
+                userRole={userRole}
                 onAddNewCollaboration={handleAddNewCollaboration}
+                onAcceptProposal={handleAcceptProposal}
+                onDeclineProposal={handleDeclineProposal}
+                onSendProposal={handleSendProposal}
+                onNavigateToProblem={(_probId) => {
+                  setActiveTab('problems');
+                }}
               />
             )}
 
