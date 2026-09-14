@@ -1,6 +1,6 @@
 
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://sih-converge.vercel.app/)
+[![Live Demo](https://sih-converge.vercel.app/)](https://sih-converge.vercel.app/)
 [![Built with React](https://img.shields.io/badge/Frontend-React%20%2B%20Tailwind-blue?style=for-the-badge&logo=react)](https://temporary-quick-fiddle-2rtjxzb.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
