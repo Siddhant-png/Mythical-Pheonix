@@ -249,18 +249,18 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto space-y-6 font-body">
       {/* Hero Showcase Banner with Official Brand Logo */}
-      <div className="bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-white shadow-md relative overflow-hidden border border-indigo-400/30">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-400/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div className="bg-[#E6E1F4] rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-[#312B41] shadow-md relative overflow-hidden border border-[#CAB9E3] border-t-4 border-t-[#CAB9E3]">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#CAB9E3]/40 rounded-full blur-2xl pointer-events-none"></div>
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center space-x-3.5">
             <div className="w-11 h-11 shrink-0 flex items-center justify-center">
-              <img src="/logo-transparent.png" alt="Converge Logo" className="w-full h-full object-contain filter drop-shadow-md brightness-110" />
+              <img src="/logo-transparent.png" alt="Converge Logo" className="w-full h-full object-contain filter drop-shadow-md" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-white">
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-[#312B41]">
                 Converge Innovation & Procurement Portal
               </h2>
-              <p className="text-xs text-indigo-100 font-medium">
+              <p className="text-xs text-[#6F6785] font-medium">
                 Bridging startups, OEM manufacturers, and government procurement delivery under GFR Rule 149.
               </p>
             </div>

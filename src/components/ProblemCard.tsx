@@ -52,43 +52,42 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
 
   return (
     <div
-      className="bg-white/90 rounded-2xl border border-slate-200/80 shadow-[0_12px_30px_rgba(15,23,42,0.06)] hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(15,23,42,0.08)] transition-all duration-200 p-5 sm:p-6 flex flex-col justify-between group font-body border-l-4"
-      style={{ borderLeftColor: sectorMeta.accent }}
+      className="bg-white/95 rounded-2xl border border-[#E6E1F4] shadow-[0_8px_24px_rgba(111,103,133,0.06)] hover:-translate-y-1 hover:border-[#CAB9E3] hover:shadow-[0_16px_32px_rgba(202,185,227,0.2)] transition-all duration-200 p-5 sm:p-6 flex flex-col justify-between group font-body border-t-4 border-t-[#CAB9E3]"
     >
       <div>
         {/* Top Badges */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border ${sectorMeta.bg} ${sectorMeta.text} ${sectorMeta.border}`}>
+          <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border bg-white/80 ${sectorMeta.text} border-[#CAB9E3]`}>
             <SectorIcon className="w-3.5 h-3.5" />
             {problem.sector}
           </span>
-          <div className="flex items-center space-x-1 text-[11px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">
-            <Clock className="w-3.5 h-3.5 text-neutral-400" />
+          <div className="flex items-center space-x-1 text-[11px] font-semibold text-[#6F6785] bg-white/80 px-2.5 py-1 rounded-full border border-[#CAB9E3]">
+            <Clock className="w-3.5 h-3.5 text-[#6F6785]" />
             <span>Deadline: {problem.deadline}</span>
           </div>
         </div>
 
         {/* Department Name */}
-        <div className="flex items-center space-x-1.5 text-xs text-brand-textMuted font-medium mb-1.5">
-          <Building2 className="w-3.5 h-3.5 text-govblue-700 shrink-0" />
+        <div className="flex items-center space-x-1.5 text-xs text-[#6F6785] font-medium mb-1.5">
+          <Building2 className="w-3.5 h-3.5 text-[#6F6785] shrink-0" />
           <span className="truncate">{problem.deptName}</span>
         </div>
 
         {/* Title */}
         <h3 
           onClick={() => onViewDetails ? onViewDetails(problem) : onSelectProblem?.(problem)}
-          className="text-base font-bold text-slate-900 group-hover:text-govblue-800 transition cursor-pointer line-clamp-2 leading-snug mb-2 font-heading"
+          className="text-base font-bold text-[#312B41] group-hover:text-[#6F6785] transition cursor-pointer line-clamp-2 leading-snug mb-2 font-heading"
         >
           {problem.title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed mb-4">
+        <p className="text-sm text-[#6F6785] line-clamp-3 leading-relaxed mb-4">
           {problem.description}
         </p>
 
         {/* Key Metrics / Highlights */}
-        <div className="grid grid-cols-2 gap-2 p-2.5 bg-brand-panelAlt rounded-xl border border-brand-border mb-4">
+        <div className="grid grid-cols-2 gap-2 p-2.5 bg-white/80 rounded-xl border border-[#CAB9E3] mb-4">
           <div>
             <span className="text-[10px] text-slate-400 font-medium block uppercase tracking-wider">Budget Ceiling</span>
             <div className="text-sm font-extrabold text-slate-900 flex items-center">

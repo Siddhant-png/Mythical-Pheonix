@@ -102,18 +102,6 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
   return (
     <aside className="w-full font-body sticky top-[72px] h-[calc(100vh-80px)] overflow-y-auto pr-1.5 pl-0.5 pt-2 pb-8 space-y-2 scrollbar-none select-none">
-      
-      {/* Brand Header Banner Card */}
-      <div className="p-3 mb-2 bg-gradient-to-r from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] rounded-2xl text-white shadow-sm flex items-center space-x-3 border border-indigo-400/30">
-        <div className="w-9 h-9 shrink-0 flex items-center justify-center">
-          <img src="/logo-transparent.png" alt="Converge" className="w-full h-full object-contain filter drop-shadow-md brightness-110" />
-        </div>
-        <div className="min-w-0">
-          <div className="text-xs font-black tracking-wide truncate">CONVERGE PORTAL</div>
-          <div className="text-[10px] text-indigo-100 truncate font-medium">Govt Innovation Sandbox</div>
-        </div>
-      </div>
-
       {/* Top Nav Buttons (Reddit Sidebar Style with Brand Theme) */}
       <div className="space-y-1">
         {topNavItems.map((item) => {

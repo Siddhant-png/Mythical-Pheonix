@@ -280,65 +280,111 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
         </div>
       </div>
 
-      {/* Media Showcase Row: Video Explainer Banner + Image Gallery */}
+      {/* Media Showcase Row: LinkedIn-Style Media Post Feed + Image Gallery */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Video Explainer Showcase Card */}
-        <div className="lg:col-span-2 bg-gradient-to-br from-slate-900 via-slate-950 to-govblue-950 text-white rounded-3xl p-6 shadow-xl border border-slate-800 relative overflow-hidden flex flex-col justify-between">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-400 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full uppercase tracking-wider">
-                <Play className="w-3 h-3 fill-current" /> Department Video Briefing
-              </span>
-              <span className="text-xs text-slate-400 font-semibold">{videoDuration}</span>
+        {/* LinkedIn-Style Official Department Post Card */}
+        <div className="lg:col-span-2 bg-white rounded-3xl p-6 shadow-sm border border-[#CAB9E3] space-y-4">
+          {/* Post Author Header */}
+          <div className="flex items-center justify-between border-b border-[#E6E1F4] pb-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#312B41] to-[#6F6785] text-white flex items-center justify-center font-bold text-sm shadow-md">
+                MH
+              </div>
+              <div>
+                <div className="flex items-center space-x-1.5">
+                  <h4 className="font-bold text-[#312B41] text-sm">{problem.deptName}</h4>
+                  <ShieldCheck className="w-4 h-4 text-[#6F6785]" />
+                </div>
+                <p className="text-[11px] text-[#6F6785]">
+                  Official Technical Briefing • Posted {problem.postedDate} • 🌐 Public Innovation RFP
+                </p>
+              </div>
             </div>
-
-            <h3 className="text-lg font-extrabold text-white font-heading">
-              {videoTitle}
-            </h3>
-
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Official video briefing from the nodal engineering team explaining field challenges, environmental constraints, and target deployment guidelines.
-            </p>
+            <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#E6E1F4] text-[#312B41] border border-[#CAB9E3]">
+              {problem.sector}
+            </span>
           </div>
 
-          {/* Interactive Simulated Video Player Box */}
+          {/* Post Description Text */}
+          <p className="text-xs text-[#312B41] leading-relaxed">
+            {problem.description}
+          </p>
+
+          {/* Video Player Card Preview (LinkedIn Media Attachment Style) */}
           <div 
             onClick={() => setVideoModalOpen(true)}
-            className="mt-6 relative h-48 rounded-2xl overflow-hidden bg-slate-900 border border-white/10 group cursor-pointer shadow-2xl"
+            className="relative h-56 rounded-2xl overflow-hidden bg-slate-900 border border-[#CAB9E3] group cursor-pointer shadow-lg"
           >
             <img 
               src={heroImage} 
               alt="Video Thumbnail" 
-              className="w-full h-full object-cover opacity-60 group-hover:opacity-85 group-hover:scale-105 transition duration-500"
+              className="w-full h-full object-cover opacity-75 group-hover:opacity-90 group-hover:scale-105 transition duration-500"
             />
-            <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
             {/* Play Button Center Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-saffron-500 text-slate-950 flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.6)] group-hover:scale-110 transition duration-300">
+              <div className="w-16 h-16 rounded-full bg-[#CAB9E3] text-[#312B41] flex items-center justify-center shadow-xl group-hover:scale-110 transition duration-300">
                 <Play className="w-8 h-8 fill-current ml-1" />
               </div>
             </div>
 
-            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-slate-200">
-              <span className="bg-slate-900/80 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm font-semibold">
-                ▶ Click to Watch Official Explainer
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs text-white">
+              <div className="flex items-center space-x-2">
+                <span className="bg-slate-900/80 px-2.5 py-1 rounded-md border border-white/20 backdrop-blur-sm font-bold text-[11px]">
+                  ▶ {videoTitle}
+                </span>
+              </div>
+              <span className="bg-[#CAB9E3] text-[#312B41] font-bold px-2 py-0.5 rounded text-[11px]">
+                {videoDuration} • HD 1080p
               </span>
-              <span className="bg-amber-400 text-slate-950 font-bold px-2 py-0.5 rounded">
-                HD 1080p
-              </span>
+            </div>
+          </div>
+
+          {/* Post Engagement Bar (LinkedIn Style) */}
+          <div className="pt-3 border-t border-[#E6E1F4] flex items-center justify-between text-xs font-bold text-[#6F6785]">
+            <button 
+              onClick={() => handleUrgencySubmit({ preventDefault: () => {} } as any)}
+              className="flex items-center space-x-1.5 hover:text-[#312B41] transition px-2 py-1 rounded-lg hover:bg-[#E6E1F4]/40"
+            >
+              <ThumbsUp className="w-4 h-4 text-[#6F6785]" />
+              <span>Upvote Priority ({voteCount})</span>
+            </button>
+
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => setVideoModalOpen(true)}
+                className="flex items-center space-x-1 hover:text-[#312B41] transition"
+              >
+                <Play className="w-3.5 h-3.5" />
+                <span>Watch Briefing</span>
+              </button>
+
+              <button 
+                onClick={() => {
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href);
+                    setVoteToastMessage('Tender link copied to clipboard!');
+                    setTimeout(() => setVoteToastMessage(null), 3000);
+                  }
+                }}
+                className="flex items-center space-x-1 hover:text-[#312B41] transition"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Share Challenge</span>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Pictures & Site Gallery */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4 flex flex-col justify-between">
+        {/* Site & Hardware Media Gallery */}
+        <div className="bg-white rounded-3xl border border-[#CAB9E3] p-6 shadow-sm space-y-4 flex flex-col justify-between">
           <div>
-            <div className="flex items-center space-x-2 text-slate-900 font-bold font-heading text-base mb-1">
-              <ImageIcon className="w-5 h-5 text-govblue-800" />
-              <span>Site & Hardware Gallery</span>
+            <div className="flex items-center space-x-2 text-[#312B41] font-bold font-heading text-base mb-1">
+              <ImageIcon className="w-5 h-5 text-[#6F6785]" />
+              <span>Field Media & CAD Samples</span>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#6F6785]">
               High-resolution photo evidence of field conditions and pilot requirements.
             </p>
 
@@ -347,7 +393,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                 <div 
                   key={idx}
                   onClick={() => setSelectedGalleryImg(img)}
-                  className="relative h-24 rounded-xl overflow-hidden border border-slate-200 cursor-pointer group shadow-xs"
+                  className="relative h-24 rounded-xl overflow-hidden border border-[#CAB9E3] cursor-pointer group shadow-xs"
                 >
                   <img src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
                   <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition"></div>
@@ -359,8 +405,8 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
             </div>
           </div>
 
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-[11px] text-slate-600 flex items-center space-x-2">
-            <FileText className="w-4 h-4 text-slate-500 shrink-0" />
+          <div className="bg-[#E6E1F4]/40 p-3 rounded-xl border border-[#CAB9E3] text-[11px] text-[#6F6785] flex items-center space-x-2">
+            <FileText className="w-4 h-4 text-[#6F6785] shrink-0" />
             <span>Full technical image dataset included in tender specifications package.</span>
           </div>
         </div>

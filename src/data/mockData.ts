@@ -228,6 +228,171 @@ export const INITIAL_PROBLEMS: Problem[] = [
       { metric: 'False Positive Trigger Rate', minTarget: '< 2 per 500 km', weightage: 30 },
       { metric: 'AIS-140 Automotive Spec Compliance', minTarget: '100%', weightage: 25 }
     ]
+  },
+  {
+    id: 'prob-106',
+    deptId: 'dept-maha-water-tribal',
+    deptName: 'Tribal Development & Water Sanitation Dept, Govt of Maharashtra',
+    title: 'Solar-Powered Automated Water Quality Telemetry & Contamination Alert System for Tribal Schools',
+    description: 'Autonomous off-grid sensor node with cellular telemetry for real-time monitoring of heavy metals, TDS, and bacterial contamination in drinking water storage tanks across 2,400 rural ashram schools.',
+    sector: 'Clean Energy & Water',
+    budgetCeiling: 5200000, // ₹52 Lakhs
+    deadline: '2026-11-15',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized IoT hardware startup or consortium with certified water sensor manufacturers (ISO-9001).',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-09-08',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:10 mins',
+    videoTitle: 'Tribal Development Briefing: Off-Grid Solar Water Quality Telemetry in Ashram Schools',
+    targetBeneficiaries: [
+      { title: 'Tribal Ashram School Students', desc: 'Protects over 4,50,000 tribal children from waterborne gastroenteritis & fluoride toxicity.' },
+      { title: 'School Headmasters & Cooks', desc: 'Instant SMS warnings before mid-day meal preparation if contamination is detected.' },
+      { title: 'District Water Testing Labs', desc: 'Centralized live telemetry dashboard mapping groundwater quality in Gadchiroli and Nandurbar.' }
+    ],
+    whyNeeded: 'Seasonal monsoon runoff contaminates open borewells in remote tribal belts, resulting in over 18,000 cases of childhood waterborne illness annually due to lack of real-time testing.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Preventing post-monsoon waterborne disease outbreaks in remote tribal schools.',
+    severityScore: 9.5,
+    publicImpactMetrics: [
+      { label: 'Water Contamination Reduction', value: '92%', subtext: 'Prevented waterborne illness cases' },
+      { label: 'Alert Dispatch Time', value: '< 60 Seconds', subtext: 'SMS dispatch to district health officers' },
+      { label: 'School Target', value: '2,400 Schools', subtext: 'Off-grid solar sensor deployment' }
+    ],
+    keywords: ['#SmartWater', '#SolarIoT', '#TribalHealth', '#WaterQualityTelemetry', '#JalJeevanMission'],
+    kpiBenchmarks: [
+      { metric: 'Turbidity & pH Sensor Accuracy', minTarget: '>= 97%', weightage: 40 },
+      { metric: 'Solar Battery Standby Autonomy', minTarget: '>= 72 Hours', weightage: 35 },
+      { metric: 'IP68 Submersible Enclosure Rating', minTarget: 'Passed', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-107',
+    deptId: 'dept-maha-traffic',
+    deptName: 'Urban Development & Traffic Control Board, Maharashtra',
+    title: 'AI-Driven Smart Urban Traffic Light & Emergency Vehicle Green-Corridor Controller',
+    description: 'Dynamic signal timing optimization engine using camera AI telemetry to clear congestion at major arterial intersections and grant priority green corridors to ambulances.',
+    sector: 'Smart Mobility & Logistics',
+    budgetCeiling: 8200000, // ₹82 Lakhs
+    deadline: '2026-11-20',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT registered startup with traffic vision models or joint venture with signal hardware vendors.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-10',
+    heroImage: 'https://images.unsplash.com/photo-1508873696983-2df515122519?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:55 mins',
+    videoTitle: 'Traffic Control Board: Adaptive Signal Timing & Emergency Ambulance Corridor AI',
+    targetBeneficiaries: [
+      { title: 'Ambulance Patients & Rescuers', desc: 'Reduces emergency transit delays by 65% across congested urban corridors.' },
+      { title: 'Urban Daily Commuters', desc: 'Cuts average junction wait times by 28% through adaptive queue-length optimization.' },
+      { title: 'Traffic Police Authorities', desc: 'Automates manual signal overrides and emergency escort dispatching.' }
+    ],
+    whyNeeded: 'Static countdown timers cause severe bottlenecks during peak hours, increasing commuter fuel waste by 22% and delaying critical cardiac ambulances in urban centers.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Rapid urban motorization demands adaptive traffic signal intelligence before upcoming metro expansion projects.',
+    severityScore: 9.1,
+    publicImpactMetrics: [
+      { label: 'Ambulance Delay Cut', value: '65%', subtext: 'Faster golden-hour hospital arrival' },
+      { label: 'Junction Congestion Drop', value: '28%', subtext: 'Reduced peak hour idle times' },
+      { label: 'Fuel Emission Saved', value: '14,000 L/Day', subtext: 'Targeted urban emission savings' }
+    ],
+    keywords: ['#AdaptiveTraffic', '#GreenCorridor', '#AmbulancePriority', '#SmartCities', '#TrafficVisionAI'],
+    kpiBenchmarks: [
+      { metric: 'Queue Detection Accuracy under All Lighting', minTarget: '>= 95%', weightage: 40 },
+      { metric: 'Emergency Beacon Preemption Response', minTarget: '< 2.5 Seconds', weightage: 35 },
+      { metric: 'NEMA TS2 Controller Compatibility', minTarget: '100% Certified', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-108',
+    deptId: 'dept-maha-health-tele',
+    deptName: 'National Health Mission (NHM), Maharashtra State Cell',
+    title: 'Tele-ICU Portable Vital Sign Monitor & AI Triage Kiosk for Rural Primary Clinics',
+    description: 'Compact, cloud-connected multi-para patient monitor with automated ECG analysis and AI triage scorecards for sub-center clinics, connecting rural nurses directly to ICU specialists.',
+    sector: 'MedTech & Public Health',
+    budgetCeiling: 6800000, // ₹68 Lakhs
+    deadline: '2026-10-25',
+    status: 'OPEN',
+    eligibilityCriteria: 'CDSCO compliance & ISO-13485 certified MedTech startup or consortium with medical device OEMs.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-08-28',
+    heroImage: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:45 mins',
+    videoTitle: 'National Health Mission: Tele-ICU Kiosks & Rural Emergency Specialist Network',
+    targetBeneficiaries: [
+      { title: 'Rural Critical Care Patients', desc: 'Access to immediate ICU specialist consultations without traveling 80+ km.' },
+      { title: 'Sub-Center Staff Nurses', desc: 'AI-guided triage alerts highlighting high-risk cardiac or septic shock patients.' },
+      { title: 'District Civil Hospitals', desc: 'Prevents unnecessary referral over-crowding in tertiary care ICUs.' }
+    ],
+    whyNeeded: 'Over 82% of rural primary health centers in Maharashtra lack resident cardiologists and ICU specialists, leading to critical delays during acute myocardial infarction and trauma cases.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Expanding golden-hour critical care access across rural and hilly district blocks.',
+    severityScore: 9.7,
+    publicImpactMetrics: [
+      { label: 'Golden Hour Survival', value: '+38%', subtext: 'Improved survival rate in acute cardiac cases' },
+      { label: 'Referral Efficiency', value: '45% Optimized', subtext: 'Reduced unnecessary emergency transfers' },
+      { label: 'Kiosk Deployment Target', value: '850 Sub-Centers', subtext: 'Turnkey telemetry deployment' }
+    ],
+    keywords: ['#TeleICU', '#MedTechAI', '#RuralHealthcare', '#CDSCOCertified', '#AITriage', '#NHMMaharashtra'],
+    kpiBenchmarks: [
+      { metric: '12-Lead ECG AI Detection Sensitivity', minTarget: '>= 96%', weightage: 45 },
+      { metric: 'Low Bandwidth 2G/3G Data Telemetry', minTarget: 'Functional at 64 Kbps', weightage: 30 },
+      { metric: 'Defibrillator Protection Rating', minTarget: 'CF-Type Safe', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-109',
+    deptId: 'dept-maha-disaster',
+    deptName: 'State Disaster Management Authority (SDMA), Maharashtra',
+    title: 'Automated Satellite & AI Flood Inundation Early Warning Telemetry System for Konkan River Basins',
+    description: 'Hydro-meteorological sensor array combined with SAR satellite imagery to predict river flash flooding and automatically trigger evacuation sirens in vulnerable coastal villages.',
+    sector: 'Disaster Management',
+    budgetCeiling: 9500000, // ₹95 Lakhs
+    deadline: '2026-11-30',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized SpaceTech / Disaster AI startup or joint consortium with industrial telemetry manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-02',
+    heroImage: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '05:15 mins',
+    videoTitle: 'SDMA Technical Briefing: Hydro-Meteorological Sensors & Konkan Flood Early Warning AI',
+    targetBeneficiaries: [
+      { title: 'Konkan Coastal Communities', desc: 'Provides 6-hour advance warning before flash flood crests reach residential areas.' },
+      { title: 'District Disaster Management Cells', desc: 'Automated evacuation route dispatch and NDRF team positioning dashboard.' },
+      { title: 'State Irrigation Engineers', desc: 'Precision dam discharge telemetry preventing downstream surge flooding.' }
+    ],
+    whyNeeded: 'Extreme monsoon cloudbursts in the Western Ghats cause sudden flash flooding in rivers like Vashishti and Savitri, submerging towns like Chiplun and Mahad with less than 90 minutes of notice.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Pre-monsoon disaster readiness requires continuous automated river basin telemetry.',
+    severityScore: 9.8,
+    publicImpactMetrics: [
+      { label: 'Advance Warning Lead Time', value: '6 Hours', subtext: 'Vs 45 minutes legacy manual alerts' },
+      { label: 'Property Damage Prevented', value: '₹120 Cr', subtext: 'Estimated savings in early evacuation' },
+      { label: 'River Basin Sensors', value: '420 Telemetry Nodes', subtext: 'Comprehensive Konkan coverage' }
+    ],
+    keywords: ['#FloodWarning', '#DisasterAI', '#HydroTelemetry', '#SDMAMaharashtra', '#SatelliteAI', '#KonkanResilience'],
+    kpiBenchmarks: [
+      { metric: 'Water Level Telemetry Precision', minTarget: '<= 1.0 cm', weightage: 40 },
+      { metric: 'Satellite Inundation Model Refresh', minTarget: '<= 30 minutes', weightage: 35 },
+      { metric: 'Solar-Powered Battery Backup', minTarget: '>= 14 Days', weightage: 25 }
+    ]
   }
 ];
 

@@ -65,8 +65,8 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-brand-panel border-b border-brand-border shadow-sm font-body">
-      {/* Top MahaGov Saffron-White-Green Tricolor Bar */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-[#FF7722] via-white to-[#138808]"></div>
+      {/* Top Bar - Misty Lavender */}
+      <div className="h-1.5 w-full bg-[#CAB9E3]"></div>
 
       {/* Main Navigation Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -94,45 +94,6 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* User Persona & Authentication Bar */}
           <div className="flex items-center space-x-3 flex-wrap gap-y-2">
-            {/* Role Switcher */}
-            <div className="flex items-center space-x-1 bg-neutral-100 p-1 rounded-xl border border-brand-border">
-              <button
-                onClick={() => setUserRole('dept')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'dept'
-                    ? 'bg-white text-govblue-800 shadow-sm font-semibold border border-govblue-200'
-                    : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                🏛️ Govt Officer
-              </button>
-              <button
-                onClick={() => setUserRole('startup')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'startup'
-                    ? 'bg-white text-saffron-700 shadow-sm font-semibold border border-saffron-200'
-                    : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                🚀 Startup
-              </button>
-              <button
-                onClick={() => setUserRole('citizen')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'citizen'
-                    ? 'bg-white text-emerald-700 shadow-sm font-semibold border border-emerald-200'
-                    : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                👥 Citizen
-              </button>
-              <button
-                onClick={() => setUserRole('manufacturer')}
-                className={`text-xs px-2.5 py-1 rounded-lg font-medium transition-all duration-200 hover:-translate-y-0.5 ${userRole === 'manufacturer'
-                    ? 'bg-white text-slate-800 shadow-sm font-semibold border border-slate-300'
-                    : 'text-slate-600 hover:text-slate-900'
-                  }`}
-              >
-                🏭 Manufacturer
-              </button>
-            </div>
 
             {/* Auth Modal Trigger */}
             <button

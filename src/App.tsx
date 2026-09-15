@@ -601,7 +601,7 @@ export function App() {
 
             <div>
               <div className="text-sm font-black text-white bg-gradient-to-r from-white via-indigo-100 to-purple-200 bg-clip-text text-transparent">
-                Converge (कन्व्हर्ज) Public Procurement Architecture
+                Converge Public Procurement Architecture
               </div>
 
               <p className="text-[11px] text-slate-400">
