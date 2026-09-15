@@ -105,8 +105,8 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
       
       {/* Brand Header Banner Card */}
       <div className="p-3 mb-2 bg-gradient-to-r from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] rounded-2xl text-white shadow-sm flex items-center space-x-3 border border-indigo-400/30">
-        <div className="w-9 h-9 rounded-xl bg-[#dce5f2] p-1 shrink-0 flex items-center justify-center shadow-xs">
-          <img src="/logo.png" alt="Converge" className="w-full h-full object-contain" />
+        <div className="w-9 h-9 shrink-0 flex items-center justify-center">
+          <img src="/logo-transparent.png" alt="Converge" className="w-full h-full object-contain filter drop-shadow-md brightness-110" />
         </div>
         <div className="min-w-0">
           <div className="text-xs font-black tracking-wide truncate">CONVERGE PORTAL</div>

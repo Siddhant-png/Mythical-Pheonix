@@ -73,14 +73,16 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           {/* Logo & Brand Identity */}
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => setActiveTab('problems')}>
-            <div className="relative w-11 h-11 rounded-xl bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] p-0.5 shadow-md group-hover:shadow-lg transition-all duration-200 border border-indigo-300/40">
-              <div className="w-full h-full rounded-[10px] bg-[#dce5f2] flex items-center justify-center overflow-hidden p-1">
-                <img src="/logo.png" alt="Converge Brand Logo" className="w-full h-full object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform duration-200" />
-              </div>
+            <div className="relative h-11 w-11 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
+              <img 
+                src="/logo-transparent.png" 
+                alt="Converge Brand Logo" 
+                className="h-full w-auto object-contain filter drop-shadow-[0_4px_12px_rgba(30,58,138,0.2)]" 
+              />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-black tracking-tight text-slate-900 font-heading bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#6d28d9] bg-clip-text text-transparent">
+                <h1 className="text-xl font-black tracking-tight font-heading bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#6d28d9] bg-clip-text text-transparent">
                   Converge
                 </h1>
                 <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-900 border border-indigo-200/80 shadow-2xs">

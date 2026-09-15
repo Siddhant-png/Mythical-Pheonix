@@ -253,8 +253,8 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
         <div className="absolute top-0 right-0 w-64 h-64 bg-purple-400/10 rounded-full blur-2xl pointer-events-none"></div>
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center space-x-3.5">
-            <div className="w-11 h-11 rounded-xl bg-[#dce5f2] p-1.5 shrink-0 flex items-center justify-center shadow-md border border-white/20">
-              <img src="/logo.png" alt="Converge Logo" className="w-full h-full object-contain" />
+            <div className="w-11 h-11 shrink-0 flex items-center justify-center">
+              <img src="/logo-transparent.png" alt="Converge Logo" className="w-full h-full object-contain filter drop-shadow-md brightness-110" />
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-white">

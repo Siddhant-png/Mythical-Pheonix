@@ -595,8 +595,8 @@ export function App() {
       <footer className="border-t border-slate-800 bg-slate-900 py-8 text-xs text-slate-400">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:px-6 md:flex-row lg:px-8">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-[#dce5f2] p-1.5 flex items-center justify-center border border-indigo-300/40 shrink-0 shadow-sm">
-              <img src="/logo.png" alt="Converge Logo" className="w-full h-full object-contain" />
+            <div className="w-9 h-9 shrink-0 flex items-center justify-center">
+              <img src="/logo-transparent.png" alt="Converge Logo" className="w-full h-full object-contain filter drop-shadow-md brightness-120" />
             </div>
 
             <div>
