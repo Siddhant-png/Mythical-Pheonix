@@ -1,52 +1,18 @@
-import React, { useState } from 'react';
-import { 
-  Building2, 
-  ShieldCheck, 
-  UserCheck, 
-  CheckCircle2, 
-  X, 
-  KeyRound, 
-  Mail, 
-  Building, 
-  Sparkles, 
-  Lock, 
-  ArrowRight,
-  User,
-  Phone,
-  FileBadge,
-  Check
-} from 'lucide-react';
-import { UserRole, AuthUser } from '../types';
+import React, { useEffect, useState } from 'react';
+import { ArrowLeft, ArrowRight, Check, Eye, EyeOff, KeyRound, LockKeyhole, Mail, ShieldCheck, Sparkles, User, X } from 'lucide-react';
+import { AuthUser, UserRole } from '../types';
+import { loginWithPassword, registerWithPassword, requestPasswordReset, resetPasswordWithCode } from '../services/api';
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onLoginSuccess: (user: AuthUser) => void;
-  initialRole?: UserRole;
-}
+interface AuthModalProps { isOpen: boolean; onClose: () => void; onLoginSuccess: (user: AuthUser) => void; initialRole?: UserRole; }
+type Screen = 'login' | 'register' | 'forgot' | 'reset' | 'success';
+const roleLabels: Record<UserRole, string> = { dept: 'Government', startup: 'Startup', citizen: 'Citizen', manufacturer: 'Manufacturer' };
 
-export const AuthModal: React.FC<AuthModalProps> = ({
-  isOpen,
-  onClose,
-  onLoginSuccess,
-  initialRole = 'citizen'
-}) => {
-  const [selectedRole, setSelectedRole] = useState<UserRole>(initialRole);
-  const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [step, setStep] = useState<'credentials' | 'otp' | 'success'>('credentials');
-
-  // Form Fields State
-  const [email, setEmail] = useState('officer.pwd@maharashtra.gov.in');
-  const [name, setName] = useState('Rajesh Sharma (Superintending Engineer)');
-  const [deptCode, setDeptCode] = useState('MH-PWD-EXEC-782');
-  const [dpiitNo, setDpiitNo] = useState('DIPP-MH-2023-98442');
-  const [citizenId, setCitizenId] = useState('MH-CITIZEN-99412');
-  const [gstNumber, setGstNumber] = useState('27AABCS1429B1Z4');
-  const [otpCode, setOtpCode] = useState('784912');
-  const [isVerifying, setIsVerifying] = useState(false);
-
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLoginSuccess, initialRole = 'citizen' }) => {
+  const [screen, setScreen] = useState<Screen>('login'); const [role, setRole] = useState<UserRole>(initialRole);
+  const [name, setName] = useState(''); const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [code, setCode] = useState('');
+  const [showPassword, setShowPassword] = useState(false); const [loading, setLoading] = useState(false); const [error, setError] = useState('');
+  useEffect(() => { if (isOpen) { setScreen('login'); setError(''); setPassword(''); setCode(''); } }, [isOpen]);
   if (!isOpen) return null;
-
   const handleRoleChange = (role: UserRole) => {
     setSelectedRole(role);
     if (role === 'dept') {
@@ -367,5 +333,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         )}
       </div>
     </div>
-  );
+  </div>;
 };

@@ -14,7 +14,7 @@ import {
   ExternalLink,
   CircleDot
 } from 'lucide-react';
-import { Manufacturer, Problem, Startup, Collaboration } from '../types';
+import { Manufacturer, Problem, Startup, Collaboration, AllianceProposal } from '../types';
 import { LegalNDAModal } from '../components/LegalNDAModal';
 
 interface ManufacturerCollabHubProps {
@@ -23,6 +23,10 @@ interface ManufacturerCollabHubProps {
   startup: Startup;
   collaborations: Collaboration[];
   onAddNewCollaboration: (collab: Collaboration) => void;
+  proposals: AllianceProposal[];
+  onAcceptProposal: (proposalId: string) => void;
+  onDeclineProposal: (proposalId: string) => void;
+  onSendProposal: (proposal: AllianceProposal) => void;
   preSelectedProblem?: Problem | null;
 }
 
@@ -32,6 +36,10 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
   startup,
   collaborations,
   onAddNewCollaboration,
+  proposals,
+  onAcceptProposal,
+  onDeclineProposal,
+  onSendProposal,
   preSelectedProblem
 }) => {
   const [selectedMfr, setSelectedMfr] = useState<Manufacturer | null>(null);
@@ -52,6 +60,26 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
   const handleStartCollab = (mfr: Manufacturer) => {
     setSelectedMfr(mfr);
     setNdaModalOpen(true);
+  };
+
+  const handleSendProposal = (mfr: Manufacturer) => {
+    onSendProposal({
+      id: `prop-${Date.now()}`,
+      senderId: startup.id,
+      senderName: startup.companyName,
+      senderRole: 'startup',
+      recipientId: mfr.id,
+      recipientName: mfr.companyName,
+      problemId: targetProblem.id,
+      problemTitle: targetProblem.title,
+      proposedRoleSplit: roleSplitInput,
+      proposedStartupShare: 60,
+      proposedPartnerShare: 40,
+      turnoverPledged: mfr.annualTurnover,
+      status: 'PENDING',
+      sentAt: new Date().toISOString(),
+      note: `Requesting a consortium alliance for ${targetProblem.title}.`
+    });
   };
 
   const handleNDASigned = (collabId: string, roleSplit: string) => {
@@ -98,6 +126,34 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
           </p>
         </div>
       </div>
+
+      {proposals.length > 0 && (
+        <section className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-slate-900">Teaming proposals</h3>
+            <span className="text-xs font-bold text-slate-500">{proposals.filter(proposal => proposal.status === 'PENDING').length} awaiting response</span>
+          </div>
+          <div className="space-y-3">
+            {proposals.map(proposal => (
+              <div key={proposal.id} className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="font-bold text-slate-900">{proposal.senderName} → {proposal.recipientName}</div>
+                    <div className="mt-1 text-slate-600">{proposal.problemTitle}</div>
+                    <div className="mt-1 text-slate-500">{proposal.proposedStartupShare}% startup / {proposal.proposedPartnerShare}% partner · {proposal.status}</div>
+                  </div>
+                  {proposal.status === 'PENDING' && (
+                    <div className="flex gap-2">
+                      <button onClick={() => onAcceptProposal(proposal.id)} className="rounded-lg bg-emerald-600 px-3 py-2 font-bold text-white">Accept</button>
+                      <button onClick={() => onDeclineProposal(proposal.id)} className="rounded-lg border border-slate-300 px-3 py-2 font-bold text-slate-700">Decline</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Active Consortiums Panel */}
       {collaborations.length > 0 && (
@@ -253,18 +309,13 @@ export const ManufacturerCollabHub: React.FC<ManufacturerCollabHubProps> = ({
                       <span>Consortium Active</span>
                     </div>
                   ) : (
-                    <button
-                      disabled={!mfr.openToCollaborate}
-                      onClick={() => handleStartCollab(mfr)}
-                      className={`flex items-center space-x-1.5 text-xs font-bold px-3.5 py-2 rounded-xl transition ${
-                        mfr.openToCollaborate
-                          ? 'bg-amber-600 hover:bg-amber-700 text-white shadow'
-                          : 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                      }`}
-                    >
-                      <Lock className="w-3.5 h-3.5" />
-                      <span>Team Up & Sign M-NDA</span>
-                    </button>
+                    <div className="flex gap-2">
+                      <button disabled={!mfr.openToCollaborate} onClick={() => handleSendProposal(mfr)} className="rounded-xl border border-amber-300 px-3 py-2 text-xs font-bold text-amber-800 disabled:cursor-not-allowed disabled:opacity-50">Send proposal</button>
+                      <button disabled={!mfr.openToCollaborate} onClick={() => handleStartCollab(mfr)} className={`flex items-center space-x-1.5 text-xs font-bold px-3.5 py-2 rounded-xl transition ${mfr.openToCollaborate ? 'bg-amber-600 hover:bg-amber-700 text-white shadow' : 'bg-slate-100 text-slate-400 cursor-not-allowed'}`}>
+                        <Lock className="w-3.5 h-3.5" />
+                        <span>Team Up & Sign M-NDA</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>

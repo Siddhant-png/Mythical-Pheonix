@@ -18,7 +18,7 @@ import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
 import { Messages } from './views/Messages';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
-import { CategoryExplorer } from './views/CategoryExplorer';
+import { Settings } from './views/Settings';
 
 import {
   fetchUserInterestsFromApi,
@@ -35,7 +35,8 @@ import {
   INITIAL_PILOTS,
   INITIAL_APPLICATIONS,
   INITIAL_PROCUREMENTS,
-  INITIAL_SCALE_ADOPTIONS
+  INITIAL_SCALE_ADOPTIONS,
+  INITIAL_ALLIANCE_PROPOSALS
 } from './data/mockData';
 
 import {
@@ -51,6 +52,7 @@ import {
   ScaleAdoption,
   Application,
   ProcurementStatus,
+  AllianceProposal,
   UserRole,
   AuthUser
 } from './types';
@@ -156,6 +158,8 @@ export function App() {
     INITIAL_SCALE_ADOPTIONS
   );
 
+  const [proposals, setProposals] = useState<AllianceProposal[]>(INITIAL_ALLIANCE_PROPOSALS);
+
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -184,6 +188,25 @@ export function App() {
     showToast(
       `Consortium formed with ${newCollab.manufacturerName}! Mutual NDA executed.`
     );
+  };
+
+  const handleAcceptProposal = (proposalId: string) => {
+    setProposals(previous => previous.map(proposal => proposal.id === proposalId
+      ? { ...proposal, status: 'ACCEPTED', respondedAt: new Date().toISOString() }
+      : proposal));
+    showToast('Teaming proposal accepted. You can now execute the mutual NDA.');
+  };
+
+  const handleDeclineProposal = (proposalId: string) => {
+    setProposals(previous => previous.map(proposal => proposal.id === proposalId
+      ? { ...proposal, status: 'DECLINED', respondedAt: new Date().toISOString() }
+      : proposal));
+    showToast('Teaming proposal declined.');
+  };
+
+  const handleSendProposal = (proposal: AllianceProposal) => {
+    setProposals(previous => [proposal, ...previous]);
+    showToast(`Consortium proposal sent to ${proposal.recipientName}.`);
   };
 
   // Problem creation handler
@@ -358,11 +381,9 @@ export function App() {
     setActiveTab('account');
   };
 
-  // Category Selection Handler (IndiaMART Explorer -> Problems Filter)
-  const handleSelectCategory = (sectorName: string) => {
-    setSelectedSector(sectorName);
-    setActiveTab('problems');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleOpenSettings = () => {
+    setSelectedStartupId(null);
+    setActiveTab('settings');
   };
 
   return (
@@ -382,6 +403,7 @@ export function App() {
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
         onOpenMyProfile={handleOpenMyProfile}
+        onOpenSettings={handleOpenSettings}
       />
 
       {/* Floating Notification Toast */}
@@ -421,12 +443,7 @@ export function App() {
           </div>
 
           {/* Center Column (Content Exploration & Problems) */}
-          <div className={`${['procurement', 'account', 'tiers', 'categories'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
-            {/* All Categories Explorer (IndiaMART Style) */}
-            {activeTab === 'categories' && (
-              <CategoryExplorer onSelectCategory={handleSelectCategory} />
-            )}
-
+          <div className={`${['procurement', 'account', 'tiers', 'settings'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
             {/* Problem Dashboard */}
             {activeTab === 'problems' && (
               <ProblemDashboard
@@ -480,6 +497,10 @@ export function App() {
                 startup={CURRENT_STARTUP}
                 collaborations={collaborations}
                 onAddNewCollaboration={handleAddNewCollaboration}
+                proposals={proposals}
+                onAcceptProposal={handleAcceptProposal}
+                onDeclineProposal={handleDeclineProposal}
+                onSendProposal={handleSendProposal}
               />
             )}
 
@@ -565,10 +586,25 @@ export function App() {
                 onToggleInterest={handleToggleInterest}
               />
             )}
+            {activeTab === 'settings' && currentUser && (
+              <Settings
+                currentUser={currentUser}
+                onResetPassword={() => {
+                  setAuthModalOpen(true);
+                }}
+                onShowToast={showToast}
+                onLogout={() => {
+                  setCurrentUser(null);
+                  setSelectedStartupId(null);
+                  setActiveTab('problems');
+                  showToast('You have been logged out securely.');
+                }}
+              />
+            )}
           </div>
 
           {/* Right Navigation Bar (Thin Sidebar - Actions & Alliances) */}
-          {!['procurement', 'account', 'tiers', 'categories'].includes(activeTab) && (
+          {!['procurement', 'account', 'tiers', 'settings'].includes(activeTab) && (
             <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
               <RightNavSidebar
                 activeTab={activeTab}
@@ -624,5 +660,3 @@ export function App() {
 }
 
 export default App;
-
-

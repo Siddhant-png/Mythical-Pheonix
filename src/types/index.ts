@@ -137,6 +137,27 @@ export interface Manufacturer {
 
 export type CollabStatus = 'REQUESTED' | 'NDA_PENDING' | 'ACTIVE' | 'REJECTED';
 
+export type ProposalStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED' | 'UNDER_REVIEW';
+
+export interface AllianceProposal {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderRole: UserRole;
+  recipientId: string;
+  recipientName: string;
+  problemId: string;
+  problemTitle: string;
+  proposedRoleSplit: string;
+  proposedStartupShare: number;
+  proposedPartnerShare: number;
+  turnoverPledged: number;
+  status: ProposalStatus;
+  sentAt: string;
+  respondedAt?: string;
+  note?: string;
+}
+
 export interface NDAContract {
   id: string;
   collaborationId: string;
@@ -351,4 +372,3 @@ export interface StartupProfileData {
   alliances: AllianceEntry[];
   projects?: StartupProject[];
 }
-
