@@ -1,4 +1,25 @@
 import React from 'react';
+import { 
+  Building2, 
+  Handshake, 
+  PlusCircle, 
+  FlaskConical, 
+  Repeat, 
+  ShieldCheck, 
+  ChevronDown,
+  Sparkles,
+  FileCheck,
+  SearchCheck,
+  Scale,
+  Flame,
+  UserCheck,
+  LogIn,
+  User,
+  MessageCircle
+} from 'lucide-react';
+import { UserRole, AuthUser } from '../types';
+
+export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'messages' | 'profiles';
 import {
   ShieldCheck,
   UserCheck,
@@ -179,6 +200,53 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Post Problem
           </button>
+
+          <button
+            onClick={() => setActiveTab('pilots')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'pilots'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <FlaskConical className="w-4 h-4 text-purple-400" />
+            <span>Sandbox Pilots & Scorecards</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('scale')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'scale'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Repeat className="w-4 h-4 text-sky-400" />
+            <span>Cross-Dept Scale Registry</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('templates')}
+            className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+              activeTab === 'templates'
+                ? 'bg-govblue-900 text-white shadow'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Scale className="w-4 h-4 text-amber-300" />
+            <span>Standard Templates & Legal Vault</span>
+          </button>
+          <button
+  onClick={() => setActiveTab('messages')}
+  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
+    activeTab === 'messages'
+      ? 'bg-govblue-900 text-white shadow'
+      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+  }`}
+>
+  <MessageCircle className="w-4 h-4 text-emerald-400" />
+  <span>Messages</span>
+</button>
           <button
             onClick={() => setActiveTab('tiers')}
             className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
