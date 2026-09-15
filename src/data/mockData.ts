@@ -1,4 +1,24 @@
-import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption } from '../types';
+
+export interface UserInterest {
+  id: string;
+  label: string;
+  count: number;
+  iconName: string;
+  color: string;
+  bg: string;
+  sectorName: string;
+  desc: string;
+}
+
+export const MASTER_INTERESTS: UserInterest[] = [
+  { id: 'ai-vision', label: 'Smart Automation & Edge AI', count: 14, iconName: 'Bot', color: 'text-purple-600', bg: 'bg-purple-100', sectorName: 'Smart Automation & AI', desc: 'Edge AI, Computer Vision, Jetson Orin & Automated Indexing' },
+  { id: 'agri-drones', label: 'AgriTech & Drone Systems', count: 8, iconName: 'Sprout', color: 'text-emerald-600', bg: 'bg-emerald-100', sectorName: 'Agriculture & Allied', desc: 'Precision spraying, Micro-drones, Bio-pesticides & Soil Sensors' },
+  { id: 'medtech', label: 'MedTech & Public Health', count: 11, iconName: 'HeartPulse', color: 'text-red-600', bg: 'bg-red-100', sectorName: 'MedTech & Public Health', desc: 'Non-invasive screeners, Portable ICU, Diagnostic IoT & Telemedicine' },
+  { id: 'clean-water', label: 'Clean Energy & Smart Water', count: 6, iconName: 'Droplets', color: 'text-sky-600', bg: 'bg-sky-100', sectorName: 'Clean Energy & Water', desc: 'Acoustic leak detection, LoRaWAN water meters & Solar Microgrids' },
+  { id: 'mobility', label: 'Smart Mobility & EV Logistics', count: 9, iconName: 'Truck', color: 'text-amber-600', bg: 'bg-amber-100', sectorName: 'Smart Mobility & Logistics', desc: 'EV fleet management, Battery swapping & Traffic AI telemetry' },
+  { id: 'disaster', label: 'Disaster Response & Resilience', count: 5, iconName: 'ShieldAlert', color: 'text-indigo-600', bg: 'bg-indigo-100', sectorName: 'Disaster Management', desc: 'Early flood warning, Seismograph IoT & Emergency Broadcasts' }
+];
 
 export const INITIAL_PROBLEMS: Problem[] = [
   {
@@ -339,6 +359,60 @@ export const INITIAL_PILOTS: Pilot[] = [
       { metric: 'Inference Latency at 60 km/h', target: '< 45 ms', achieved: '38 ms on Jetson Orin', score: 90, passed: true },
       { metric: 'IP67 Environmental Seal Under Heavy Rain', target: 'Zero ingress', achieved: 'Passed 100%', score: 85, passed: true }
     ]
+  },
+  {
+    id: 'pilot-303',
+    applicationId: 'app-903',
+    problemTitle: 'Portable Non-Invasive HbA1c & Diabetic Retinopathy Screener for Rural PHCs',
+    applicantName: 'CivicGrid Analytics',
+    isCollab: false,
+    sandboxEnvironment: 'Public Health Department - Satara Rural PHC Network',
+    startDate: '2026-08-04',
+    endDate: '2026-09-10',
+    aggregateScore: 86,
+    status: 'PASSED',
+    evaluatorRemarks: 'Completed supervised field evaluation with consistent screening accuracy and acceptable per-patient test duration. Awaiting procurement order.',
+    scorecards: [
+      { metric: 'Clinical Sensitivity & Specificity', target: '>= 95%', achieved: '96.1%', score: 88, passed: true },
+      { metric: 'Test Duration per Patient', target: '< 3 minutes', achieved: '2.4 minutes', score: 84, passed: true },
+      { metric: 'Battery Standby on Single Charge', target: '>= 8 hours', achieved: '9.2 hours', score: 86, passed: true }
+    ]
+  }
+];
+
+export const INITIAL_APPLICATIONS: Application[] = [
+  {
+    id: 'app-901',
+    problemId: 'prob-104',
+    type: 'SOLO',
+    startupId: 'startup-aquapulse',
+    applicantName: 'AquaPulse Sensing Technologies',
+    proposalSummary: 'Acoustic sensing and LoRaWAN network for precision leak localization.',
+    bidAmount: 3650000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-12'
+  },
+  {
+    id: 'app-902',
+    problemId: 'prob-101',
+    type: 'COLLABORATION',
+    startupId: 'startup-drishti',
+    applicantName: 'Drishti Edge Technologies + Sahyadri Electronics',
+    proposalSummary: 'Edge vision stack with ruggedized hardware for road defect indexing.',
+    bidAmount: 3800000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-08-26'
+  },
+  {
+    id: 'app-903',
+    problemId: 'prob-103',
+    type: 'SOLO',
+    startupId: 'startup-civicgrid',
+    applicantName: 'CivicGrid Analytics',
+    proposalSummary: 'Portable screening workflow for rural primary health centres.',
+    bidAmount: 5200000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-28'
   }
 ];
 
@@ -353,7 +427,8 @@ export const INITIAL_PROCUREMENTS: Procurement[] = [
     gfrRuleReference: 'GFR-2017 Rule 149 / Maharashtra State Startup Policy Sec 4.2 (Prior Experience & Turnover Waived)',
     deliveryTimelineWeeks: 6,
     issuedAt: '2026-09-02',
-    adoptionsCount: 3
+    adoptionsCount: 3,
+    status: 'COMPLETED'
   }
 ];
 
