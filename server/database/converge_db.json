@@ -137,5 +137,15 @@
   "pilots": [],
   "procurements": [],
   "scaleAdoptions": [],
-  "civicIdeas": []
+  "civicIdeas": [],
+  "users": [
+    {
+      "id": "user-1789449549907",
+      "name": "Vivek Rahar",
+      "email": "vivekrahar2@gmail.com",
+      "role": "citizen",
+      "passwordHash": "f89f3fbf996281c49b6572e18074a481:5a834e40c31196abd004c08aec7428941ce3aa48beaf7beb0675f9f0a565bfb6b2b4bf56838acce2ec72eb57725885fa18b792a309671b0d7db8019149218024",
+      "verificationBadge": "Citizen Account"
+    }
+  ]
 }

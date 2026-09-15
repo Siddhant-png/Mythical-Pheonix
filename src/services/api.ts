@@ -1,7 +1,14 @@
 import { Problem, Pilot } from '../types';
 import { INITIAL_PROBLEMS, INITIAL_PILOTS } from '../data/mockData';
+import { AuthUser, UserRole } from '../types';
 
 const API_BASE_URL = 'http://localhost:5000/api';
+
+async function authRequest(path: string, payload: Record<string, string>): Promise<AuthUser> { const response = await fetch(`${API_BASE_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); const body = await response.json(); if (!response.ok || !body.success) throw new Error(body.error || 'Something went wrong.'); return body.user as AuthUser; }
+export const loginWithPassword = (email: string, password: string) => authRequest('/auth/login', { email, password });
+export const registerWithPassword = (name: string, email: string, password: string, role: UserRole) => authRequest('/auth/register', { name, email, password, role });
+export async function requestPasswordReset(email: string) { const response = await fetch(`${API_BASE_URL}/auth/request-reset`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) }); const body = await response.json(); if (!response.ok || !body.success) throw new Error(body.error || 'Unable to request reset.'); }
+export const resetPasswordWithCode = (email: string, code: string, password: string) => authRequest('/auth/reset-password', { email, code, password });
 
 export async function fetchUserInterestsFromApi(): Promise<string[]> {
   try {

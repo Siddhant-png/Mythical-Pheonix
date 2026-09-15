@@ -1,5 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 
 const dbDir = path.resolve(process.cwd(), 'database');
 if (!fs.existsSync(dbDir)) {
@@ -15,7 +16,10 @@ export interface DBStore {
   procurements: any[];
   scaleAdoptions: any[];
   civicIdeas: any[];
+  users: StoredUser[];
 }
+
+interface StoredUser { id: string; name: string; email: string; role: string; passwordHash: string; verificationBadge: string; resetCodeHash?: string; resetExpiresAt?: string; }
 
 let store: DBStore = {
   problems: [],
@@ -23,8 +27,11 @@ let store: DBStore = {
   pilots: [],
   procurements: [],
   scaleAdoptions: [],
-  civicIdeas: []
+  civicIdeas: [], users: []
 };
+
+const hashPassword = (password: string, salt = crypto.randomBytes(16).toString('hex')) => `${salt}:${crypto.scryptSync(password, salt, 64).toString('hex')}`;
+const passwordsMatch = (password: string, stored: string) => { const [salt, storedHash] = stored.split(':'); return Boolean(salt && storedHash) && crypto.timingSafeEqual(Buffer.from(crypto.scryptSync(password, salt, 64).toString('hex'), 'hex'), Buffer.from(storedHash, 'hex')); };
 
 function saveToDisk() {
   try {
@@ -132,6 +139,7 @@ export function initDatabase() {
   if (!store.userInterests || !store.userInterests.default_user) {
     store.userInterests = { default_user: ['ai-vision', 'agri-drones', 'medtech', 'clean-water'] };
   }
+  if (!Array.isArray(store.users)) store.users = [];
 
   saveToDisk();
 }
@@ -160,3 +168,9 @@ export function updateUserInterests(userId = 'default_user', interestIds: string
 export function getPilots() {
   return store.pilots || [];
 }
+
+const publicUser = (user: StoredUser) => ({ id: user.id, name: user.name, email: user.email, role: user.role, isVerified: true, verificationBadge: user.verificationBadge });
+export function registerUser(input: { name: string; email: string; password: string; role: string }) { const email = input.email.trim().toLowerCase(); if (store.users.some(user => user.email === email)) throw new Error('An account with this email already exists.'); const user: StoredUser = { id: `user-${Date.now()}`, name: input.name.trim(), email, role: input.role, passwordHash: hashPassword(input.password), verificationBadge: `${input.role === 'dept' ? 'Government' : input.role === 'startup' ? 'Startup' : input.role === 'manufacturer' ? 'Manufacturer' : 'Citizen'} Account` }; store.users.push(user); saveToDisk(); return publicUser(user); }
+export function authenticateUser(emailInput: string, password: string) { const user = store.users.find(item => item.email === emailInput.trim().toLowerCase()); return user && passwordsMatch(password, user.passwordHash) ? publicUser(user) : null; }
+export function createPasswordReset(emailInput: string) { const user = store.users.find(item => item.email === emailInput.trim().toLowerCase()); if (!user) return false; user.resetCodeHash = hashPassword('123456'); user.resetExpiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); saveToDisk(); return true; }
+export function resetPassword(emailInput: string, code: string, password: string) { const user = store.users.find(item => item.email === emailInput.trim().toLowerCase()); if (!user || !user.resetCodeHash || !user.resetExpiresAt || new Date(user.resetExpiresAt) < new Date() || !passwordsMatch(code, user.resetCodeHash)) throw new Error('The reset code is invalid or has expired.'); user.passwordHash = hashPassword(password); delete user.resetCodeHash; delete user.resetExpiresAt; saveToDisk(); return publicUser(user); }

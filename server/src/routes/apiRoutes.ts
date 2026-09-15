@@ -4,10 +4,15 @@ import {
   getProblemById,
   getUserInterests,
   updateUserInterests,
-  getPilots
+  getPilots, registerUser, authenticateUser, createPasswordReset, resetPassword
 } from '../db/database.js';
 
 export const apiRouter = Router();
+
+apiRouter.post('/auth/register', (req: Request, res: Response) => { try { const { name, email, password, role = 'citizen' } = req.body; if (!name || !email || typeof password !== 'string' || password.length < 8) return res.status(400).json({ success: false, error: 'Name, email, and an 8-character password are required.' }); res.status(201).json({ success: true, user: registerUser({ name, email, password, role }) }); } catch (err: any) { res.status(400).json({ success: false, error: err.message }); } });
+apiRouter.post('/auth/login', (req: Request, res: Response) => { const user = authenticateUser(req.body.email || '', req.body.password || ''); if (!user) return res.status(401).json({ success: false, error: 'Email or password is incorrect.' }); res.json({ success: true, user }); });
+apiRouter.post('/auth/request-reset', (req: Request, res: Response) => { createPasswordReset(req.body.email || ''); res.json({ success: true, message: 'If an account exists, a reset code has been sent.' }); });
+apiRouter.post('/auth/reset-password', (req: Request, res: Response) => { try { const { email, code, password } = req.body; if (typeof password !== 'string' || password.length < 8) return res.status(400).json({ success: false, error: 'Use a password with at least 8 characters.' }); res.json({ success: true, user: resetPassword(email || '', code || '', password) }); } catch (err: any) { res.status(400).json({ success: false, error: err.message }); } });
 
 // Health Check
 apiRouter.get('/health', (_req: Request, res: Response) => {
