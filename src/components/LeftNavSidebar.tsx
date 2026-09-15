@@ -101,7 +101,18 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
   return (
     <aside className="w-full font-body sticky top-[72px] h-[calc(100vh-80px)] overflow-y-auto pr-1.5 pl-0.5 pt-2 pb-8 space-y-2 scrollbar-none select-none">
       
-      {/* Top Nav Buttons (Reddit Sidebar Style) */}
+      {/* Brand Header Banner Card */}
+      <div className="p-3 mb-2 bg-gradient-to-r from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] rounded-2xl text-white shadow-sm flex items-center space-x-3 border border-indigo-400/30">
+        <div className="w-9 h-9 rounded-xl bg-[#dce5f2] p-1 shrink-0 flex items-center justify-center shadow-xs">
+          <img src="/logo.png" alt="Converge" className="w-full h-full object-contain" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-xs font-black tracking-wide truncate">CONVERGE PORTAL</div>
+          <div className="text-[10px] text-indigo-100 truncate font-medium">Govt Innovation Sandbox</div>
+        </div>
+      </div>
+
+      {/* Top Nav Buttons (Reddit Sidebar Style with Brand Theme) */}
       <div className="space-y-1">
         {topNavItems.map((item) => {
           const Icon = item.icon;
@@ -114,11 +125,11 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
               }}
               className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 ${
                 isActive
-                  ? 'border-2 border-slate-900 rounded-2xl bg-white text-slate-900 shadow-sm font-extrabold'
+                  ? 'border-2 border-[#1e3a8a] rounded-2xl bg-gradient-to-r from-indigo-50/90 via-purple-50/80 to-white text-[#1e3a8a] shadow-xs font-extrabold ring-1 ring-purple-300/40'
                   : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
-              <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-slate-900' : 'text-slate-600'}`} />
+              <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#6d28d9]' : 'text-slate-600'}`} />
               <span className="truncate">{item.label}</span>
             </button>
           );
@@ -135,7 +146,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
       </div>
 
       {/* Divider */}
-      <hr className="border-t border-slate-200 my-2.5" />
+      <hr className="border-t border-slate-200/90 my-2.5" />
 
       {/* Section 1: YOUR INTERESTS (Collapsible) */}
       <div className="space-y-1.5">
