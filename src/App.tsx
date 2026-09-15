@@ -413,7 +413,7 @@ export function App() {
           </div>
 
           {/* Center Column (Content Exploration & Problems) */}
-          <div className="lg:col-span-8 xl:col-span-8 min-w-0 space-y-6">
+          <div className={`${['procurement', 'account', 'tiers'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
             {/* Problem Dashboard */}
             {activeTab === 'problems' && (
               <ProblemDashboard
@@ -554,16 +554,18 @@ export function App() {
           </div>
 
           {/* Right Navigation Bar (Thin Sidebar - Actions & Alliances) */}
-          <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
-            <RightNavSidebar
-              activeTab={activeTab}
-              setActiveTab={(tab) => {
-                setActiveTab(tab);
-                setSelectedStartupId(null);
-              }}
-              activeCollabCount={collaborations.length}
-            />
-          </div>
+          {!['procurement', 'account', 'tiers'].includes(activeTab) && (
+            <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
+              <RightNavSidebar
+                activeTab={activeTab}
+                setActiveTab={(tab) => {
+                  setActiveTab(tab);
+                  setSelectedStartupId(null);
+                }}
+                activeCollabCount={collaborations.length}
+              />
+            </div>
+          )}
         </div>
       </main>
 
