@@ -15,29 +15,26 @@ import {
   UserCheck,
   LogIn,
   User,
-  MessageCircle
-} from 'lucide-react';
-import { UserRole, AuthUser } from '../types';
-
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'templates' | 'messages' | 'profiles';
-import {
-  ShieldCheck,
-  UserCheck,
-  LogIn,
-  Building2,
-  Flame,
-  SearchCheck,
+  MessageCircle,
   Rocket,
-  Handshake,
-  PlusCircle,
-  FlaskConical,
-  Repeat,
-  Scale
-  , Milestone
+  Milestone
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'tiers' | 'procurement' | 'templates' | 'account';
+export type NavTab = 
+  | 'problems' 
+  | 'feed' 
+  | 'discovery' 
+  | 'profiles' 
+  | 'collab' 
+  | 'dept-upload' 
+  | 'pilots' 
+  | 'scale' 
+  | 'tiers' 
+  | 'procurement' 
+  | 'templates' 
+  | 'messages' 
+  | 'account';
 
 interface HeaderProps {
   activeTab: NavTab;

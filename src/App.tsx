@@ -498,13 +498,13 @@ export function App() {
               />
             )}
 
-        {/* Standard Templates */}
-        {activeTab === 'templates' && (
-          <StandardTemplatesVault userRole={userRole} />
-        )}
-        {/* Messages */}
-        {activeTab === 'messages' && <Messages />}
-         </div>
+            {/* Standard Templates */}
+            {activeTab === 'templates' && (
+              <StandardTemplatesVault userRole={userRole} />
+            )}
+            {/* Messages */}
+            {activeTab === 'messages' && <Messages />}
+
             {activeTab === 'tiers' && (
               <TierRegistry
                 applications={applications}
