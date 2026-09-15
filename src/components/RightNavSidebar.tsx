@@ -1,5 +1,5 @@
 import React from 'react';
-import { Handshake, PlusCircle, FlaskConical, Repeat, Scale, Zap, ShieldCheck } from 'lucide-react';
+import { Handshake, PlusCircle, FlaskConical, Repeat, Scale, Zap, ShieldCheck, Milestone, FileCheck2 } from 'lucide-react';
 import { NavTab } from './Header';
 
 interface RightNavSidebarProps {
@@ -71,6 +71,30 @@ export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, set
           >
             <Repeat className={`w-4 h-4 shrink-0 ${activeTab === 'scale' ? 'text-sky-300' : 'text-sky-600'}`} />
             <span className="truncate">Scale Registry</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('tiers')}
+            className={`w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+              activeTab === 'tiers'
+                ? 'bg-slate-900 text-white shadow-md border-l-4 border-amber-400'
+                : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+            }`}
+          >
+            <Milestone className={`w-4 h-4 shrink-0 ${activeTab === 'tiers' ? 'text-amber-300' : 'text-amber-600'}`} />
+            <span className="truncate">Tier Progress</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('procurement')}
+            className={`w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+              activeTab === 'procurement'
+                ? 'bg-slate-900 text-white shadow-md border-l-4 border-emerald-400'
+                : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+            }`}
+          >
+            <FileCheck2 className={`w-4 h-4 shrink-0 ${activeTab === 'procurement' ? 'text-emerald-300' : 'text-emerald-600'}`} />
+            <span className="truncate">Procurement Dashboard</span>
           </button>
 
           <button

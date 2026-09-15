@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Header, NavTab } from './components/Header';
 import { AuthModal } from './components/AuthModal';
@@ -10,10 +10,21 @@ import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
 import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
 import { ScaleRegistry } from './views/ScaleRegistry';
+import { TierRegistry } from './views/TierRegistry';
+import { ProcurementDashboard } from './views/ProcurementDashboard';
 import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
+import { Messages } from './views/Messages';
+import { SelfAccountProfile } from './views/SelfAccountProfile';
+
+import {
+  fetchUserInterestsFromApi,
+  saveUserInterestsToApi,
+  fetchProblemsFromApi
+} from './services/api';
+import { ProcurementDraft } from './components/procurement/ProcurementCreationForm';
 
 import {
   INITIAL_PROBLEMS,
@@ -21,6 +32,7 @@ import {
   CURRENT_STARTUP,
   INITIAL_COLLABORATIONS,
   INITIAL_PILOTS,
+  INITIAL_APPLICATIONS,
   INITIAL_PROCUREMENTS,
   INITIAL_SCALE_ADOPTIONS,
   INITIAL_ALLIANCE_PROPOSALS
@@ -37,9 +49,11 @@ import {
   Pilot,
   Procurement,
   ScaleAdoption,
+  Application,
+  ProcurementStatus,
+  AllianceProposal,
   UserRole,
-  AuthUser,
-  AllianceProposal
+  AuthUser
 } from './types';
 
 import { CheckCircle2 } from 'lucide-react';
@@ -61,6 +75,42 @@ export function App() {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [maxBudget, setMaxBudget] = useState(10000000);
   const [collabOnly, setCollabOnly] = useState(false);
+
+  // User Selected Domain Interests State
+  const [selectedInterestIds, setSelectedInterestIds] = useState<string[]>([
+    'ai-vision',
+    'agri-drones',
+    'medtech',
+    'clean-water'
+  ]);
+
+  // Load backend data on mount
+  useEffect(() => {
+    async function initBackendData() {
+      const interests = await fetchUserInterestsFromApi();
+      setSelectedInterestIds(interests);
+
+      const loadedProblems = await fetchProblemsFromApi();
+      if (loadedProblems.length > 0) {
+        setProblems(loadedProblems);
+      }
+    }
+    initBackendData();
+  }, []);
+
+  const handleToggleInterest = (id: string) => {
+    setSelectedInterestIds(prev => {
+      const isSelected = prev.includes(id);
+      const next = isSelected ? prev.filter(item => item !== id) : [...prev, id];
+      saveUserInterestsToApi(next);
+      showToast(
+        isSelected
+          ? 'Interest removed from Left Navigation Bar.'
+          : 'Interest added to Left Navigation Bar!'
+      );
+      return next;
+    });
+  };
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -97,6 +147,8 @@ export function App() {
 
   const [pilots, setPilots] = useState<Pilot[]>(INITIAL_PILOTS);
 
+  const [applications, setApplications] = useState<Application[]>(INITIAL_APPLICATIONS);
+
   const [procurements, setProcurements] = useState<Procurement[]>(
     INITIAL_PROCUREMENTS
   );
@@ -105,9 +157,7 @@ export function App() {
     INITIAL_SCALE_ADOPTIONS
   );
 
-  const [proposals, setProposals] = useState<AllianceProposal[]>(
-    INITIAL_ALLIANCE_PROPOSALS
-  );
+  const [proposals, setProposals] = useState<AllianceProposal[]>(INITIAL_ALLIANCE_PROPOSALS);
 
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -139,20 +189,23 @@ export function App() {
     );
   };
 
-  // Proposal handlers
-  const handleAcceptProposal = (propId: string) => {
-    setProposals(prev => prev.map(p => p.id === propId ? { ...p, status: 'ACCEPTED' as const } : p));
-    showToast('Teaming Proposal Accepted! Ready to execute Mutual NDA.');
+  const handleAcceptProposal = (proposalId: string) => {
+    setProposals(previous => previous.map(proposal => proposal.id === proposalId
+      ? { ...proposal, status: 'ACCEPTED', respondedAt: new Date().toISOString() }
+      : proposal));
+    showToast('Teaming proposal accepted. You can now execute the mutual NDA.');
   };
 
-  const handleDeclineProposal = (propId: string) => {
-    setProposals(prev => prev.map(p => p.id === propId ? { ...p, status: 'DECLINED' as const } : p));
-    showToast('Teaming Proposal Declined.');
+  const handleDeclineProposal = (proposalId: string) => {
+    setProposals(previous => previous.map(proposal => proposal.id === proposalId
+      ? { ...proposal, status: 'DECLINED', respondedAt: new Date().toISOString() }
+      : proposal));
+    showToast('Teaming proposal declined.');
   };
 
-  const handleSendProposal = (newProposal: AllianceProposal) => {
-    setProposals(prev => [newProposal, ...prev]);
-    showToast(`Consortium Proposal sent to ${newProposal.recipientName}!`);
+  const handleSendProposal = (proposal: AllianceProposal) => {
+    setProposals(previous => [proposal, ...previous]);
+    showToast(`Consortium proposal sent to ${proposal.recipientName}.`);
   };
 
   // Problem creation handler
@@ -177,9 +230,25 @@ export function App() {
       return;
     }
 
+    const applicationId = `app-${Date.now()}`;
+    const pilotId = `pilot-${Date.now()}`;
+    const newApplication: Application = {
+      id: applicationId,
+      problemId,
+      type: isCollab ? 'COLLABORATION' : 'SOLO',
+      startupId: CURRENT_STARTUP.id,
+      applicantName: isCollab
+        ? `${CURRENT_STARTUP.companyName} + Sahyadri Electronics`
+        : CURRENT_STARTUP.companyName,
+      proposalSummary: summary,
+      bidAmount,
+      status: 'PILOT_APPROVED',
+      submittedAt: new Date().toISOString().split('T')[0]
+    };
+
     const newPilot: Pilot = {
-      id: `pilot-${Date.now()}`,
-      applicationId: `app-${Date.now()}`,
+      id: pilotId,
+      applicationId,
       problemTitle: targetProblem.title,
 
       applicantName: isCollab
@@ -211,6 +280,7 @@ export function App() {
     };
 
     setPilots(previousPilots => [newPilot, ...previousPilots]);
+    setApplications(previousApplications => [newApplication, ...previousApplications]);
 
     showToast(
       isCollab
@@ -223,7 +293,8 @@ export function App() {
   const handleGeneratePO = (pilotId: string, poValue: number) => {
     const targetPilot = pilots.find(pilot => pilot.id === pilotId);
 
-    if (!targetPilot) {
+    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80) {
+      showToast('Procurement is blocked until pilot validation is PASSED with a score of 80 or higher.');
       return;
     }
 
@@ -246,7 +317,8 @@ export function App() {
 
       issuedAt: new Date().toISOString().split('T')[0],
 
-      adoptionsCount: 0
+      adoptionsCount: 0,
+      status: 'PENDING_DELIVERY'
     };
 
     setProcurements(previousProcurements => [
@@ -257,6 +329,27 @@ export function App() {
     showToast(
       `Purchase Order ${newPO.poNumber} issued to ${targetPilot.applicantName}!`
     );
+  };
+
+  const handleCreateProcurement = (draft: ProcurementDraft) => {
+    const targetPilot = pilots.find(pilot => pilot.id === draft.pilotId);
+    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80 || procurements.some(procurement => procurement.pilotId === draft.pilotId)) {
+      showToast('This solution is not eligible for a new procurement order.');
+      return;
+    }
+
+    const newProcurement: Procurement = {
+      id: `proc-${Date.now()}`,
+      ...draft,
+      status: 'PENDING_DELIVERY'
+    };
+    setProcurements(previousProcurements => [newProcurement, ...previousProcurements]);
+    showToast(`Procurement order ${newProcurement.poNumber} created successfully.`);
+  };
+
+  const handleUpdateProcurementStatus = (procurementId: string, status: ProcurementStatus) => {
+    setProcurements(previousProcurements => previousProcurements.map(procurement => procurement.id === procurementId ? { ...procurement, status } : procurement));
+    showToast(`Procurement status updated to ${status.replace('_', ' ').toLowerCase()}.`);
   };
 
   // Scale adoption handler
@@ -283,8 +376,8 @@ export function App() {
 
   // Open my startup profile
   const handleOpenMyProfile = () => {
-    setSelectedStartupId(myProfileId);
-    setActiveTab('discovery');
+    setSelectedStartupId(null);
+    setActiveTab('account');
   };
 
   return (
@@ -326,6 +419,7 @@ export function App() {
                 setActiveTab(tab);
                 setSelectedStartupId(null);
               }}
+              onOpenStartupProfile={handleOpenStartupProfile}
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               selectedSector={selectedSector}
@@ -337,19 +431,12 @@ export function App() {
               collabOnly={collabOnly}
               setCollabOnly={setCollabOnly}
               onResetFilters={handleResetFilters}
+              selectedInterestIds={selectedInterestIds}
             />
           </div>
 
           {/* Center Column (Content Exploration & Problems) */}
-          <div className="lg:col-span-8 xl:col-span-8 min-w-0 space-y-6">
-            {/* Startup Profile Page */}
-            {(activeTab === 'discovery' && selectedStartupId) || activeTab === 'profiles' ? (
-              <StartupProfile
-                startupId={selectedStartupId || selectedProfileId}
-                onBack={handleCloseStartupProfile}
-              />
-            ) : null}
-
+          <div className={`${['procurement', 'account', 'tiers'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
             {/* Problem Dashboard */}
             {activeTab === 'problems' && (
               <ProblemDashboard
@@ -378,14 +465,21 @@ export function App() {
               />
             )}
 
-            {/* Startup Discovery */}
-            {activeTab === 'discovery' && !selectedStartupId && (
-              <StartupDiscoveryHub
-                currentStartup={CURRENT_STARTUP}
-                problems={problems}
-                userRole={userRole}
-                onOpenStartupProfile={handleOpenStartupProfile}
-              />
+            {/* Startup Profiles & Discovery Hub */}
+            {(activeTab === 'discovery' || activeTab === 'profiles') && (
+              selectedStartupId ? (
+                <StartupProfile
+                  startupId={selectedStartupId}
+                  onBack={handleCloseStartupProfile}
+                />
+              ) : (
+                <StartupDiscoveryHub
+                  currentStartup={CURRENT_STARTUP}
+                  problems={problems}
+                  userRole={userRole}
+                  onOpenStartupProfile={handleOpenStartupProfile}
+                />
+              )
             )}
 
             {/* Manufacturer Collaboration */}
@@ -395,15 +489,11 @@ export function App() {
                 problems={problems}
                 startup={CURRENT_STARTUP}
                 collaborations={collaborations}
-                proposals={proposals}
-                userRole={userRole}
                 onAddNewCollaboration={handleAddNewCollaboration}
+                proposals={proposals}
                 onAcceptProposal={handleAcceptProposal}
                 onDeclineProposal={handleDeclineProposal}
                 onSendProposal={handleSendProposal}
-                onNavigateToProblem={(_probId) => {
-                  setActiveTab('problems');
-                }}
               />
             )}
 
@@ -435,23 +525,67 @@ export function App() {
               />
             )}
 
+            {activeTab === 'tiers' && (
+              <TierRegistry
+                applications={applications}
+                pilots={pilots}
+                procurements={procurements}
+                scaleAdoptions={scaleAdoptions}
+              />
+            )}
+
+            {activeTab === 'procurement' && (
+              <ProcurementDashboard
+                problems={problems}
+                applications={applications}
+                pilots={pilots}
+                procurements={procurements}
+                scaleAdoptions={scaleAdoptions}
+                userRole={userRole}
+                onCreateProcurement={handleCreateProcurement}
+                onUpdateProcurementStatus={handleUpdateProcurementStatus}
+              />
+            )}
+
             {/* Standard Templates */}
             {activeTab === 'templates' && (
               <StandardTemplatesVault userRole={userRole} />
             )}
+
+            {/* Self Account & Detailed Profile Page */}
+            {activeTab === 'account' && (
+              <SelfAccountProfile
+                currentUser={currentUser}
+                currentStartup={CURRENT_STARTUP}
+                problems={problems}
+                collaborations={collaborations}
+                pilots={pilots}
+                procurements={procurements}
+                userRole={userRole}
+                setUserRole={setUserRole}
+                onNavigate={(tab) => {
+                  setActiveTab(tab);
+                  setSelectedStartupId(null);
+                }}
+                selectedInterestIds={selectedInterestIds}
+                onToggleInterest={handleToggleInterest}
+              />
+            )}
           </div>
 
           {/* Right Navigation Bar (Thin Sidebar - Actions & Alliances) */}
-          <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
-            <RightNavSidebar
-              activeTab={activeTab}
-              setActiveTab={(tab) => {
-                setActiveTab(tab);
-                setSelectedStartupId(null);
-              }}
-              activeCollabCount={collaborations.length}
-            />
-          </div>
+          {!['procurement', 'account', 'tiers'].includes(activeTab) && (
+            <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
+              <RightNavSidebar
+                activeTab={activeTab}
+                setActiveTab={(tab) => {
+                  setActiveTab(tab);
+                  setSelectedStartupId(null);
+                }}
+                activeCollabCount={collaborations.length}
+              />
+            </div>
+          )}
         </div>
       </main>
 
@@ -497,5 +631,3 @@ export function App() {
 }
 
 export default App;
-
-

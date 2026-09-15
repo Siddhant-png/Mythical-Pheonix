@@ -248,39 +248,13 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto space-y-6 font-body">
-      {/* Hero Showcase Banner */}
-      <div className="bg-gradient-to-br from-govblue-900 via-govblue-800 to-slate-950 rounded-[28px] p-7 sm:p-10 text-white shadow-[0_20px_60px_rgba(11,37,69,0.26)] relative overflow-hidden border border-govblue-700/80">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-saffron-400/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="relative z-10 max-w-3xl">
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
+      {/* Hero Showcase Banner (Compact) */}
+      <div className="bg-gradient-to-br from-govblue-900 via-govblue-800 to-slate-950 rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-white shadow-md relative overflow-hidden border border-govblue-700/80">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-saffron-400/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-white">
             Bridging startups, manufacturers, and government delivery.
           </h2>
-          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
-            Eliminating turnover and balance-sheet barriers for DPIIT startups. Form joint consortiums under verified mutual NDAs, trial your innovations in government sandboxes, and scale across Maharashtra departments.
-          </p>
-        </div>
-
-        <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
-            <span className="text-saffron-300 font-bold block mb-1.5">Stage 1</span>
-            <span className="font-semibold text-white block">Problem Definition</span>
-            <p className="text-[11px] text-slate-400 mt-2">Departments post structured requirements without PDF friction.</p>
-          </div>
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
-            <span className="text-saffron-300 font-bold block mb-1.5">Stage 2</span>
-            <span className="font-semibold text-white block">Consortium & M-NDA</span>
-            <p className="text-[11px] text-slate-400 mt-2">Startups pair with manufacturers to unlock eligibility.</p>
-          </div>
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
-            <span className="text-saffron-300 font-bold block mb-1.5">Stage 3</span>
-            <span className="font-semibold text-white block">Sandbox Trial</span>
-            <p className="text-[11px] text-slate-400 mt-2">Milestone-driven testbeds and objective scorecards.</p>
-          </div>
-          <div className="bg-white/5 rounded-2xl p-4 border border-white/10">
-            <span className="text-saffron-300 font-bold block mb-1.5">Stage 4</span>
-            <span className="font-semibold text-white block">Auto-PO & Scale</span>
-            <p className="text-[11px] text-slate-400 mt-2">Instant procurement PO and multi-department adoption.</p>
-          </div>
         </div>
       </div>
 

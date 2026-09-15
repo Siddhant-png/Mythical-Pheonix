@@ -4,10 +4,12 @@ import {
   Flame, 
   SearchCheck, 
   Rocket, 
-  Cpu, 
-  Leaf, 
-  BriefcaseMedical, 
-  BatteryCharging, 
+  Bot, 
+  Sprout, 
+  HeartPulse, 
+  Droplets, 
+  Truck,
+  ShieldAlert,
   Star,
   ChevronDown,
   ChevronUp,
@@ -15,13 +17,25 @@ import {
   Zap,
   Filter,
   Search,
-  RotateCcw
+  RotateCcw,
+  MessageCircle
 } from 'lucide-react';
 import { NavTab } from './Header';
+import { MASTER_INTERESTS } from '../data/mockData';
+
+const ICON_MAP: Record<string, any> = {
+  Bot,
+  Sprout,
+  HeartPulse,
+  Droplets,
+  Truck,
+  ShieldAlert
+};
 
 interface LeftNavSidebarProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
+  onOpenStartupProfile?: (startupId: string) => void;
   // Filter props
   searchQuery?: string;
   setSearchQuery?: (q: string) => void;
@@ -34,11 +48,13 @@ interface LeftNavSidebarProps {
   collabOnly?: boolean;
   setCollabOnly?: (val: boolean) => void;
   onResetFilters?: () => void;
+  selectedInterestIds?: string[];
 }
 
 export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({ 
   activeTab, 
   setActiveTab,
+  onOpenStartupProfile,
   searchQuery = '',
   setSearchQuery,
   selectedSector = '',
@@ -49,7 +65,8 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
   setMaxBudget,
   collabOnly = false,
   setCollabOnly,
-  onResetFilters
+  onResetFilters,
+  selectedInterestIds = ['ai-vision', 'agri-drones', 'medtech', 'clean-water']
 }) => {
   // Collapsible section states
   const [isInterestsOpen, setIsInterestsOpen] = useState(true);
@@ -64,19 +81,15 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
     { id: 'feed', label: 'Civic Shorts Feed', icon: Flame, activeTabTarget: 'feed' as NavTab },
     { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
     { id: 'profiles', label: 'Startup Profiles', icon: Rocket, activeTabTarget: 'profiles' as NavTab },
+    { id: 'messages', label: 'Messages', icon: MessageCircle, activeTabTarget: 'messages' as NavTab },
   ];
 
-  const interests = [
-    { id: 'ai-vision', label: 'Smart Automation & Edge AI', count: 14, icon: Cpu, color: 'text-purple-600', bg: 'bg-purple-100', sectorName: 'Smart Automation & AI' },
-    { id: 'agri-drones', label: 'AgriTech & Drone Systems', count: 8, icon: Leaf, color: 'text-emerald-600', bg: 'bg-emerald-100', sectorName: 'Agriculture & Allied' },
-    { id: 'medtech', label: 'MedTech & Public Health', count: 11, icon: BriefcaseMedical, color: 'text-red-600', bg: 'bg-red-100', sectorName: 'MedTech & Public Health' },
-    { id: 'clean-water', label: 'Clean Energy & Smart Water', count: 6, icon: BatteryCharging, color: 'text-sky-600', bg: 'bg-sky-100', sectorName: 'Clean Energy & Water' }
-  ];
+  const activeInterests = MASTER_INTERESTS.filter(item => selectedInterestIds.includes(item.id));
 
   const followedStartups = [
-    { id: 'drishti-edge', name: 'Drishti Edge Tech', sector: 'Edge AI', initials: 'DE', color: 'bg-slate-900' },
-    { id: 'aquapulse', name: 'AquaPulse Sensing', sector: 'Water IoT', initials: 'AP', color: 'bg-sky-700' },
-    { id: 'greenroute-mobility', name: 'GreenRoute Mobility', sector: 'EV Mobility', initials: 'GM', color: 'bg-emerald-700' }
+    { id: 'startup-1', name: 'Drishti Edge Tech', sector: 'Edge AI', initials: 'DE', color: 'bg-slate-900' },
+    { id: 'startup-2', name: 'AquaPulse Sensing', sector: 'Water IoT', initials: 'AP', color: 'bg-sky-700' },
+    { id: 'startup-4', name: 'GreenRoute Mobility', sector: 'EV Mobility', initials: 'GM', color: 'bg-emerald-700' }
   ];
 
   const followedInnovations = [
@@ -96,7 +109,9 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.activeTabTarget)}
+              onClick={() => {
+                setActiveTab(item.activeTabTarget);
+              }}
               className={`w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 ${
                 isActive
                   ? 'border-2 border-slate-900 rounded-2xl bg-white text-slate-900 shadow-sm font-extrabold'
@@ -138,59 +153,48 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
         {isInterestsOpen && (
           <div className="space-y-1">
-            {/* Featured Highlight Banner Card */}
-            <div 
-              onClick={() => setActiveTab('problems')}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-950 via-amber-900 to-amber-950 p-3 text-white shadow-sm cursor-pointer hover:opacity-95 transition group"
-            >
-              <div className="absolute top-2 right-2 bg-saffron-500 text-slate-950 font-black text-[9px] px-1.5 py-0.5 rounded uppercase tracking-wider">
-                NEW
+            {activeInterests.length === 0 ? (
+              <div 
+                onClick={() => setActiveTab('account')}
+                className="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-center cursor-pointer hover:bg-slate-100 transition space-y-1"
+              >
+                <p className="text-[11px] font-bold text-slate-700">No interests selected</p>
+                <p className="text-[10px] text-slate-500">Choose interests in Account Profile →</p>
               </div>
-              <div className="flex items-center space-x-2.5">
-                <div className="w-9 h-9 rounded-xl bg-saffron-400/20 border border-saffron-400/30 flex items-center justify-center shrink-0">
-                  <Zap className="w-5 h-5 text-saffron-400 animate-pulse" />
-                </div>
-                <div className="min-w-0 pr-6">
-                  <div className="font-extrabold text-xs text-white truncate group-hover:underline">Hexa Edge AI</div>
-                  <div className="text-[10px] text-amber-200/90 truncate">Deploy & test in 24hrs!</div>
-                  <div className="text-[9px] text-amber-300/70 font-medium">14 Govt pilot slots left</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Interest items */}
-            {interests.map((item) => {
-              const Icon = item.icon;
-              const isSelected = selectedInterest === item.id || selectedSector === item.sectorName;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (isSelected) {
-                      setSelectedInterest(null);
-                      setSelectedSector?.('');
-                    } else {
-                      setSelectedInterest(item.id);
-                      setSelectedSector?.(item.sectorName);
-                    }
-                    setActiveTab('problems');
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    isSelected
-                      ? 'bg-slate-900 text-white font-bold'
-                      : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2.5 min-w-0">
-                    <div className={`w-5 h-5 rounded-md ${item.bg} flex items-center justify-center shrink-0`}>
-                      <Icon className={`w-3.5 h-3.5 ${item.color}`} />
+            ) : (
+              activeInterests.map((item) => {
+                const Icon = ICON_MAP[item.iconName] || Bot;
+                const isSelected = selectedInterest === item.id || selectedSector === item.sectorName;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      if (isSelected) {
+                        setSelectedInterest(null);
+                        setSelectedSector?.('');
+                      } else {
+                        setSelectedInterest(item.id);
+                        setSelectedSector?.(item.sectorName);
+                      }
+                      setActiveTab('problems');
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      isSelected
+                        ? 'bg-slate-900 text-white font-bold'
+                        : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2.5 min-w-0">
+                      <div className={`w-5 h-5 rounded-md ${item.bg} flex items-center justify-center shrink-0`}>
+                        <Icon className={`w-3.5 h-3.5 ${item.color}`} />
+                      </div>
+                      <span className="truncate">{item.label}</span>
                     </div>
-                    <span className="truncate">{item.label}</span>
-                  </div>
-                  <Star className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-saffron-400 fill-saffron-400' : 'text-slate-300 hover:text-amber-500'}`} />
-                </button>
-              );
-            })}
+                    <Star className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-saffron-400 fill-saffron-400' : 'text-slate-300 hover:text-amber-500'}`} />
+                  </button>
+                );
+              })
+            )}
           </div>
         )}
       </div>
@@ -217,7 +221,10 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
             {followedStartups.map((st) => (
               <div
                 key={st.id}
-                onClick={() => setActiveTab('profiles')}
+                onClick={() => {
+                  onOpenStartupProfile?.(st.id);
+                  setActiveTab('profiles');
+                }}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 cursor-pointer transition group"
               >
                 <div className="flex items-center space-x-2.5 min-w-0">

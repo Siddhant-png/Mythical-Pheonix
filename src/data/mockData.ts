@@ -1,4 +1,43 @@
-import { Problem, Startup, Manufacturer, Collaboration, Pilot, Procurement, ScaleAdoption, AllianceProposal } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption, AllianceProposal } from '../types';
+
+export interface UserInterest {
+  id: string;
+  label: string;
+  count: number;
+  iconName: string;
+  color: string;
+  bg: string;
+  sectorName: string;
+  desc: string;
+}
+
+export const MASTER_INTERESTS: UserInterest[] = [
+  { id: 'ai-vision', label: 'Smart Automation & Edge AI', count: 14, iconName: 'Bot', color: 'text-purple-600', bg: 'bg-purple-100', sectorName: 'Smart Automation & AI', desc: 'Edge AI, Computer Vision, Jetson Orin & Automated Indexing' },
+  { id: 'agri-drones', label: 'AgriTech & Drone Systems', count: 8, iconName: 'Sprout', color: 'text-emerald-600', bg: 'bg-emerald-100', sectorName: 'Agriculture & Allied', desc: 'Precision spraying, Micro-drones, Bio-pesticides & Soil Sensors' },
+  { id: 'medtech', label: 'MedTech & Public Health', count: 11, iconName: 'HeartPulse', color: 'text-red-600', bg: 'bg-red-100', sectorName: 'MedTech & Public Health', desc: 'Non-invasive screeners, Portable ICU, Diagnostic IoT & Telemedicine' },
+  { id: 'clean-water', label: 'Clean Energy & Smart Water', count: 6, iconName: 'Droplets', color: 'text-sky-600', bg: 'bg-sky-100', sectorName: 'Clean Energy & Water', desc: 'Acoustic leak detection, LoRaWAN water meters & Solar Microgrids' },
+  { id: 'mobility', label: 'Smart Mobility & EV Logistics', count: 9, iconName: 'Truck', color: 'text-amber-600', bg: 'bg-amber-100', sectorName: 'Smart Mobility & Logistics', desc: 'EV fleet management, Battery swapping & Traffic AI telemetry' },
+  { id: 'disaster', label: 'Disaster Response & Resilience', count: 5, iconName: 'ShieldAlert', color: 'text-indigo-600', bg: 'bg-indigo-100', sectorName: 'Disaster Management', desc: 'Early flood warning, Seismograph IoT & Emergency Broadcasts' }
+];
+
+export const INITIAL_ALLIANCE_PROPOSALS: AllianceProposal[] = [
+  {
+    id: 'prop-101', senderId: 'startup-drishti', senderName: 'Drishti Edge Technologies Pvt Ltd', senderRole: 'startup',
+    recipientId: 'mfr-mahindra-aero', recipientName: 'Bharat Drone Systems & Composite Fab',
+    problemId: 'prob-102', problemTitle: 'Precision Micro-Drone Payload for Targeted Bio-Pesticide Spraying in Vidarbha',
+    proposedRoleSplit: 'Startup: autonomous pest-detection AI. Partner: certified airframe and composite tanks.',
+    proposedStartupShare: 65, proposedPartnerShare: 35, turnoverPledged: 420000000, status: 'PENDING',
+    sentAt: '2026-09-10T11:20:00Z', note: 'Requesting a consortium pairing for the Agriculture challenge.'
+  },
+  {
+    id: 'prop-102', senderId: 'mfr-mahainfra-epc', senderName: 'MahaInfra System Integrators', senderRole: 'manufacturer',
+    recipientId: 'startup-drishti', recipientName: 'Drishti Edge Technologies Pvt Ltd',
+    problemId: 'prob-105', problemTitle: 'Driver Drowsiness & Blind-Spot Warning System for State Intercity Buses',
+    proposedRoleSplit: 'Partner: statewide field fitment and AMC. Startup: dual-camera AI edge units and dashboard.',
+    proposedStartupShare: 55, proposedPartnerShare: 45, turnoverPledged: 1250000000, status: 'PENDING',
+    sentAt: '2026-09-12T09:45:00Z', note: 'We need your computer-vision algorithms to complete this consortium.'
+  }
+];
 
 export const INITIAL_PROBLEMS: Problem[] = [
   {
@@ -235,12 +274,7 @@ export const MANUFACTURERS: Manufacturer[] = [
     contactPerson: 'Rajesh Kulkarni (VP Government Alliances)',
     contactEmail: 'alliances@sahyadripres.com',
     activeConsortiumsCount: 4,
-    rating: 4.9,
-    category: 'MANUFACTURER',
-    headquarters: 'Pune (Bhosari MIDC), Maharashtra',
-    certifications: ['ISO-9001', 'ISO-14001', 'RoHS', 'CE', 'IP67 Ingress Rated'],
-    establishedYear: 2008,
-    verifiedStatus: 'MIDC Verified High-Tech Industrial Plant'
+    rating: 4.9
   },
   {
     id: 'mfr-mahindra-aero',
@@ -249,16 +283,11 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 420000000, // ₹42 Crores
     manufacturingCapacityUnits: 12000,
     openToCollaborate: true,
-    facilitiesSectors: ['Carbon Fiber Fabrication', 'DGCA Drone Airframes', 'Agricultural Payloads', 'Lithium Battery Packs'],
+    facilitiesSectors: ['Carbon Fiber Fabrication', 'DGCA Drone Airframes', 'Agricultural Payloads'],
     contactPerson: 'Sunil Patil (Head of Production)',
     contactEmail: 'spatil@bharatdronesys.com',
     activeConsortiumsCount: 2,
-    rating: 4.8,
-    category: 'MANUFACTURER',
-    headquarters: 'Nagpur (MIHAN Aerospace SEZ), Maharashtra',
-    certifications: ['DGCA Type Certified', 'AS9100D Aerospace', 'ISO-9001'],
-    establishedYear: 2014,
-    verifiedStatus: 'DGCA Certified UAV Manufacturing Hub'
+    rating: 4.8
   },
   {
     id: 'mfr-pune-optics',
@@ -267,52 +296,11 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 280000000, // ₹28 Crores
     manufacturingCapacityUnits: 25000,
     openToCollaborate: true,
-    facilitiesSectors: ['Optical Sensors', 'ISO-13485 Cleanroom', 'Medical Diagnostics Assembly', 'Sterile Packaging'],
+    facilitiesSectors: ['Optical Sensors', 'ISO-13485 Cleanroom', 'Medical Diagnostics Assembly'],
     contactPerson: 'Dr. Meera Joshi (Compliance Director)',
     contactEmail: 'meera.joshi@pratham-med.com',
     activeConsortiumsCount: 3,
-    rating: 4.7,
-    category: 'MANUFACTURER',
-    headquarters: 'Mumbai (SEEPZ Tech Zone), Maharashtra',
-    certifications: ['ISO-13485 Medical', 'CDSCO Class B/C Compliant', 'WHO-GMP'],
-    establishedYear: 2011,
-    verifiedStatus: 'CDSCO / FDA Registered Medical Device Facility'
-  },
-  {
-    id: 'mfr-mahainfra-epc',
-    companyName: 'MahaInfra System Integrators & Smart Cities EPC Ltd',
-    gstNumber: '27AAECM5542R1ZQ',
-    annualTurnover: 1250000000, // ₹125 Crores (Mega EPC Partner)
-    manufacturingCapacityUnits: 150000,
-    openToCollaborate: true,
-    facilitiesSectors: ['Pan-State Optical Fiber Cabling', 'Highways ITS Installation', '24/7 AMC Command Centre', 'SCADA Integration'],
-    contactPerson: 'Aniket Sawant (Head of EPC Tenders)',
-    contactEmail: 'tenders@mahainfraepc.com',
-    activeConsortiumsCount: 6,
-    rating: 4.9,
-    category: 'SYSTEM_INTEGRATOR',
-    headquarters: 'Navi Mumbai (Belapur), Maharashtra',
-    certifications: ['Class-1 PWD Contractor', 'CMMI Level 5', 'ISO-27001', 'ISO-9001'],
-    establishedYear: 2004,
-    verifiedStatus: 'Class-1 Maharashtra PWD & Smart Cities Empanelled'
-  },
-  {
-    id: 'mfr-arai-sensorlab',
-    companyName: 'ARAI & STQC Sensor Testbeds & Calibration Centre',
-    gstNumber: '27AAETA8812J1ZU',
-    annualTurnover: 450000000, // ₹45 Crores
-    manufacturingCapacityUnits: 5000,
-    openToCollaborate: true,
-    facilitiesSectors: ['NABL Accredited Calibration', 'Automotive AIS-140 Rig Testing', 'EMI/EMC Chamber', 'Environmental Ingress Testing'],
-    contactPerson: 'Dr. Sandeep Phadke (Lead Scientist)',
-    contactEmail: 'phadke.test@arai-calib.gov.in',
-    activeConsortiumsCount: 5,
-    rating: 4.9,
-    category: 'TESTING_LAB',
-    headquarters: 'Pune (Kothrud), Maharashtra',
-    certifications: ['NABL ISO/IEC 17025', 'STQC Empanelled', 'BIS Approved Lab'],
-    establishedYear: 1998,
-    verifiedStatus: 'Govt NABL Accredited Autonomous Testing Lab'
+    rating: 4.7
   },
   {
     id: 'mfr-tata-telecom',
@@ -321,71 +309,11 @@ export const MANUFACTURERS: Manufacturer[] = [
     annualTurnover: 190000000, // ₹19 Crores
     manufacturingCapacityUnits: 80000,
     openToCollaborate: false, // Currently at capacity
-    facilitiesSectors: ['LoRa & NB-IoT Gateways', 'Acoustic Transducers', 'Water Metering', 'PCB Pick-and-Place'],
+    facilitiesSectors: ['LoRa & NB-IoT Gateways', 'Acoustic Transducers', 'Water Metering'],
     contactPerson: 'Vikas Shinde',
     contactEmail: 'vikas@westerniot.in',
     activeConsortiumsCount: 1,
-    rating: 4.5,
-    category: 'MANUFACTURER',
-    headquarters: 'Chhatrapati Sambhaji Nagar (Waluj MIDC), Maharashtra',
-    certifications: ['DoT / TEC Empanelled', 'IP68 Hydrostatic Test', 'ISO-9001'],
-    establishedYear: 2016,
-    verifiedStatus: 'TEC / DoT Approved Telemetry Manufacturer'
-  },
-  {
-    id: 'mfr-solarix-edge',
-    companyName: 'Solarix MicroGrid & Edge Sense Pvt Ltd',
-    gstNumber: '27AASCS6612P1ZN',
-    annualTurnover: 18000000, // ₹1.8 Crores
-    manufacturingCapacityUnits: 10000,
-    openToCollaborate: true,
-    facilitiesSectors: ['Solar MPPT Controllers', 'Low-Power LoRa Mesh Telemetry', 'Substation Edge Gateways'],
-    contactPerson: 'Sneha Chitnis (Co-Founder & CEO)',
-    contactEmail: 'sneha@solarixedge.io',
-    activeConsortiumsCount: 2,
-    rating: 4.6,
-    category: 'STARTUP_CO_BIDDER',
-    headquarters: 'Nashik (Ambad MIDC), Maharashtra',
-    certifications: ['DPIIT Recognized Startup', 'BIS Solar Certified', 'CE'],
-    establishedYear: 2021,
-    verifiedStatus: 'DPIIT Certified CleanTech Startup'
-  }
-];
-
-export const INITIAL_ALLIANCE_PROPOSALS: AllianceProposal[] = [
-  {
-    id: 'prop-101',
-    senderId: 'startup-drishti',
-    senderName: 'Drishti Edge Technologies Pvt Ltd',
-    senderRole: 'startup',
-    recipientId: 'mfr-mahindra-aero',
-    recipientName: 'Bharat Drone Systems & Composite Fab',
-    problemId: 'prob-102',
-    problemTitle: 'Precision Micro-Drone Payload for Targeted Bio-Pesticide Spraying in Vidarbha',
-    proposedRoleSplit: 'Startup: Autonomous multispectral pest detection AI & variable rate spraying telemetry. Partner: DGCA Type-Certified hexacopter airframe & carbon composite tanks.',
-    proposedStartupShare: 65,
-    proposedPartnerShare: 35,
-    turnoverPledged: 420000000,
-    status: 'PENDING',
-    sentAt: '2026-09-10T11:20:00Z',
-    note: 'Requesting consortium pairing for Dept of Agriculture challenge. Your DGCA airframes match the tender eligibility perfectly.'
-  },
-  {
-    id: 'prop-102',
-    senderId: 'mfr-mahainfra-epc',
-    senderName: 'MahaInfra System Integrators & Smart Cities EPC Ltd',
-    senderRole: 'manufacturer',
-    recipientId: 'startup-drishti',
-    recipientName: 'Drishti Edge Technologies Pvt Ltd',
-    problemId: 'prob-105',
-    problemTitle: 'Driver Drowsiness & Blind-Spot Warning System for State Intercity Buses',
-    proposedRoleSplit: 'Partner: Pan-Maharashtra field depot fitment across 5,000 MSRTC buses & 5-year on-ground AMC. Startup: Dual-camera AI edge units & driver behavior dashboard.',
-    proposedStartupShare: 55,
-    proposedPartnerShare: 45,
-    turnoverPledged: 1250000000,
-    status: 'PENDING',
-    sentAt: '2026-09-12T09:45:00Z',
-    note: 'We are bidding for the MSRTC bus safety tender and need your deep-tech facial expression computer vision algorithms to complete our consortium.'
+    rating: 4.5
   }
 ];
 
@@ -398,13 +326,9 @@ export const INITIAL_COLLABORATIONS: Collaboration[] = [
     manufacturerName: 'Sahyadri Precision Electronics & Assemblies Ltd',
     problemId: 'prob-101',
     problemTitle: 'AI-Powered Computer Vision for Automated Pothole & Road Quality Indexing',
-    roleSplit: 'Startup: Neural network models, edge inference firmware & GIS mapping portal. Partner: Automotive-grade IP67 camera housing, vibration damping mounts, SMT board assembly & field warranty.',
+    roleSplit: 'Startup: Neural network models, edge inference firmware & GIS mapping portal. Manufacturer: Automotive-grade IP67 camera housing, vibration damping mounts, SMT board assembly & field warranty.',
     status: 'ACTIVE',
     agreedAt: '2026-08-25T14:30:00Z',
-    partnerCategory: 'MANUFACTURER',
-    revenueSplitStartup: 60,
-    revenueSplitPartner: 40,
-    turnoverPledged: 680000000,
     ndaContract: {
       id: 'nda-881',
       collaborationId: 'collab-201',
@@ -454,6 +378,60 @@ export const INITIAL_PILOTS: Pilot[] = [
       { metric: 'Inference Latency at 60 km/h', target: '< 45 ms', achieved: '38 ms on Jetson Orin', score: 90, passed: true },
       { metric: 'IP67 Environmental Seal Under Heavy Rain', target: 'Zero ingress', achieved: 'Passed 100%', score: 85, passed: true }
     ]
+  },
+  {
+    id: 'pilot-303',
+    applicationId: 'app-903',
+    problemTitle: 'Portable Non-Invasive HbA1c & Diabetic Retinopathy Screener for Rural PHCs',
+    applicantName: 'CivicGrid Analytics',
+    isCollab: false,
+    sandboxEnvironment: 'Public Health Department - Satara Rural PHC Network',
+    startDate: '2026-08-04',
+    endDate: '2026-09-10',
+    aggregateScore: 86,
+    status: 'PASSED',
+    evaluatorRemarks: 'Completed supervised field evaluation with consistent screening accuracy and acceptable per-patient test duration. Awaiting procurement order.',
+    scorecards: [
+      { metric: 'Clinical Sensitivity & Specificity', target: '>= 95%', achieved: '96.1%', score: 88, passed: true },
+      { metric: 'Test Duration per Patient', target: '< 3 minutes', achieved: '2.4 minutes', score: 84, passed: true },
+      { metric: 'Battery Standby on Single Charge', target: '>= 8 hours', achieved: '9.2 hours', score: 86, passed: true }
+    ]
+  }
+];
+
+export const INITIAL_APPLICATIONS: Application[] = [
+  {
+    id: 'app-901',
+    problemId: 'prob-104',
+    type: 'SOLO',
+    startupId: 'startup-aquapulse',
+    applicantName: 'AquaPulse Sensing Technologies',
+    proposalSummary: 'Acoustic sensing and LoRaWAN network for precision leak localization.',
+    bidAmount: 3650000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-12'
+  },
+  {
+    id: 'app-902',
+    problemId: 'prob-101',
+    type: 'COLLABORATION',
+    startupId: 'startup-drishti',
+    applicantName: 'Drishti Edge Technologies + Sahyadri Electronics',
+    proposalSummary: 'Edge vision stack with ruggedized hardware for road defect indexing.',
+    bidAmount: 3800000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-08-26'
+  },
+  {
+    id: 'app-903',
+    problemId: 'prob-103',
+    type: 'SOLO',
+    startupId: 'startup-civicgrid',
+    applicantName: 'CivicGrid Analytics',
+    proposalSummary: 'Portable screening workflow for rural primary health centres.',
+    bidAmount: 5200000,
+    status: 'PILOT_APPROVED',
+    submittedAt: '2026-07-28'
   }
 ];
 
@@ -468,7 +446,8 @@ export const INITIAL_PROCUREMENTS: Procurement[] = [
     gfrRuleReference: 'GFR-2017 Rule 149 / Maharashtra State Startup Policy Sec 4.2 (Prior Experience & Turnover Waived)',
     deliveryTimelineWeeks: 6,
     issuedAt: '2026-09-02',
-    adoptionsCount: 3
+    adoptionsCount: 3,
+    status: 'COMPLETED'
   }
 ];
 

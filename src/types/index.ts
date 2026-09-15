@@ -121,12 +121,6 @@ export interface Startup {
   activePilotsCount: number;
 }
 
-export type PartnerCategory = 
-  | 'MANUFACTURER' 
-  | 'SYSTEM_INTEGRATOR' 
-  | 'TESTING_LAB' 
-  | 'STARTUP_CO_BIDDER';
-
 export interface Manufacturer {
   id: string;
   companyName: string;
@@ -139,11 +133,6 @@ export interface Manufacturer {
   contactEmail: string;
   activeConsortiumsCount: number;
   rating: number;
-  category?: PartnerCategory;
-  headquarters?: string;
-  certifications?: string[];
-  establishedYear?: number;
-  verifiedStatus?: string;
 }
 
 export type CollabStatus = 'REQUESTED' | 'NDA_PENDING' | 'ACTIVE' | 'REJECTED';
@@ -160,8 +149,8 @@ export interface AllianceProposal {
   problemId: string;
   problemTitle: string;
   proposedRoleSplit: string;
-  proposedStartupShare: number; // e.g. 60
-  proposedPartnerShare: number; // e.g. 40
+  proposedStartupShare: number;
+  proposedPartnerShare: number;
   turnoverPledged: number;
   status: ProposalStatus;
   sentAt: string;
@@ -191,10 +180,6 @@ export interface Collaboration {
   roleSplit: string;
   status: CollabStatus;
   agreedAt: string | null;
-  partnerCategory?: PartnerCategory;
-  revenueSplitStartup?: number;
-  revenueSplitPartner?: number;
-  turnoverPledged?: number;
   ndaContract?: NDAContract;
 }
 
@@ -247,7 +232,10 @@ export interface Procurement {
   deliveryTimelineWeeks: number;
   issuedAt: string;
   adoptionsCount: number;
+  status?: ProcurementStatus;
 }
+
+export type ProcurementStatus = 'ACTIVE' | 'COMPLETED' | 'PENDING_DELIVERY';
 
 export interface ScaleAdoption {
   id: string;
@@ -259,6 +247,37 @@ export interface ScaleAdoption {
   adoptedOn: string;
   addonContractValue: number;
   deploymentLocation: string;
+}
+
+export type StartupTier =
+  | 'IDEA'
+  | 'PILOT_READY'
+  | 'PILOT_VALIDATED'
+  | 'PROCUREMENT_READY'
+  | 'PROCURRED'
+  | 'SCALED';
+
+export type TierProgressState = 'COMPLETED' | 'CURRENT' | 'UPCOMING';
+
+export interface TierDefinition {
+  tier: StartupTier;
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  label: string;
+  description: string;
+  requirement: string;
+}
+
+export interface StartupTierStatus {
+  currentTier: StartupTier | null;
+  completedTiers: StartupTier[];
+  upcomingTiers: StartupTier[];
+  stateByTier: Record<StartupTier, TierProgressState>;
+  evidence: {
+    applicationId?: string;
+    pilotId?: string;
+    procurementId?: string;
+    scaleAdoptionIds: string[];
+  };
 }
 
 /* ---------------------------------------------------------------------- */
@@ -353,4 +372,3 @@ export interface StartupProfileData {
   alliances: AllianceEntry[];
   projects?: StartupProject[];
 }
-
