@@ -1,4 +1,4 @@
-import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption, AllianceProposal } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption } from '../types';
 
 export interface UserInterest {
   id: string;
@@ -18,25 +18,6 @@ export const MASTER_INTERESTS: UserInterest[] = [
   { id: 'clean-water', label: 'Clean Energy & Smart Water', count: 6, iconName: 'Droplets', color: 'text-sky-600', bg: 'bg-sky-100', sectorName: 'Clean Energy & Water', desc: 'Acoustic leak detection, LoRaWAN water meters & Solar Microgrids' },
   { id: 'mobility', label: 'Smart Mobility & EV Logistics', count: 9, iconName: 'Truck', color: 'text-amber-600', bg: 'bg-amber-100', sectorName: 'Smart Mobility & Logistics', desc: 'EV fleet management, Battery swapping & Traffic AI telemetry' },
   { id: 'disaster', label: 'Disaster Response & Resilience', count: 5, iconName: 'ShieldAlert', color: 'text-indigo-600', bg: 'bg-indigo-100', sectorName: 'Disaster Management', desc: 'Early flood warning, Seismograph IoT & Emergency Broadcasts' }
-];
-
-export const INITIAL_ALLIANCE_PROPOSALS: AllianceProposal[] = [
-  {
-    id: 'prop-101', senderId: 'startup-drishti', senderName: 'Drishti Edge Technologies Pvt Ltd', senderRole: 'startup',
-    recipientId: 'mfr-mahindra-aero', recipientName: 'Bharat Drone Systems & Composite Fab',
-    problemId: 'prob-102', problemTitle: 'Precision Micro-Drone Payload for Targeted Bio-Pesticide Spraying in Vidarbha',
-    proposedRoleSplit: 'Startup: autonomous pest-detection AI. Partner: certified airframe and composite tanks.',
-    proposedStartupShare: 65, proposedPartnerShare: 35, turnoverPledged: 420000000, status: 'PENDING',
-    sentAt: '2026-09-10T11:20:00Z', note: 'Requesting a consortium pairing for the Agriculture challenge.'
-  },
-  {
-    id: 'prop-102', senderId: 'mfr-mahainfra-epc', senderName: 'MahaInfra System Integrators', senderRole: 'manufacturer',
-    recipientId: 'startup-drishti', recipientName: 'Drishti Edge Technologies Pvt Ltd',
-    problemId: 'prob-105', problemTitle: 'Driver Drowsiness & Blind-Spot Warning System for State Intercity Buses',
-    proposedRoleSplit: 'Partner: statewide field fitment and AMC. Startup: dual-camera AI edge units and dashboard.',
-    proposedStartupShare: 55, proposedPartnerShare: 45, turnoverPledged: 1250000000, status: 'PENDING',
-    sentAt: '2026-09-12T09:45:00Z', note: 'We need your computer-vision algorithms to complete this consortium.'
-  }
 ];
 
 export const INITIAL_PROBLEMS: Problem[] = [

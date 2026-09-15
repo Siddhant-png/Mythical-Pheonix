@@ -18,7 +18,8 @@ import {
   Filter,
   Search,
   RotateCcw,
-  MessageCircle
+  MessageCircle,
+  LayoutGrid
 } from 'lucide-react';
 import { NavTab } from './Header';
 import { MASTER_INTERESTS } from '../data/mockData';
@@ -78,6 +79,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
   const topNavItems = [
     { id: 'problems', label: 'Home / Directory', icon: Building2, activeTabTarget: 'problems' as NavTab },
+    { id: 'categories', label: 'All Categories', icon: LayoutGrid, activeTabTarget: 'categories' as NavTab },
     { id: 'feed', label: 'Civic Shorts Feed', icon: Flame, activeTabTarget: 'feed' as NavTab },
     { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
     { id: 'profiles', label: 'Startup Profiles', icon: Rocket, activeTabTarget: 'profiles' as NavTab },
