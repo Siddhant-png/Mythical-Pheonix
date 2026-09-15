@@ -17,12 +17,14 @@ import {
   User,
   MessageCircle,
   Rocket,
-  Milestone
+  Milestone,
+  LayoutGrid
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
 export type NavTab = 
   | 'problems' 
+  | 'categories'
   | 'feed' 
   | 'discovery' 
   | 'profiles' 

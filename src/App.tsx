@@ -18,6 +18,7 @@ import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
 import { Messages } from './views/Messages';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
+import { CategoryExplorer } from './views/CategoryExplorer';
 
 import {
   fetchUserInterestsFromApi,
@@ -357,6 +358,13 @@ export function App() {
     setActiveTab('account');
   };
 
+  // Category Selection Handler (IndiaMART Explorer -> Problems Filter)
+  const handleSelectCategory = (sectorName: string) => {
+    setSelectedSector(sectorName);
+    setActiveTab('problems');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text font-body">
       {/* Header */}
@@ -413,7 +421,12 @@ export function App() {
           </div>
 
           {/* Center Column (Content Exploration & Problems) */}
-          <div className={`${['procurement', 'account', 'tiers'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
+          <div className={`${['procurement', 'account', 'tiers', 'categories'].includes(activeTab) ? 'lg:col-span-10 xl:col-span-10' : 'lg:col-span-8 xl:col-span-8'} min-w-0 space-y-6`}>
+            {/* All Categories Explorer (IndiaMART Style) */}
+            {activeTab === 'categories' && (
+              <CategoryExplorer onSelectCategory={handleSelectCategory} />
+            )}
+
             {/* Problem Dashboard */}
             {activeTab === 'problems' && (
               <ProblemDashboard
@@ -554,7 +567,7 @@ export function App() {
           </div>
 
           {/* Right Navigation Bar (Thin Sidebar - Actions & Alliances) */}
-          {!['procurement', 'account', 'tiers'].includes(activeTab) && (
+          {!['procurement', 'account', 'tiers', 'categories'].includes(activeTab) && (
             <div className="hidden lg:block lg:col-span-2 xl:col-span-2">
               <RightNavSidebar
                 activeTab={activeTab}
