@@ -265,9 +265,6 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
               </p>
             </div>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shrink-0 self-start sm:self-center">
-            Govt of Maharashtra
-          </span>
         </div>
       </div>
 

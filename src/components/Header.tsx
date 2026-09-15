@@ -85,9 +85,6 @@ export const Header: React.FC<HeaderProps> = ({
                 <h1 className="text-xl font-black tracking-tight font-heading bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#6d28d9] bg-clip-text text-transparent">
                   Converge
                 </h1>
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-900 border border-indigo-200/80 shadow-2xs">
-                  Govt of Maharashtra
-                </span>
               </div>
               <p className="text-[11px] text-slate-500 font-medium">
                 Public Innovation, Sandbox & Accelerated Procurement Architecture
