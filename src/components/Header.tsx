@@ -38,7 +38,6 @@ export type NavTab =
   | 'messages' 
   | 'account';
 
-
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;

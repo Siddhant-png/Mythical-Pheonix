@@ -113,20 +113,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="h-2 w-full bg-gradient-to-r from-govblue-900 via-amber-500 to-emerald-600"></div>
 
         {/* Modal Header */}
-        <div className="p-6 bg-slate-900 text-white flex items-center justify-between">
+        <div className="p-6 bg-gradient-to-r from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] text-white flex items-center justify-between border-b border-indigo-400/30">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-govblue-800 flex items-center justify-center text-amber-400 border border-slate-700">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-xl bg-[#dce5f2] p-1 flex items-center justify-center border border-white/20 shrink-0 shadow-md">
+              <img src="/logo.png" alt="Converge Logo" className="w-full h-full object-contain" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm font-bold font-heading">Converge Single Sign-On</span>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono font-bold border border-emerald-400/30">
-                  SSO v3.1 Verified
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-400">
-                Government of Maharashtra Innovation Portal
+              <h2 className="text-base font-extrabold tracking-tight">
+                {step === 'success' ? 'Verification Complete!' : 'Authentication & DPIIT Portal Gate'}
+              </h2>
+              <p className="text-[11px] text-indigo-100 font-medium">
+                Converge Govt Innovation Sandbox • Role Verification
               </p>
             </div>
           </div>
