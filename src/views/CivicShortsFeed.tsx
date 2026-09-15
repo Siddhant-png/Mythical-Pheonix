@@ -1,27 +1,14 @@
-import React, { useState } from 'react';
-import { 
-  ThumbsUp, 
-  ThumbsDown, 
-  MessageSquare, 
-  Share2, 
-  Sparkles, 
-  Flame, 
-  Award, 
-  Play, 
-  Pause, 
-  Volume2, 
-  Plus, 
-  CheckCircle2, 
-  X, 
-  Send, 
-  TrendingUp, 
-  LayoutGrid, 
-  Film, 
-  UserCheck, 
-  AlertTriangle,
-  Building2
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Bookmark,
+  Flag,
+  Heart,
+  MessageCircle,
+  Plus,
+  Share2,
+  X
 } from 'lucide-react';
-import { CivicIdeaPost, CivicComment, UserRole, ProblemSector } from '../types';
+import { UserRole } from '../types';
 
 interface CivicShortsFeedProps {
   userRole: UserRole;
@@ -29,598 +16,466 @@ interface CivicShortsFeedProps {
   onNavigateToTenders?: () => void;
 }
 
+interface CivicShort {
+  id: string;
+  category: string;
+  username: string;
+  displayName: string;
+  title: string;
+  description: string;
+  hashtags: string[];
+  gradient: string;
+  icon: string;
+  likes: number;
+  comments: number;
+}
+
+const civicShorts: CivicShort[] = [
+  {
+    id: 'short-1',
+    category: 'SMART MOBILITY',
+    username: '@drishti_edge',
+    displayName: 'Drishti Edge Tech',
+    title: 'AI Traffic Management reducing congestion by 40%',
+    description: 'Our computer vision system processes 10,000 vehicles/hr at major intersections across Mumbai.',
+    hashtags: ['#SmartMobility', '#AITraffic', '#GovTech'],
+    gradient: 'linear-gradient(135deg, #1a1a2e, #16213e, #0f3460)',
+    icon: '🚦',
+    likes: 2400,
+    comments: 186
+  },
+  {
+    id: 'short-2',
+    category: 'AGRITECH',
+    username: '@aquapulse',
+    displayName: 'AquaPulse Sensing',
+    title: 'Soil moisture sensors saving 60% water in Maharashtra farms',
+    description: 'IoT-based precision irrigation deployed across 500 acres in Nashik district pilot.',
+    hashtags: ['#AgriTech', '#Irrigation', '#Maharashtra'],
+    gradient: 'linear-gradient(135deg, #134e5e, #71b280)',
+    icon: '🌱',
+    likes: 1800,
+    comments: 94
+  },
+  {
+    id: 'short-3',
+    category: 'CLEAN ENERGY',
+    username: '@greenroute',
+    displayName: 'GreenRoute Mobility',
+    title: 'EV charging corridors across Pune-Mumbai highway',
+    description: '15 fast-charging stations deployed, 800+ EVs served monthly.',
+    hashtags: ['#CleanEnergy', '#EVCharging', '#Sustainability'],
+    gradient: 'linear-gradient(135deg, #f46b45, #eea849)',
+    icon: '⚡',
+    likes: 3100,
+    comments: 241
+  },
+  {
+    id: 'short-4',
+    category: 'MEDTECH',
+    username: '@medbridge',
+    displayName: 'MedBridge Diagnostics',
+    title: 'AI diagnostics reaching rural Maharashtra villages',
+    description: 'Mobile diagnostic units detecting TB and anaemia with 94% accuracy.',
+    hashtags: ['#MedTech', '#RuralHealth', '#AI'],
+    gradient: 'linear-gradient(135deg, #8e0e00, #1f1c18)',
+    icon: '🏥',
+    likes: 4200,
+    comments: 312
+  },
+  {
+    id: 'short-5',
+    category: 'CIVIC ISSUE',
+    username: '@citizen_raj',
+    displayName: 'Rajesh Patil',
+    title: 'Pothole crisis on SH-4 needs urgent attention',
+    description: 'Over 200 potholes reported between Pune and Ahmednagar. Upvote!',
+    hashtags: ['#CivicIssue', '#Roads', '#Maharashtra'],
+    gradient: 'linear-gradient(135deg, #232526, #414345)',
+    icon: '🛣️',
+    likes: 5700,
+    comments: 891
+  },
+  {
+    id: 'short-6',
+    category: 'PROCUREMENT',
+    username: '@govprocure',
+    displayName: 'Procurement Cell',
+    title: 'Drone surveillance RFP now open for startups',
+    description: 'Maharashtra invites proposals for border surveillance drones under GFR 149.',
+    hashtags: ['#Procurement', '#Drones', '#Startup'],
+    gradient: 'linear-gradient(135deg, #0f0c29, #302b63, #24243e)',
+    icon: '🚁',
+    likes: 987,
+    comments: 43
+  },
+  {
+    id: 'short-7',
+    category: 'SMART AUTOMATION',
+    username: '@automate_mh',
+    displayName: 'AutomateMH',
+    title: 'Robotic waste sorting plant cuts landfill by 35%',
+    description: 'Automated segregation processes 200 tons of waste daily in Navi Mumbai.',
+    hashtags: ['#SmartAutomation', '#WasteManagement', '#CleanCity'],
+    gradient: 'linear-gradient(135deg, #11998e, #38ef7d)',
+    icon: '♻️',
+    likes: 2200,
+    comments: 156
+  },
+  {
+    id: 'short-8',
+    category: 'CIVIC ISSUE',
+    username: '@waterwatch',
+    displayName: 'WaterWatch Collective',
+    title: 'Water supply disruption in Thane Ward 7 - Day 12',
+    description: '8,000 citizens affected. Needs nodal officer action urgently.',
+    hashtags: ['#WaterCrisis', '#Thane', '#CivicVoice'],
+    gradient: 'linear-gradient(135deg, #005c97, #363795)',
+    icon: '💧',
+    likes: 9300,
+    comments: 1200
+  }
+];
+
+const formatCount = (count: number) => {
+  if (count < 1000) return count.toString();
+  return `${(count / 1000).toFixed(count % 1000 === 0 ? 0 : 1)}k`;
+};
+
+const getInitials = (name: string) => name
+  .split(' ')
+  .map(word => word[0])
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+
 export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
-  userRole,
-  currentUserName,
-  onNavigateToTenders
+  userRole: _userRole,
+  currentUserName: _currentUserName,
+  onNavigateToTenders: _onNavigateToTenders
 }) => {
-  const [feedMode, setFeedMode] = useState<'shorts' | 'reddit'>('shorts');
-  const [filterCategory, setFilterCategory] = useState<string>('ALL');
   const [activeShortIndex, setActiveShortIndex] = useState(0);
-  const [isNewIdeaModalOpen, setIsNewIdeaModalOpen] = useState(false);
-  const [commentDrawerOpen, setCommentDrawerOpen] = useState(false);
-  const [newCommentText, setNewCommentText] = useState('');
+  const [likedShortIds, setLikedShortIds] = useState<string[]>([]);
+  const [savedShortIds, setSavedShortIds] = useState<string[]>([]);
+  const [shareToastVisible, setShareToastVisible] = useState(false);
+  const [postModalOpen, setPostModalOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('SMART MOBILITY');
+  const [hashtags, setHashtags] = useState('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Sample Posts Data
-  const [posts, setPosts] = useState<CivicIdeaPost[]>([
-    {
-      id: 'post-101',
-      title: 'Edge AI Camera Sensor for Expressway Fog Collision Prevention',
-      authorName: 'Drishti Edge Technologies',
-      authorRole: 'startup',
-      authorBadge: '🚀 DPIIT Startup Pitch',
-      category: 'Smart Mobility & Logistics',
-      content: 'Our dual thermal camera units detect vehicle slowdowns 500m ahead in zero-visibility fog and trigger instant LED strobe warnings. Tested on Mumbai-Pune Expressway.',
-      mediaType: 'video',
-      mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-traffic-on-a-highway-at-night-42866-large.mp4',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
-      upvotes: 2840,
-      downvotes: 12,
-      userVote: null,
-      tags: ['#ExpresswaySafety', '#AI', '#ZeroCollisions'],
-      urgency: 'CRITICAL',
-      deptEndorsed: true,
-      targetDept: 'Public Works Department (PWD)',
-      createdAt: '2 hours ago',
-      comments: [
-        { id: 'c1', authorName: 'Prakash Patil (PWD Nodal Officer)', authorRole: 'dept', text: 'Excellent field demonstration. Scheduling sandbox testbed review for NH-66 corridor.', timestamp: '1 hour ago', upvotes: 45 },
-        { id: 'c2', authorName: 'Dr. Sameer Joshi', authorRole: 'citizen', text: 'This is urgently needed during winter fog on Samruddhi Mahamarg!', timestamp: '45 mins ago', upvotes: 18 }
-      ]
-    },
-    {
-      id: 'post-102',
-      title: 'Smart Acoustic Sensor for Pinhole Water Pipeline Leakage in Baner',
-      authorName: 'AquaPulse Sensing',
-      authorRole: 'startup',
-      authorBadge: '🚀 Pilot Demo Pitch',
-      category: 'Clean Energy & Water',
-      content: 'Non-invasive acoustic sensors placed along municipal water mains identify underground leaks before roads collapse. Saves 40% non-revenue water loss.',
-      mediaType: 'video',
-      mediaUrl: 'https://assets.mixkit.co/videos/preview/mixkit-water-flowing-from-a-pipe-42867-large.mp4',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
-      upvotes: 1950,
-      downvotes: 8,
-      userVote: null,
-      tags: ['#WaterConservation', '#SmartCity', '#PuneMunicipality'],
-      urgency: 'HIGH',
-      deptEndorsed: true,
-      targetDept: 'Water Resources & Sanitation Dept',
-      createdAt: '4 hours ago',
-      comments: [
-        { id: 'c3', authorName: 'PMC Ward Engineer', authorRole: 'dept', text: 'Verified 0.8m accuracy in Ward 4 feeder testbed. Recommended for scale PO.', timestamp: '2 hours ago', upvotes: 29 }
-      ]
-    },
-    {
-      id: 'post-103',
-      title: 'Civic Demand: Autonomous Solar Weed Mower for Canal Embankments',
-      authorName: 'Ramesh Kale (Farmer Leader, Nashik)',
-      authorRole: 'citizen',
-      authorBadge: '👥 Citizen Proposal',
-      category: 'Agriculture & Allied',
-      content: 'Overgrown weeds choke irrigation canals every monsoon, causing flooding. We request startups to build low-cost autonomous solar mowers for Zilla Parishad canals.',
-      mediaType: 'image',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1592417817098-8f3d6928e146?auto=format&fit=crop&w=800&q=80',
-      upvotes: 3120,
-      downvotes: 19,
-      userVote: null,
-      tags: ['#CanalMaintenance', '#AgriTech', '#NashikFarmers'],
-      urgency: 'HIGH',
-      deptEndorsed: false,
-      targetDept: 'Irrigation & Agriculture Dept',
-      createdAt: '1 day ago',
-      comments: [
-        { id: 'c4', authorName: 'Bharat Drones Ltd', authorRole: 'manufacturer', text: 'We have a solar-tracked rover frame ready for partnership with software startups.', timestamp: '12 hours ago', upvotes: 62 }
-      ]
-    }
-  ]);
+  const currentShort = civicShorts[activeShortIndex];
 
-  // Form State for New Idea
-  const [newTitle, setNewTitle] = useState('');
-  const [newCategory, setNewCategory] = useState<ProblemSector>('Smart Automation & AI');
-  const [newContent, setNewContent] = useState('');
-  const [newTags, setNewTags] = useState('#Innovation #MaharashtraGov');
+  const scrollToShort = (index: number) => {
+    const nextIndex = Math.max(0, Math.min(civicShorts.length - 1, index));
+    scrollContainerRef.current?.querySelector<HTMLElement>(`[data-short-index="${nextIndex}"]`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
-  const currentShort = posts[activeShortIndex] || posts[0];
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
 
-  const handleVote = (postId: string, direction: 'UP' | 'DOWN') => {
-    setPosts(posts.map(p => {
-      if (p.id !== postId) return p;
-      let upDelta = 0;
-      let downDelta = 0;
-      let newVote: 'UP' | 'DOWN' | null = direction;
-
-      if (p.userVote === direction) {
-        // Toggle off
-        newVote = null;
-        if (direction === 'UP') upDelta = -1;
-        if (direction === 'DOWN') downDelta = -1;
-      } else {
-        if (p.userVote === 'UP') upDelta = -1;
-        if (p.userVote === 'DOWN') downDelta = -1;
-        if (direction === 'UP') upDelta = 1;
-        if (direction === 'DOWN') downDelta = 1;
+    const observer = new IntersectionObserver((entries) => {
+      const visibleEntry = entries.find(entry => entry.isIntersecting);
+      if (visibleEntry) {
+        setActiveShortIndex(Number((visibleEntry.target as HTMLElement).dataset.shortIndex));
       }
+    }, {
+      root: scrollContainer,
+      threshold: 0.75
+    });
 
-      return {
-        ...p,
-        upvotes: p.upvotes + upDelta,
-        downvotes: p.downvotes + downDelta,
-        userVote: newVote
-      };
-    }));
-  };
+    scrollContainer.querySelectorAll<HTMLElement>('[data-short-index]').forEach(card => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
 
-  const handleAddComment = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newCommentText.trim()) return;
-
-    const newComment: CivicComment = {
-      id: `c-${Date.now()}`,
-      authorName: currentUserName,
-      authorRole: userRole,
-      text: newCommentText,
-      timestamp: 'Just now',
-      upvotes: 1
+  useEffect(() => {
+    const handleKeyboardNavigation = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+      event.preventDefault();
+      scrollToShort(activeShortIndex + (event.key === 'ArrowDown' ? 1 : -1));
     };
 
-    setPosts(posts.map(p => {
-      if (p.id !== currentShort.id) return p;
-      return {
-        ...p,
-        comments: [...p.comments, newComment]
-      };
-    }));
+    window.addEventListener('keydown', handleKeyboardNavigation);
+    return () => window.removeEventListener('keydown', handleKeyboardNavigation);
+  }, [activeShortIndex]);
 
-    setNewCommentText('');
+  const toggleLike = (shortId: string) => {
+    setLikedShortIds(current => current.includes(shortId)
+      ? current.filter(id => id !== shortId)
+      : [...current, shortId]);
   };
 
-  const handleCreatePost = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newPost: CivicIdeaPost = {
-      id: `post-${Date.now()}`,
-      title: newTitle,
-      authorName: currentUserName,
-      authorRole: userRole,
-      authorBadge: userRole === 'citizen' ? '👥 Citizen Proposal' : (userRole === 'startup' ? '🚀 Startup Pitch' : '🏛️ Govt Demand'),
-      category: newCategory,
-      content: newContent,
-      mediaType: 'text',
-      upvotes: 1,
-      downvotes: 0,
-      userVote: 'UP',
-      comments: [],
-      tags: newTags.split(' ').filter(t => t.startsWith('#')),
-      urgency: 'HIGH',
-      deptEndorsed: false,
-      createdAt: 'Just now'
-    };
+  const toggleSave = (shortId: string) => {
+    setSavedShortIds(current => current.includes(shortId)
+      ? current.filter(id => id !== shortId)
+      : [...current, shortId]);
+  };
 
-    setPosts([newPost, ...posts]);
-    setIsNewIdeaModalOpen(false);
-    setNewTitle('');
-    setNewContent('');
+  const shareShort = async () => {
+    try {
+      await navigator.clipboard.writeText(`https://sih-converge.vercel.app/civic-shorts/${currentShort.id}`);
+    } catch {
+      // Clipboard access can be unavailable in local development previews.
+    }
+    setShareToastVisible(true);
+    window.setTimeout(() => setShareToastVisible(false), 2000);
+  };
+
+  const submitPost = (event: React.FormEvent) => {
+    event.preventDefault();
+    setPostModalOpen(false);
+    setTitle('');
+    setDescription('');
+    setHashtags('');
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10 font-body">
-      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.22)] relative overflow-hidden border border-govblue-700/80">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-violet-100 mb-4 border border-white/10">
-              <Flame className="w-3.5 h-3.5 text-saffron-300" />
-              <span>Public civic voice and idea upvote system</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
-              Civic pulse shorts and issue upvotes.
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
-              Democratising public procurement. Citizens and startups pitch urgent civic needs and innovative solutions. High upvotes boost issue priority directly onto government nodal officers’ agendas.
-            </p>
-          </div>
+    <div style={{ height: 'calc(100vh - 72px)' }} className="relative -mx-3 -my-6 min-h-[620px] overflow-hidden bg-slate-950 font-body sm:-mx-4 lg:-mx-6">
+      <style>{`
+        @keyframes civic-card-gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
 
-          <div className="flex items-center space-x-3 shrink-0">
-            <button
-              onClick={() => setIsNewIdeaModalOpen(true)}
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-saffron-600 hover:from-amber-600 hover:to-saffron-700 text-slate-950 font-extrabold text-xs px-5 py-3 rounded-2xl shadow-lg transition"
+        @keyframes civic-emoji-pulse {
+          0%, 100% { transform: scale(1); opacity: 0.34; }
+          50% { transform: scale(1.12); opacity: 0.6; }
+        }
+
+        @keyframes civic-progress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+
+        .civic-shorts-scroll {
+          overflow-y: scroll;
+          scroll-snap-type: y mandatory;
+          height: calc(100vh - 72px);
+          scrollbar-width: none;
+        }
+
+        .civic-shorts-scroll::-webkit-scrollbar {
+          display: none;
+        }
+
+        .civic-short-card {
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+          flex: 0 0 100%;
+          height: 100%;
+          min-height: 100%;
+        }
+
+        .civic-short-card > article {
+          position: relative;
+          height: 100%;
+          width: min(420px, calc(56.25vh - 40.5px));
+          min-width: 280px;
+          isolation: isolate;
+        }
+
+        .civic-short-card > article::before {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          content: '';
+          opacity: 0.03;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+          mix-blend-mode: screen;
+        }
+
+        .civic-upload-button {
+          position: absolute;
+          top: 50%;
+          left: calc(50% + 234px);
+          transform: translateY(-50%);
+        }
+
+        @media (max-width: 1100px) {
+          .civic-upload-button {
+            left: 24px;
+            right: auto;
+          }
+        }
+      `}</style>
+
+      <div
+        ref={scrollContainerRef}
+        className="civic-shorts-scroll"
+        onScroll={event => console.log('[CivicShortsFeed] scroll', event.currentTarget.scrollTop)}
+      >
+        {civicShorts.map((short, index) => {
+          const liked = likedShortIds.includes(short.id);
+          const saved = savedShortIds.includes(short.id);
+
+          return (
+            <section
+              key={short.id}
+              data-short-index={index}
+              className="civic-short-card flex items-center justify-center px-3 sm:px-6"
             >
-              <Plus className="w-4 h-4" />
-              <span>Submit Idea or Civic Request</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Feed Mode Controls & Filters */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
-        {/* Shorts vs Reddit Toggle */}
-        <div className="flex items-center space-x-1.5 bg-slate-100 p-1 rounded-xl">
-          <button
-            onClick={() => setFeedMode('shorts')}
-            className={`flex items-center space-x-2 text-xs font-bold px-4 py-2 rounded-lg transition ${
-              feedMode === 'shorts'
-                ? 'bg-govblue-900 text-white shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Film className="w-4 h-4 text-amber-400" />
-            <span>🎬 Civic Shorts Reel</span>
-          </button>
-          <button
-            onClick={() => setFeedMode('reddit')}
-            className={`flex items-center space-x-2 text-xs font-bold px-4 py-2 rounded-lg transition ${
-              feedMode === 'reddit'
-                ? 'bg-govblue-900 text-white shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <LayoutGrid className="w-4 h-4 text-emerald-400" />
-            <span>📜 Reddit Upvote Board</span>
-          </button>
-        </div>
-
-        {/* Category Pills */}
-        <div className="flex items-center space-x-1 overflow-x-auto text-xs font-medium pb-1 sm:pb-0 scrollbar-none">
-          {['ALL', 'Smart Mobility & Logistics', 'Clean Energy & Water', 'Agriculture & Allied', 'MedTech & Public Health'].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilterCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                filterCategory === cat
-                  ? 'bg-slate-900 text-amber-400 font-bold'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
-            >
-              {cat === 'ALL' ? '🔥 All Trending' : cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* MODE 1: SHORTS VIDEO REEL VIEW */}
-      {feedMode === 'shorts' && (
-        <div className="max-w-md mx-auto relative bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 min-h-[640px] flex flex-col justify-between text-white">
-          {/* Top Short Info Bar */}
-          <div className="p-4 bg-gradient-to-b from-slate-950/90 to-transparent relative z-20 flex items-center justify-between">
-            <span className="text-[10px] bg-amber-400 text-slate-950 font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-              {currentShort.category}
-            </span>
-            <div className="flex items-center space-x-2">
-              <span className="text-[11px] bg-white/20 px-2 py-0.5 rounded font-mono">
-                Short {activeShortIndex + 1} of {posts.length}
-              </span>
-            </div>
-          </div>
-
-          {/* Media Background Preview Container */}
-          <div className="absolute inset-0 z-0 bg-slate-900 flex items-center justify-center overflow-hidden">
-            {currentShort.thumbnailUrl ? (
-              <img 
-                src={currentShort.thumbnailUrl} 
-                alt={currentShort.title} 
-                className="w-full h-full object-cover opacity-65 scale-105 transition-all duration-700"
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-govblue-900 to-slate-950 flex items-center justify-center text-slate-600 font-mono text-xs">
-                Visual Pitch Media Frame
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-          </div>
-
-          {/* Right Action Floating Bar (Shorts Style) */}
-          <div className="absolute right-4 bottom-24 z-30 flex flex-col items-center space-y-5 text-center">
-            {/* Upvote Button */}
-            <button
-              onClick={() => handleVote(currentShort.id, 'UP')}
-              className={`w-12 h-12 rounded-full flex flex-col items-center justify-center shadow-lg transition backdrop-blur-md ${
-                currentShort.userVote === 'UP'
-                  ? 'bg-amber-400 text-slate-950 font-bold scale-110'
-                  : 'bg-black/50 text-white hover:bg-amber-400 hover:text-slate-950 border border-white/20'
-              }`}
-            >
-              <ThumbsUp className="w-5 h-5" />
-            </button>
-            <span className="text-xs font-black drop-shadow">{currentShort.upvotes.toLocaleString()}</span>
-
-            {/* Downvote */}
-            <button
-              onClick={() => handleVote(currentShort.id, 'DOWN')}
-              className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition ${
-                currentShort.userVote === 'DOWN'
-                  ? 'bg-rose-600 text-white'
-                  : 'bg-black/50 text-white hover:bg-slate-800 border border-white/20'
-              }`}
-            >
-              <ThumbsDown className="w-4 h-4" />
-            </button>
-
-            {/* Comments Drawer Button */}
-            <button
-              onClick={() => setCommentDrawerOpen(true)}
-              className="w-12 h-12 rounded-full bg-black/50 hover:bg-slate-800 text-white flex flex-col items-center justify-center shadow-lg border border-white/20 transition"
-            >
-              <MessageSquare className="w-5 h-5" />
-            </button>
-            <span className="text-[11px] font-bold drop-shadow">{currentShort.comments.length}</span>
-          </div>
-
-          {/* Bottom Pitch Details Overlay */}
-          <div className="p-6 relative z-20 space-y-2">
-            <div className="flex items-center space-x-2">
-              <span className="text-[11px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded border border-emerald-400/30">
-                {currentShort.authorBadge}
-              </span>
-              <span className="text-xs text-slate-300 font-medium">by {currentShort.authorName}</span>
-            </div>
-
-            <h3 className="text-lg font-extrabold leading-snug font-heading drop-shadow-md">
-              {currentShort.title}
-            </h3>
-
-            <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed drop-shadow">
-              {currentShort.content}
-            </p>
-
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {currentShort.tags.map((t, idx) => (
-                <span key={idx} className="text-[10px] bg-white/10 text-amber-300 px-2 py-0.5 rounded font-mono">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            {/* Next / Prev Shorts Controls */}
-            <div className="pt-4 flex items-center justify-between border-t border-white/10">
-              <button
-                disabled={activeShortIndex === 0}
-                onClick={() => setActiveShortIndex(prev => Math.max(0, prev - 1))}
-                className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${
-                  activeShortIndex === 0 ? 'text-slate-600 border-slate-800' : 'text-white border-white/20 hover:bg-white/10'
-                }`}
+              <article
+                className="relative h-full w-full max-w-[420px] overflow-hidden rounded-[16px] border border-white/10 text-white shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+                style={{
+                  backgroundImage: short.gradient,
+                  backgroundSize: '220% 220%',
+                  animation: 'civic-card-gradient-shift 14s ease-in-out infinite'
+                }}
               >
-                ▲ Previous Pitch
-              </button>
+                <div className="absolute left-0 right-0 top-0 z-30 h-[3px] overflow-hidden bg-white/30">
+                  <div
+                    key={`${short.id}-${activeShortIndex}`}
+                    className="h-full rounded-full bg-white"
+                    style={{
+                      width: activeShortIndex === index ? undefined : index < activeShortIndex ? '100%' : '0%',
+                      animation: activeShortIndex === index ? 'civic-progress 8s linear infinite' : 'none',
+                      boxShadow: '0 0 8px white'
+                    }}
+                  />
+                </div>
 
-              <button
-                disabled={activeShortIndex === posts.length - 1}
-                onClick={() => setActiveShortIndex(prev => Math.min(posts.length - 1, prev + 1))}
-                className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${
-                  activeShortIndex === posts.length - 1 ? 'text-slate-600 border-slate-800' : 'bg-amber-400 text-slate-950 font-bold border-amber-300'
-                }`}
-              >
-                Next Pitch Shorts ▼
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                <div className="absolute inset-0 z-[1] bg-black/10" />
+                <div className="absolute inset-x-0 bottom-0 z-10 h-1/2 bg-[linear-gradient(to_top,rgba(0,0,0,0.9)_0%,transparent_100%)]" />
 
-      {/* MODE 2: REDDIT THREADED BOARD VIEW */}
-      {feedMode === 'reddit' && (
-        <div className="space-y-4">
-          {posts
-            .filter(p => filterCategory === 'ALL' || p.category === filterCategory)
-            .map((post) => (
-              <div
-                key={post.id}
-                className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-4"
-              >
-                {/* Left Reddit Upvote Counter Pillar */}
-                <div className="flex sm:flex-col items-center justify-center bg-slate-50 border border-slate-200 p-2.5 rounded-2xl shrink-0 space-y-1">
-                  <button
-                    onClick={() => handleVote(post.id, 'UP')}
-                    className={`p-2 rounded-xl transition ${
-                      post.userVote === 'UP'
-                        ? 'bg-amber-400 text-slate-950 font-bold shadow'
-                        : 'text-slate-500 hover:bg-amber-100 hover:text-amber-700'
-                    }`}
-                  >
-                    <ThumbsUp className="w-5 h-5" />
-                  </button>
-
-                  <span className="text-sm font-black text-slate-900 font-mono px-2">
-                    {post.upvotes.toLocaleString()}
+                <div className="absolute left-4 right-4 top-5 z-20 flex items-center justify-between">
+                  <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-[10px] font-black tracking-[0.12em] text-white shadow-sm backdrop-blur-[8px]">
+                    {short.category}
                   </span>
-
-                  <button
-                    onClick={() => handleVote(post.id, 'DOWN')}
-                    className={`p-2 rounded-xl transition ${
-                      post.userVote === 'DOWN'
-                        ? 'bg-rose-500 text-white font-bold'
-                        : 'text-slate-400 hover:bg-slate-200'
-                    }`}
-                  >
-                    <ThumbsDown className="w-4 h-4" />
-                  </button>
+                  <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 font-mono text-[11px] font-bold text-white shadow-sm backdrop-blur-[8px]">
+                    {index + 1} of {civicShorts.length}
+                  </span>
                 </div>
 
-                {/* Right Post Body Content */}
-                <div className="flex-1 space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-[10px] bg-govblue-100 text-govblue-900 font-bold px-2.5 py-0.5 rounded font-mono">
-                        {post.authorBadge}
-                      </span>
-                      <span className="text-xs text-slate-600 font-medium">{post.authorName}</span>
-                      <span className="text-slate-300">•</span>
-                      <span className="text-xs text-slate-400">{post.createdAt}</span>
-                    </div>
+                <div className="absolute left-1/2 top-[35%] z-[2] -translate-x-1/2 -translate-y-1/2 text-center">
+                  <div className="text-[4rem] leading-none drop-shadow-2xl">{short.icon}</div>
+                  <div className="mx-auto mt-5 h-4 w-32 rounded-full bg-white/35 blur-xl" style={{ animation: 'civic-emoji-pulse 3s ease-in-out infinite' }} />
+                </div>
 
-                    {post.deptEndorsed && (
-                      <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        <span>GOVT NODAL ENDORSED</span>
-                      </span>
-                    )}
+                <div className="absolute bottom-7 left-4 z-20 w-[calc(65%-1rem)] max-w-[65%] space-y-2 pr-20 sm:left-6">
+                  <div className="flex items-center gap-2">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 via-orange-500 to-govblue-900 text-xs font-black text-white shadow-lg">
+                      {getInitials(short.displayName)}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-extrabold">{short.username}</p>
+                      <p className="truncate text-[11px] text-white/70">{short.displayName}</p>
+                    </div>
                   </div>
-
-                  <h3 className="text-base font-bold text-slate-900 leading-snug">
-                    {post.title}
-                  </h3>
-
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {post.content}
-                  </p>
-
-                  <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
-                    <div className="flex flex-wrap gap-1">
-                      {post.tags.map((t, idx) => (
-                        <span key={idx} className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center space-x-4 text-slate-500 font-medium">
-                      <button 
-                        onClick={() => {
-                          setActiveShortIndex(posts.findIndex(p => p.id === post.id));
-                          setCommentDrawerOpen(true);
-                        }}
-                        className="flex items-center space-x-1 hover:text-govblue-800"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>{post.comments.length} Comments</span>
-                      </button>
-                    </div>
+                  <h2 className="font-heading text-lg font-extrabold leading-tight drop-shadow-md sm:text-xl">{short.title}</h2>
+                  <p className="line-clamp-2 overflow-hidden text-ellipsis text-xs leading-relaxed text-white/75">{short.description}</p>
+                  <div className="flex flex-nowrap gap-x-2 overflow-hidden whitespace-nowrap pt-1">
+                    {short.hashtags.map(hashtag => (
+                      <span key={hashtag} className="shrink-0 text-[12px] font-bold text-white/90">{hashtag}</span>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
+
+                <div className="absolute bottom-[80px] right-[-4px] z-30 flex w-20 flex-col items-center gap-4">
+                  <div className="flex flex-col items-center gap-1">
+                    <button aria-label="Like short" onClick={() => toggleLike(short.id)} className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105 ${liked ? 'text-rose-400' : ''}`}>
+                      <Heart className={`h-5 w-5 ${liked ? 'fill-current' : ''}`} />
+                    </button>
+                    <span className="text-[11px] font-bold drop-shadow-md">{formatCount(short.likes + (liked ? 1 : 0))}</span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1">
+                    <button aria-label="Comment on short" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
+                      <MessageCircle className="h-5 w-5" />
+                    </button>
+                    <span className="text-[11px] font-bold drop-shadow-md">{formatCount(short.comments)}</span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1">
+                    <button aria-label="Share short" onClick={shareShort} className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
+                      <Share2 className="h-5 w-5" />
+                    </button>
+                    <span className="text-[11px] font-bold drop-shadow-md">Share</span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1">
+                    <button aria-label="Save short" onClick={() => toggleSave(short.id)} className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105 ${saved ? 'text-amber-300' : ''}`}>
+                      <Bookmark className={`h-5 w-5 ${saved ? 'fill-current' : ''}`} />
+                    </button>
+                    <span className="text-[11px] font-bold drop-shadow-md">Save</span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-1">
+                    <button aria-label="Report short" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
+                      <Flag className="h-5 w-5" />
+                    </button>
+                    <span className="text-[11px] font-bold drop-shadow-md">Report</span>
+                  </div>
+                </div>
+              </article>
+            </section>
+          );
+        })}
+      </div>
+
+      <button
+        type="button"
+        aria-label="Post a Civic Short"
+        title="Post a Civic Short"
+        onClick={() => setPostModalOpen(true)}
+        className="civic-upload-button z-40 flex items-center gap-2 whitespace-nowrap rounded-full bg-amber-400 px-4 py-3 text-xs font-black text-slate-950 shadow-[0_0_24px_rgba(251,191,36,0.45)] transition hover:scale-105 hover:bg-amber-300"
+      >
+        <Plus className="h-5 w-5" />
+        <span>Upload Civic Short</span>
+      </button>
+
+      {shareToastVisible && (
+        <div className="absolute bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-bold text-white shadow-xl">
+          Link copied!
         </div>
       )}
 
-      {/* COMMENTS DRAWER MODAL */}
-      {commentDrawerOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs">
-            <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
+      {postModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/70 p-3 backdrop-blur-sm sm:p-4">
+          <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
+            <div className="flex items-center justify-between bg-govblue-900 p-5 text-white">
               <div>
-                <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Public Civic Discussion</span>
-                <h3 className="text-sm font-bold truncate max-w-xs">{currentShort.title}</h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300">Civic Shorts</span>
+                <h3 className="mt-0.5 text-base font-bold">Post a Civic Short</h3>
               </div>
-              <button onClick={() => setCommentDrawerOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
+              <button type="button" aria-label="Close post form" onClick={() => setPostModalOpen(false)}>
+                <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="p-4 space-y-3 max-h-80 overflow-y-auto">
-              {currentShort.comments.length === 0 ? (
-                <div className="text-center py-6 text-slate-400">
-                  No public comments yet. Be the first to start the civic discussion!
-                </div>
-              ) : (
-                currentShort.comments.map((c) => (
-                  <div key={c.id} className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-                    <div className="flex items-center justify-between text-[11px]">
-                      <span className="font-bold text-slate-900">{c.authorName}</span>
-                      <span className="text-slate-400 text-[10px]">{c.timestamp}</span>
-                    </div>
-                    <p className="text-slate-700 text-xs">{c.text}</p>
-                  </div>
-                ))
-              )}
-            </div>
-
-            <form onSubmit={handleAddComment} className="p-3 bg-slate-100 border-t border-slate-200 flex gap-2">
-              <input
-                type="text"
-                value={newCommentText}
-                onChange={(e) => setNewCommentText(e.target.value)}
-                placeholder="Write constructive civic feedback..."
-                className="flex-1 p-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-govblue-800"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-govblue-900 text-white font-bold px-4 rounded-xl flex items-center justify-center hover:bg-govblue-800"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* CREATE NEW IDEA MODAL */}
-      {isNewIdeaModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs">
-            <div className="p-5 bg-govblue-900 text-white flex items-center justify-between">
+            <form onSubmit={submitPost} className="space-y-4 p-5 text-xs">
               <div>
-                <span className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Public Submission Portal</span>
-                <h3 className="text-base font-bold mt-0.5">Post an Innovation Pitch or Civic Challenge</h3>
+                <label className="mb-1 block font-bold text-slate-800" htmlFor="short-title">Title</label>
+                <input id="short-title" value={title} onChange={event => setTitle(event.target.value)} placeholder="Give your civic short a title" className="w-full rounded-xl border border-slate-200 p-2.5 font-bold" required />
               </div>
-              <button onClick={() => setIsNewIdeaModalOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleCreatePost} className="p-5 space-y-4">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Title / Headline</label>
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="e.g. AI Flood Early Warning System for Kolhapur District"
-                  className="w-full p-2.5 rounded-xl border border-slate-200 font-bold"
-                  required
-                />
+                <label className="mb-1 block font-bold text-slate-800" htmlFor="short-description">Description</label>
+                <textarea id="short-description" value={description} onChange={event => setDescription(event.target.value)} rows={3} placeholder="What should the civic community know?" className="w-full rounded-xl border border-slate-200 p-2.5" required />
               </div>
-
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Sector Category</label>
-                <select
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value as ProblemSector)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200"
-                >
-                  <option value="Smart Automation & AI">Smart Automation & AI</option>
-                  <option value="Agriculture & Allied">Agriculture & Allied</option>
-                  <option value="MedTech & Public Health">MedTech & Public Health</option>
-                  <option value="Clean Energy & Water">Clean Energy & Water</option>
-                  <option value="Smart Mobility & Logistics">Smart Mobility & Logistics</option>
+                <label className="mb-1 block font-bold text-slate-800" htmlFor="short-category">Category</label>
+                <select id="short-category" value={category} onChange={event => setCategory(event.target.value)} className="w-full rounded-xl border border-slate-200 p-2.5">
+                  <option>SMART MOBILITY</option>
+                  <option>AGRITECH</option>
+                  <option>CLEAN ENERGY</option>
+                  <option>MEDTECH</option>
+                  <option>CIVIC ISSUE</option>
+                  <option>PROCUREMENT</option>
+                  <option>SMART AUTOMATION</option>
                 </select>
               </div>
-
               <div>
-                <label className="font-bold text-slate-800 block mb-1">Detailed Description & Civic Impact</label>
-                <textarea
-                  rows={3}
-                  value={newContent}
-                  onChange={(e) => setNewContent(e.target.value)}
-                  placeholder="Explain why this problem or solution is urgent for public deployment..."
-                  className="w-full p-2.5 rounded-xl border border-slate-200"
-                  required
-                />
+                <label className="mb-1 block font-bold text-slate-800" htmlFor="short-hashtags">Hashtags</label>
+                <input id="short-hashtags" value={hashtags} onChange={event => setHashtags(event.target.value)} placeholder="#GovTech #CivicVoice" className="w-full rounded-xl border border-slate-200 p-2.5 font-mono" />
               </div>
-
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Hashtags / Keywords</label>
-                <input
-                  type="text"
-                  value={newTags}
-                  onChange={(e) => setNewTags(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 font-mono"
-                  placeholder="#FloodWarning #Kolhapur #AI"
-                />
-              </div>
-
-              <div className="flex justify-end space-x-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsNewIdeaModalOpen(false)}
-                  className="px-4 py-2 font-semibold text-slate-600 hover:text-slate-900"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-govblue-900 hover:bg-govblue-800 text-white font-bold px-5 py-2.5 rounded-xl shadow"
-                >
-                  Publish to Public Feed
-                </button>
+              <div className="flex justify-end gap-2 pt-2">
+                <button type="button" onClick={() => setPostModalOpen(false)} className="px-4 py-2 font-semibold text-slate-600">Close</button>
+                <button type="submit" className="rounded-xl bg-govblue-900 px-5 py-2.5 font-bold text-white shadow">Post</button>
               </div>
             </form>
           </div>
