@@ -10,7 +10,7 @@ interface RightNavSidebarProps {
 
 export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, setActiveTab, activeCollabCount }) => {
   return (
-    <aside className="w-full font-body sticky top-[72px] h-[calc(100vh-80px)] overflow-y-auto pr-1.5 pb-8 space-y-3 scrollbar-none">
+    <aside className="w-full translate-x-4 font-body sticky top-[72px] h-[calc(100vh-80px)] overflow-y-auto pr-1.5 pb-8 space-y-3 scrollbar-none">
       <div className="bg-white rounded-2xl border border-slate-200/90 p-3 shadow-[0_8px_30px_rgba(15,23,42,0.04)] space-y-2">
         <div className="flex items-center space-x-1.5 text-[11px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-2 px-1">
           <Zap className="w-3.5 h-3.5 text-amber-500" />

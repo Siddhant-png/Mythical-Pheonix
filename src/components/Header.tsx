@@ -17,11 +17,27 @@ import {
   User,
   MessageCircle,
   Rocket,
-  Milestone
+  Milestone,
+  LayoutGrid
 } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 'problems' | 'feed' | 'discovery' | 'profiles' | 'collab' | 'dept-upload' | 'pilots' | 'scale' | 'tiers' | 'procurement' | 'templates' | 'account' | 'messages' | 'categories';
+export type NavTab = 
+  | 'problems' 
+  | 'categories'
+  | 'feed' 
+  | 'discovery' 
+  | 'profiles' 
+  | 'collab' 
+  | 'dept-upload' 
+  | 'pilots' 
+  | 'scale' 
+  | 'tiers' 
+  | 'procurement' 
+  | 'templates' 
+  | 'messages' 
+  | 'account';
+
 
 interface HeaderProps {
   activeTab: NavTab;
