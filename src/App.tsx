@@ -498,13 +498,15 @@ export function App() {
               />
             )}
 
-        {/* Standard Templates */}
-        {activeTab === 'templates' && (
-          <StandardTemplatesVault userRole={userRole} />
-        )}
-        {/* Messages */}
-        {activeTab === 'messages' && <Messages />}
-         </div>
+            {/* Standard Templates */}
+            {activeTab === 'templates' && (
+              <StandardTemplatesVault userRole={userRole} />
+            )}
+
+            {/* Messages */}
+            {activeTab === 'messages' && <Messages />}
+
+            {/* Tiers */}
             {activeTab === 'tiers' && (
               <TierRegistry
                 applications={applications}
@@ -514,6 +516,7 @@ export function App() {
               />
             )}
 
+            {/* Procurement */}
             {activeTab === 'procurement' && (
               <ProcurementDashboard
                 problems={problems}
@@ -525,11 +528,6 @@ export function App() {
                 onCreateProcurement={handleCreateProcurement}
                 onUpdateProcurementStatus={handleUpdateProcurementStatus}
               />
-            )}
-
-            {/* Standard Templates */}
-            {activeTab === 'templates' && (
-              <StandardTemplatesVault userRole={userRole} />
             )}
 
             {/* Self Account & Detailed Profile Page */}
