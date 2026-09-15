@@ -248,13 +248,26 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto space-y-6 font-body">
-      {/* Hero Showcase Banner (Compact) */}
-      <div className="bg-gradient-to-br from-govblue-900 via-govblue-800 to-slate-950 rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-white shadow-md relative overflow-hidden border border-govblue-700/80">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-saffron-400/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="relative z-10 flex items-center justify-between">
-          <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-white">
-            Bridging startups, manufacturers, and government delivery.
-          </h2>
+      {/* Hero Showcase Banner with Official Brand Logo */}
+      <div className="bg-gradient-to-br from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-white shadow-md relative overflow-hidden border border-indigo-400/30">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-400/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-3.5">
+            <div className="w-11 h-11 rounded-xl bg-[#dce5f2] p-1.5 shrink-0 flex items-center justify-center shadow-md border border-white/20">
+              <img src="/logo.png" alt="Converge Logo" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-white">
+                Converge Innovation & Procurement Portal
+              </h2>
+              <p className="text-xs text-indigo-100 font-medium">
+                Bridging startups, OEM manufacturers, and government procurement delivery under GFR Rule 149.
+              </p>
+            </div>
+          </div>
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shrink-0 self-start sm:self-center">
+            Govt of Maharashtra
+          </span>
         </div>
       </div>
 
