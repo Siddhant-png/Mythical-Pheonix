@@ -16,6 +16,7 @@ import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
+import { Messages } from './views/Messages';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
 
 import {
@@ -497,6 +498,13 @@ export function App() {
               />
             )}
 
+        {/* Standard Templates */}
+        {activeTab === 'templates' && (
+          <StandardTemplatesVault userRole={userRole} />
+        )}
+        {/* Messages */}
+        {activeTab === 'messages' && <Messages />}
+         </div>
             {activeTab === 'tiers' && (
               <TierRegistry
                 applications={applications}
