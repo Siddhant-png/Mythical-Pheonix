@@ -1,21 +1,5 @@
-import React, { useState } from 'react';
-import { 
-  Building2, 
-  ShieldCheck, 
-  UserCheck, 
-  CheckCircle2, 
-  X, 
-  KeyRound, 
-  Mail, 
-  Building, 
-  Sparkles, 
-  Lock, 
-  ArrowRight,
-  User,
-  Phone,
-  FileBadge,
-  Check
-} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
 interface AuthModalProps {
@@ -31,340 +15,133 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onLoginSuccess,
   initialRole = 'citizen'
 }) => {
-  const [selectedRole, setSelectedRole] = useState<UserRole>(initialRole);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-  const [step, setStep] = useState<'credentials' | 'otp' | 'success'>('credentials');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // Form Fields State
-  const [email, setEmail] = useState('officer.pwd@maharashtra.gov.in');
-  const [name, setName] = useState('Rajesh Sharma (Superintending Engineer)');
-  const [deptCode, setDeptCode] = useState('MH-PWD-EXEC-782');
-  const [dpiitNo, setDpiitNo] = useState('DIPP-MH-2023-98442');
-  const [citizenId, setCitizenId] = useState('MH-CITIZEN-99412');
-  const [gstNumber, setGstNumber] = useState('27AABCS1429B1Z4');
-  const [otpCode, setOtpCode] = useState('784912');
-  const [isVerifying, setIsVerifying] = useState(false);
+  useEffect(() => {
+    if (!isOpen) {
+      setIsRegisterMode(false);
+      setName('');
+      setEmail('');
+      setPassword('');
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleRoleChange = (role: UserRole) => {
-    setSelectedRole(role);
-    if (role === 'dept') {
-      setEmail('officer.pwd@maharashtra.gov.in');
-      setName('Rajesh Sharma (Nodal Officer)');
-    } else if (role === 'startup') {
-      setEmail('aarav@drishtiedge.in');
-      setName('Aarav Deshmukh (Founder)');
-    } else if (role === 'citizen') {
-      setEmail('priya.pune@gmail.com');
-      setName('Priya Kulkarni (Citizen)');
-    } else {
-      setEmail('alliances@sahyadripres.com');
-      setName('Rajesh Kulkarni (VP)');
-    }
-  };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleSendOtp = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsVerifying(true);
-    setTimeout(() => {
-      setIsVerifying(false);
-      setStep('otp');
-    }, 700);
-  };
+    const displayName = isRegisterMode && name.trim()
+      ? name.trim()
+      : email.split('@')[0];
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsVerifying(true);
-    setTimeout(() => {
-      setIsVerifying(false);
-      setStep('success');
+    const user: AuthUser = {
+      id: `user-${Date.now()}`,
+      name: displayName,
+      email,
+      role: initialRole,
+      isVerified: true,
+      verificationBadge: 'Converge Account'
+    };
 
-      let badge = 'Aadhaar Verified Citizen';
-      if (selectedRole === 'dept') badge = 'Govt Officer Verified (PWD Maharashtra)';
-      if (selectedRole === 'startup') badge = 'DPIIT Certified Startup (DIPP-MH-98442)';
-      if (selectedRole === 'manufacturer') badge = 'GST Audited Manufacturer (Sahyadri)';
-
-      const user: AuthUser = {
-        id: `user-${Date.now()}`,
-        name,
-        email,
-        role: selectedRole,
-        isVerified: true,
-        verificationBadge: badge,
-        departmentCode: selectedRole === 'dept' ? deptCode : undefined,
-        dpiitNo: selectedRole === 'startup' ? dpiitNo : undefined,
-        citizenId: selectedRole === 'citizen' ? citizenId : undefined,
-        gstNumber: selectedRole === 'manufacturer' ? gstNumber : undefined
-      };
-
-      setTimeout(() => {
-        onLoginSuccess(user);
-        onClose();
-        setStep('credentials');
-      }, 1000);
-    }, 900);
+    onLoginSuccess(user);
+    onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 font-body">
-      <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs relative font-body">
-        {/* Top Decorative Bar */}
-        <div className="h-2 w-full bg-gradient-to-r from-govblue-900 via-amber-500 to-emerald-600"></div>
-
-        {/* Modal Header */}
-        <div className="p-6 bg-gradient-to-r from-[#1e3a8a] via-[#1d4ed8] to-[#6d28d9] text-white flex items-center justify-between border-b border-indigo-400/30">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-[#dce5f2] p-1 flex items-center justify-center border border-white/20 shrink-0 shadow-md">
-              <img src="/logo.png" alt="Converge Logo" className="w-full h-full object-contain" />
-            </div>
-            <div>
-              <h2 className="text-base font-extrabold tracking-tight">
-                {step === 'success' ? 'Verification Complete!' : 'Authentication & DPIIT Portal Gate'}
-              </h2>
-              <p className="text-[11px] text-indigo-100 font-medium">
-                Converge Govt Innovation Sandbox • Role Verification
-              </p>
-            </div>
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-white font-body"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="auth-title"
+    >
+      <div className="min-h-screen w-full bg-slate-50">
+        <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col justify-center px-5 py-12 sm:px-8">
+          <div className="mb-8 flex items-start justify-between">
+          <div>
+            <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-700">Converge</p>
+            <h2 id="auth-title" className="text-3xl font-bold text-slate-900">
+              {isRegisterMode ? 'Create your account' : 'Welcome back'}
+            </h2>
+            <p className="mt-2 text-sm text-slate-500">
+              {isRegisterMode ? 'Register to access the innovation portal.' : 'Log in to continue to the innovation portal.'}
+            </p>
           </div>
-
           <button
+            type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition"
+            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+            aria-label="Close authentication form"
           >
-            <X className="w-5 h-5" />
+            <X className="h-5 w-5" />
           </button>
-        </div>
-
-        {/* Persona Selector Tabs */}
-        {step === 'credentials' && (
-          <div className="p-4 bg-slate-100 border-b border-slate-200 grid grid-cols-4 gap-1.5 text-center font-bold text-[11px]">
-            <button
-              type="button"
-              onClick={() => handleRoleChange('dept')}
-              className={`py-2 px-1 rounded-xl transition ${
-                selectedRole === 'dept'
-                  ? 'bg-govblue-900 text-white shadow-sm'
-                  : 'bg-white text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              🏛️ Govt Officer
-            </button>
-            <button
-              type="button"
-              onClick={() => handleRoleChange('startup')}
-              className={`py-2 px-1 rounded-xl transition ${
-                selectedRole === 'startup'
-                  ? 'bg-saffron-600 text-white shadow-sm'
-                  : 'bg-white text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              🚀 Startup
-            </button>
-            <button
-              type="button"
-              onClick={() => handleRoleChange('citizen')}
-              className={`py-2 px-1 rounded-xl transition ${
-                selectedRole === 'citizen'
-                  ? 'bg-emerald-700 text-white shadow-sm'
-                  : 'bg-white text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              👥 Citizen
-            </button>
-            <button
-              type="button"
-              onClick={() => handleRoleChange('manufacturer')}
-              className={`py-2 px-1 rounded-xl transition ${
-                selectedRole === 'manufacturer'
-                  ? 'bg-slate-800 text-white shadow-sm'
-                  : 'bg-white text-slate-700 hover:bg-slate-200'
-              }`}
-            >
-              🏭 Manufacturer
-            </button>
           </div>
-        )}
 
-        {/* Step 1: Input Credentials */}
-        {step === 'credentials' && (
-          <form onSubmit={handleSendOtp} className="p-6 space-y-4">
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">SELECTED AUTHENTICATION PATH:</span>
-              <span className="font-bold text-slate-900 text-xs mt-0.5 block">
-                {selectedRole === 'dept' && '🏛️ Government Officer / Nodal Evaluator Portal'}
-                {selectedRole === 'startup' && '🚀 DPIIT Recognized Startup Founder Portal'}
-                {selectedRole === 'citizen' && '👥 Public Citizen Civic Voice & Upvote Portal'}
-                {selectedRole === 'manufacturer' && '🏭 Verified Equipment Manufacturer Portal'}
-              </span>
-            </div>
-
+        <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          {isRegisterMode && (
             <div>
-              <label className="font-bold text-slate-800 block mb-1">Full Name</label>
-              <div className="relative">
-                <User className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-medium focus:ring-2 focus:ring-govblue-800/20"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="font-bold text-slate-800 block mb-1">Official Email Address</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-medium focus:ring-2 focus:ring-govblue-800/20"
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Role Specific Verification Inputs */}
-            {selectedRole === 'dept' && (
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Government Department Code</label>
-                <div className="relative">
-                  <FileBadge className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    value={deptCode}
-                    onChange={(e) => setDeptCode(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-mono font-bold"
-                    placeholder="e.g. MH-PWD-EXEC-782"
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            {selectedRole === 'startup' && (
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">DPIIT Recognition Number</label>
-                <div className="relative">
-                  <FileBadge className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    value={dpiitNo}
-                    onChange={(e) => setDpiitNo(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-mono font-bold"
-                    placeholder="e.g. DIPP-MH-2023-98442"
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            {selectedRole === 'citizen' && (
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">Citizen ID / Aadhaar Virtual ID</label>
-                <div className="relative">
-                  <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    value={citizenId}
-                    onChange={(e) => setCitizenId(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-mono font-bold"
-                    placeholder="e.g. MH-CITIZEN-99412"
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            {selectedRole === 'manufacturer' && (
-              <div>
-                <label className="font-bold text-slate-800 block mb-1">GSTIN Registration Number</label>
-                <div className="relative">
-                  <FileBadge className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                  <input
-                    type="text"
-                    value={gstNumber}
-                    onChange={(e) => setGstNumber(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-200 font-mono font-bold"
-                    placeholder="e.g. 27AABCS1429B1Z4"
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={isVerifying}
-              className="w-full bg-govblue-900 hover:bg-govblue-800 text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2 text-xs"
-            >
-              {isVerifying ? (
-                <span>Generating Verification OTP...</span>
-              ) : (
-                <>
-                  <span>Send Verification Code & Continue</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-        )}
-
-        {/* Step 2: Verification OTP */}
-        {step === 'otp' && (
-          <form onSubmit={handleVerifyOtp} className="p-6 space-y-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto">
-              <KeyRound className="w-6 h-6" />
-            </div>
-
-            <div>
-              <h3 className="font-bold text-slate-900 text-sm">Enter 6-Digit Verification OTP</h3>
-              <p className="text-xs text-slate-500 mt-1">
-                A 6-digit security code was sent to <strong className="text-slate-800">{email}</strong>
-              </p>
-            </div>
-
-            <div className="max-w-xs mx-auto">
+              <label htmlFor="auth-name" className="mb-1.5 block text-sm font-medium text-slate-700">Name</label>
               <input
+                id="auth-name"
                 type="text"
-                value={otpCode}
-                onChange={(e) => setOtpCode(e.target.value)}
-                maxLength={6}
-                className="w-full text-center tracking-[0.5em] text-lg font-mono font-bold py-2.5 border-2 border-slate-300 rounded-xl focus:border-govblue-800"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Your name"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 required
               />
             </div>
+          )}
 
-            <div className="text-[11px] text-emerald-700 font-semibold flex items-center justify-center space-x-1">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Simulated State Portal Verification Ready</span>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isVerifying}
-              className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl shadow-md transition text-xs"
-            >
-              {isVerifying ? 'Verifying Credentials...' : 'Verify OTP & Log In'}
-            </button>
-          </form>
-        )}
-
-        {/* Step 3: Success Granted */}
-        {step === 'success' && (
-          <div className="p-8 text-center space-y-3 bg-emerald-50">
-            <div className="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-lg animate-bounce">
-              <Check className="w-8 h-8" />
-            </div>
-            <h3 className="text-base font-bold text-emerald-900">Identity Verified & Session Active!</h3>
-            <p className="text-xs text-emerald-700">
-              Welcome back, <strong>{name}</strong>. Accessing Converge Innovation Portal.
-            </p>
+          <div>
+            <label htmlFor="auth-email" className="mb-1.5 block text-sm font-medium text-slate-700">Email</label>
+            <input
+              id="auth-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+              required
+            />
           </div>
-        )}
+
+          <div>
+            <label htmlFor="auth-password" className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
+            <input
+              id="auth-password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter your password"
+              minLength={6}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"
+          >
+            {isRegisterMode ? 'Create account' : 'Log in'}
+          </button>
+        </form>
+
+        <div className="mt-5 text-center text-sm text-slate-500">
+          {isRegisterMode ? 'Already have an account?' : "Don't have an account?"}{' '}
+          <button
+            type="button"
+            onClick={() => setIsRegisterMode((currentMode) => !currentMode)}
+            className="font-semibold text-blue-700 hover:text-blue-800"
+          >
+            {isRegisterMode ? 'Log in' : 'Register'}
+          </button>
+        </div>
+        </div>
       </div>
     </div>
   );
