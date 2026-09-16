@@ -252,7 +252,7 @@ export const LegalNDAModal: React.FC<LegalNDAModalProps> = ({
             >
               {isProcessing ? (
                 <>
-                  <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full"></div>
                   <span>Generating DSC & Cryptographic Signatures...</span>
                 </>
               ) : completed ? (

@@ -38,9 +38,6 @@ export const ProblemCard: React.FC<ProblemCardProps> = ({
           <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate">{problem.deptName}</span>
         </span>
-        <span className="shrink-0 text-slate-400 font-mono text-[10px] uppercase">
-          {problem.sector}
-        </span>
       </div>
 
       {/* Title */}

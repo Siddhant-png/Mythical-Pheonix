@@ -114,10 +114,10 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 font-body animate-fadeIn pb-16 relative">
+    <div className="max-w-6xl mx-auto space-y-8 font-body pb-16 relative">
       {/* Toast Notification */}
       {voteToastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-3 bg-slate-900 text-white border border-amber-400/60 px-5 py-3.5 rounded-2xl shadow-2xl text-xs animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-3 bg-slate-900 text-white border border-amber-400/60 px-5 py-3.5 rounded-2xl shadow-2xl text-xs">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <div>
             <div className="font-bold text-amber-300">Urgency Score Recorded</div>
@@ -173,14 +173,14 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                 {problem.sector}
               </span>
               <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-100/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-300">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 Status: {problem.status}
               </span>
             </div>
 
             {/* Priority Score Badge */}
             <div className="inline-flex items-center space-x-1.5 bg-red-900/90 text-red-200 border border-red-700/80 px-3 py-1.5 rounded-full text-xs font-extrabold backdrop-blur-md shadow-lg">
-              <Flame className="w-4 h-4 text-amber-400 animate-bounce" />
+              <Flame className="w-4 h-4 text-amber-400" />
               <span>Priority Score: {currentScore} / 10</span>
               <span className="text-[10px] text-red-300 font-normal">({voteCount} votes)</span>
             </div>
@@ -491,7 +491,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-black shadow-md">
-                      <Flame className="w-6 h-6 animate-pulse" />
+                      <Flame className="w-6 h-6" />
                     </div>
                     <div>
                       <div className="flex items-center space-x-2">
@@ -807,7 +807,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
       {/* Interactive Validate Urgency Score Modal */}
       {urgencyModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden font-body animate-scaleUp">
+          <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden font-body">
             <div className="p-5 bg-gradient-to-r from-red-900 via-slate-900 to-govblue-900 text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Flame className="w-5 h-5 text-amber-400" />
@@ -935,7 +935,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
             <div className="relative aspect-video bg-black flex items-center justify-center">
               <img src={heroImage} alt="Video Stream" className="w-full h-full object-cover opacity-70" />
               <div className="absolute inset-0 bg-slate-950/40 flex flex-col items-center justify-center space-y-3">
-                <div className="w-20 h-20 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-2xl animate-pulse">
+                <div className="w-20 h-20 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center shadow-2xl">
                   <Play className="w-10 h-10 fill-current ml-1" />
                 </div>
                 <div className="text-sm font-bold text-white bg-slate-900/80 px-4 py-1.5 rounded-full border border-white/10">
