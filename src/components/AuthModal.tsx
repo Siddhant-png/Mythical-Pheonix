@@ -19,6 +19,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [dpiitId, setDpiitId] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (!isOpen) {
@@ -26,6 +28,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       setName('');
       setEmail('');
       setPassword('');
+      setDpiitId('');
+      setErrorMessage('');
     }
   }, [isOpen]);
 
@@ -34,17 +38,51 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedDpiitId = dpiitId.trim().toUpperCase();
+    const storedAccount = localStorage.getItem('converge-auth-account');
+
+    if (isRegisterMode) {
+      localStorage.setItem('converge-auth-account', JSON.stringify({
+        name: name.trim(),
+        email: normalizedEmail,
+        password,
+        dpiitId: normalizedDpiitId
+      }));
+    } else {
+      let account: { email: string; password: string; dpiitId: string } | null = null;
+
+      try {
+        account = storedAccount ? JSON.parse(storedAccount) : null;
+      } catch {
+        account = null;
+      }
+
+      if (
+        !account ||
+        account.email !== normalizedEmail ||
+        account.password !== password ||
+        account.dpiitId !== normalizedDpiitId
+      ) {
+      setErrorMessage('Email, password, or DPIIT ID is incorrect.');
+      return;
+      }
+    }
+
+    setErrorMessage('');
+
     const displayName = isRegisterMode && name.trim()
       ? name.trim()
-      : email.split('@')[0];
+      : normalizedEmail.split('@')[0];
 
     const user: AuthUser = {
       id: `user-${Date.now()}`,
       name: displayName,
-      email,
+      email: normalizedEmail,
       role: initialRole,
       isVerified: true,
-      verificationBadge: 'Converge Account'
+      verificationBadge: 'DPIIT ID Verified',
+      dpiitNo: normalizedDpiitId
     };
 
     onLoginSuccess(user);
@@ -122,6 +160,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               required
             />
           </div>
+
+          <div>
+            <label htmlFor="auth-dpiit" className="mb-1.5 block text-sm font-medium text-slate-700">DPIIT ID</label>
+            <input
+              id="auth-dpiit"
+              type="text"
+              value={dpiitId}
+              onChange={(event) => setDpiitId(event.target.value)}
+              placeholder="DIPP-MH-2023-98442"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm uppercase outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+              required
+            />
+          </div>
+
+          {errorMessage && (
+            <p className="text-sm text-red-600" role="alert">{errorMessage}</p>
+          )}
 
           <button
             type="submit"
