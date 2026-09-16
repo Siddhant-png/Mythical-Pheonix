@@ -6,16 +6,9 @@ import { LeftNavSidebar } from './components/LeftNavSidebar';
 import { RightNavSidebar } from './components/RightNavSidebar';
 
 import { ProblemDashboard } from './views/ProblemDashboard';
-import { ManufacturerCollabHub } from './views/ManufacturerCollabHub';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
-import { SandboxPilotScorecard } from './views/SandboxPilotScorecard';
-import { ScaleRegistry } from './views/ScaleRegistry';
-import { TierRegistry } from './views/TierRegistry';
-import { ProcurementDashboard } from './views/ProcurementDashboard';
-import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
-import { CivicShortsFeed } from './views/CivicShortsFeed';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
 import { CategoryExplorer } from './views/CategoryExplorer';
 
@@ -366,7 +359,7 @@ export function App() {
 
       {/* Floating Notification Toast */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-3 rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-xs text-white shadow-2xl animate-bounce">
+        <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-3 rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-xs text-white shadow-2xl">
           <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" />
 
           <span className="font-semibold">{toastMessage}</span>
@@ -413,7 +406,7 @@ export function App() {
                 collaborations={collaborations}
                 currentStartup={CURRENT_STARTUP}
                 onOpenCollabHub={() => {
-                  setActiveTab('collab');
+                  setActiveTab('dept-upload');
                 }}
                 onSubmitApplication={handleSubmitApplication}
                 searchQuery={searchQuery}
@@ -422,15 +415,6 @@ export function App() {
                 maxBudget={maxBudget}
                 collabOnly={collabOnly}
                 onResetFilters={handleResetFilters}
-              />
-            )}
-
-            {/* Civic Feed */}
-            {activeTab === 'feed' && (
-              <CivicShortsFeed
-                userRole={userRole}
-                currentUserName={currentUser?.name || 'Anonymous Citizen'}
-                onNavigateToTenders={() => setActiveTab('problems')}
               />
             )}
 
@@ -451,76 +435,12 @@ export function App() {
               )
             )}
 
-            {/* Manufacturer Collaboration */}
-            {activeTab === 'collab' && (
-              <ManufacturerCollabHub
-                manufacturers={MANUFACTURERS}
-                problems={problems}
-                startup={CURRENT_STARTUP}
-                collaborations={collaborations}
-                onAddNewCollaboration={handleAddNewCollaboration}
-              />
-            )}
-
             {/* Department Problem Upload */}
             {activeTab === 'dept-upload' && (
               <DepartmentPostProblem
                 onProblemCreated={handleProblemCreated}
                 onNavigateToDirectory={() => setActiveTab('problems')}
               />
-            )}
-
-            {/* Sandbox Pilots */}
-            {activeTab === 'pilots' && (
-              <SandboxPilotScorecard
-                pilots={pilots}
-                procurements={procurements}
-                onGeneratePO={handleGeneratePO}
-                userRole={userRole}
-              />
-            )}
-
-            {/* Scale Registry */}
-            {activeTab === 'scale' && (
-              <ScaleRegistry
-                procurements={procurements}
-                scaleAdoptions={scaleAdoptions}
-                onAdoptSolution={handleAdoptSolution}
-                userRole={userRole}
-              />
-            )}
-
-            {/* Standard Templates */}
-            {activeTab === 'templates' && (
-              <StandardTemplatesVault userRole={userRole} />
-            )}
-
-            {/* Tiers */}
-            {activeTab === 'tiers' && (
-              <TierRegistry
-                applications={applications}
-                pilots={pilots}
-                procurements={procurements}
-                scaleAdoptions={scaleAdoptions}
-              />
-            )}
-
-            {activeTab === 'procurement' && (
-              <ProcurementDashboard
-                problems={problems}
-                applications={applications}
-                pilots={pilots}
-                procurements={procurements}
-                scaleAdoptions={scaleAdoptions}
-                userRole={userRole}
-                onCreateProcurement={handleCreateProcurement}
-                onUpdateProcurementStatus={handleUpdateProcurementStatus}
-              />
-            )}
-
-            {/* Standard Templates */}
-            {activeTab === 'templates' && (
-              <StandardTemplatesVault userRole={userRole} />
             )}
 
             {/* Self Account & Detailed Profile Page */}

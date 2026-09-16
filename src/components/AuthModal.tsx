@@ -107,7 +107,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 font-body">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 font-body">
       <div className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden text-xs relative font-body">
         {/* Top Decorative Bar */}
         <div className="h-2 w-full bg-gradient-to-r from-govblue-900 via-amber-500 to-emerald-600"></div>
@@ -356,7 +356,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Step 3: Success Granted */}
         {step === 'success' && (
           <div className="p-8 text-center space-y-3 bg-emerald-50">
-            <div className="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-lg animate-bounce">
+            <div className="w-14 h-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-lg">
               <Check className="w-8 h-8" />
             </div>
             <h3 className="text-base font-bold text-emerald-900">Identity Verified & Session Active!</h3>

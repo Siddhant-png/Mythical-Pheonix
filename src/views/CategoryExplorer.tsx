@@ -262,20 +262,20 @@ export const CategoryExplorer: React.FC<CategoryExplorerProps> = ({ onSelectCate
         </div>
 
         {/* Concise Category Grid Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {filteredCategories.map((cat) => {
             const Icon = cat.icon;
             return (
               <div
                 key={cat.id}
                 onClick={() => onSelectCategory(cat.sectorName, cat.title)}
-                className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:border-[#CAB9E3] cursor-pointer flex flex-col items-center justify-center text-center group"
+                className="bg-white rounded-lg p-4 border border-slate-200 cursor-pointer flex flex-col items-center justify-center text-center hover:border-slate-400"
               >
-                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${cat.bgColor} ${cat.borderColor} border flex items-center justify-center mb-3 sm:mb-4 shadow-xs`}>
-                  <Icon className={`w-7 h-7 sm:w-8 sm:h-8 ${cat.color}`} />
+                <div className="w-10 h-10 rounded-md bg-slate-100 border border-slate-200 flex items-center justify-center mb-2.5">
+                  <Icon className="w-5 h-5 text-slate-700" />
                 </div>
 
-                <h4 className="font-bold text-slate-800 text-xs sm:text-sm leading-snug group-hover:text-[#312B41] font-body">
+                <h4 className="font-semibold text-slate-800 text-xs leading-snug">
                   {cat.title}
                 </h4>
               </div>
