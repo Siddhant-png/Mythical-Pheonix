@@ -14,9 +14,6 @@ export type NavTab =
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
-  userRole: UserRole;
-  setUserRole: (role: UserRole) => void;
-  activeCollabCount: number;
   currentUser: AuthUser | null;
   onOpenAuthModal: () => void;
   onLogout: () => void;

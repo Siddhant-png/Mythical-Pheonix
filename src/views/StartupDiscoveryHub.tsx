@@ -1,19 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { Startup, Problem, UserRole } from '../types';
 
 interface StartupDiscoveryHubProps {
-  currentStartup: Startup;
-  problems: Problem[];
-  userRole: UserRole;
-
-  onSelectProblemForApplication?: (
-    problemId: string,
-    isCollab: boolean,
-    bidAmount: number,
-    summary: string
-  ) => void;
-
   onOpenStartupProfile?: (startupId: string) => void;
 }
 

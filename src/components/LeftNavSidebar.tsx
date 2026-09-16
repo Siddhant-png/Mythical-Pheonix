@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { 
-  Building2, 
-  SearchCheck, 
   ChevronDown,
-  ChevronUp,
-  LayoutGrid
+  ChevronUp
 } from 'lucide-react';
 import { NavTab } from './Header';
 
@@ -12,17 +9,6 @@ interface LeftNavSidebarProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   onOpenStartupProfile?: (startupId: string) => void;
-  searchQuery?: string;
-  setSearchQuery?: any;
-  selectedSector?: string;
-  setSelectedSector?: any;
-  selectedStatus?: string;
-  setSelectedStatus?: any;
-  maxBudget?: number;
-  setMaxBudget?: any;
-  collabOnly?: boolean;
-  setCollabOnly?: any;
-  onResetFilters?: () => void;
 }
 
 export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({ 
@@ -34,10 +20,10 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
   const [isInnovationsOpen, setIsInnovationsOpen] = useState(true);
 
   const topNavItems = [
-    { id: 'problems', label: 'Home', icon: Building2, activeTabTarget: 'problems' as NavTab },
-    { id: 'categories', label: 'All Categories', icon: LayoutGrid, activeTabTarget: 'categories' as NavTab },
-    { id: 'feed', label: 'Solution Outcomes', icon: LayoutGrid, activeTabTarget: 'feed' as NavTab },
-    { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
+    { id: 'problems', label: 'Home', activeTabTarget: 'problems' as NavTab },
+    { id: 'categories', label: 'All Categories', activeTabTarget: 'categories' as NavTab },
+    { id: 'feed', label: 'Solution Outcomes', activeTabTarget: 'feed' as NavTab },
+    { id: 'discovery', label: 'Startup Discovery', activeTabTarget: 'discovery' as NavTab },
   ];
 
   const followedStartups = [

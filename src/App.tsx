@@ -16,50 +16,34 @@ import { CategoryExplorer } from './views/CategoryExplorer';
 import {
   fetchProblemsFromApi
 } from './services/api';
-import { ProcurementDraft } from './components/procurement/ProcurementCreationForm';
 
 import {
   INITIAL_PROBLEMS,
-  MANUFACTURERS,
   CURRENT_STARTUP,
   INITIAL_COLLABORATIONS,
   INITIAL_PILOTS,
   INITIAL_APPLICATIONS,
-  INITIAL_PROCUREMENTS,
-  INITIAL_SCALE_ADOPTIONS
+  INITIAL_PROCUREMENTS
 } from './data/mockData';
-
-import {
-  STARTUP_PROFILES,
-  DEFAULT_STARTUP_PROFILE
-} from './data/startupProfiles';
 
 import {
   Problem,
   Collaboration,
   Pilot,
   Procurement,
-  ScaleAdoption,
   Application,
-  ProcurementStatus,
   UserRole,
-  AuthUser
-  ,SolutionOutcome
-  ,SolutionProposal
+  AuthUser,
+  SolutionOutcome,
+  SolutionProposal
 } from './types';
 
 import { CheckCircle2 } from 'lucide-react';
-
-type ProfileMode = 'my' | 'public';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
 
   const [userRole, setUserRole] = useState<UserRole>('startup');
-  const [startupProfiles, setStartupProfiles] = useState(STARTUP_PROFILES);
-  const [selectedProfileId, setSelectedProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
-  const [myProfileId, setMyProfileId] = useState<string>(DEFAULT_STARTUP_PROFILE.id);
-  const [profileMode, setProfileMode] = useState<ProfileMode>('public');
 
   // Global Filter State for Problems
   const [searchQuery, setSearchQuery] = useState('');
@@ -122,18 +106,6 @@ export function App() {
     INITIAL_PROCUREMENTS
   );
 
-  const [scaleAdoptions, setScaleAdoptions] = useState<ScaleAdoption[]>(
-    INITIAL_SCALE_ADOPTIONS
-  );
-
-  useEffect(() => {
-    fetchProblemsFromApi().then((fetched) => {
-      if (fetched && fetched.length > 0) {
-        setProblems(fetched);
-      }
-    });
-  }, []);
-
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -156,18 +128,6 @@ export function App() {
     setCurrentUser(null);
     setAuthModalOpen(true);
     showToast('You have been logged out.');
-  };
-
-  // Collaboration handler
-  const handleAddNewCollaboration = (newCollab: Collaboration) => {
-    setCollaborations(previousCollaborations => [
-      newCollab,
-      ...previousCollaborations
-    ]);
-
-    showToast(
-      `Consortium formed with ${newCollab.manufacturerName}! Mutual NDA executed.`
-    );
   };
 
   // Problem creation handler
@@ -261,81 +221,6 @@ export function App() {
     );
   };
 
-  // Purchase order handler
-  const handleGeneratePO = (pilotId: string, poValue: number) => {
-    const targetPilot = pilots.find(pilot => pilot.id === pilotId);
-
-    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80) {
-      showToast('Procurement is blocked until pilot validation is PASSED with a score of 80 or higher.');
-      return;
-    }
-
-    const newPO: Procurement = {
-      id: `proc-${Date.now()}`,
-      pilotId,
-      problemTitle: targetPilot.problemTitle,
-      vendorName: targetPilot.applicantName,
-
-      poNumber: `MAHA-GOV-PO-2026-${Math.floor(
-        1000 + Math.random() * 9000
-      )}`,
-
-      finalPoValue: poValue,
-
-      gfrRuleReference:
-        'GFR-2017 Rule 149 / Maharashtra Startup Policy Sec 4.2',
-
-      deliveryTimelineWeeks: 6,
-
-      issuedAt: new Date().toISOString().split('T')[0],
-
-      adoptionsCount: 0,
-      status: 'PENDING_DELIVERY'
-    };
-
-    setProcurements(previousProcurements => [
-      newPO,
-      ...previousProcurements
-    ]);
-
-    showToast(
-      `Purchase Order ${newPO.poNumber} issued to ${targetPilot.applicantName}!`
-    );
-  };
-
-  const handleCreateProcurement = (draft: ProcurementDraft) => {
-    const targetPilot = pilots.find(pilot => pilot.id === draft.pilotId);
-    if (!targetPilot || targetPilot.status !== 'PASSED' || targetPilot.aggregateScore < 80 || procurements.some(procurement => procurement.pilotId === draft.pilotId)) {
-      showToast('This solution is not eligible for a new procurement order.');
-      return;
-    }
-
-    const newProcurement: Procurement = {
-      id: `proc-${Date.now()}`,
-      ...draft,
-      status: 'PENDING_DELIVERY'
-    };
-    setProcurements(previousProcurements => [newProcurement, ...previousProcurements]);
-    showToast(`Procurement order ${newProcurement.poNumber} created successfully.`);
-  };
-
-  const handleUpdateProcurementStatus = (procurementId: string, status: ProcurementStatus) => {
-    setProcurements(previousProcurements => previousProcurements.map(procurement => procurement.id === procurementId ? { ...procurement, status } : procurement));
-    showToast(`Procurement status updated to ${status.replace('_', ' ').toLowerCase()}.`);
-  };
-
-  // Scale adoption handler
-  const handleAdoptSolution = (newAdoption: ScaleAdoption) => {
-    setScaleAdoptions(previousAdoptions => [
-      newAdoption,
-      ...previousAdoptions
-    ]);
-
-    showToast(
-      `Solution replicated for ${newAdoption.adoptingDeptName}!`
-    );
-  };
-
   // Open startup profile
   const handleOpenStartupProfile = (startupId: string) => {
     setSelectedStartupId(startupId);
@@ -371,9 +256,6 @@ export function App() {
           // Close startup profile when changing main navigation
           setSelectedStartupId(null);
         }}
-        userRole={userRole}
-        setUserRole={setUserRole}
-        activeCollabCount={collaborations.length}
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
         onLogout={handleLogout}
@@ -401,17 +283,6 @@ export function App() {
                 setSelectedStartupId(null);
               }}
               onOpenStartupProfile={handleOpenStartupProfile}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              selectedSector={selectedSector}
-              setSelectedSector={setSelectedSector}
-              selectedStatus={selectedStatus}
-              setSelectedStatus={setSelectedStatus}
-              maxBudget={maxBudget}
-              setMaxBudget={setMaxBudget}
-              collabOnly={collabOnly}
-              setCollabOnly={setCollabOnly}
-              onResetFilters={handleResetFilters}
             />
           </div>
 
@@ -461,9 +332,6 @@ export function App() {
                 />
               ) : (
                 <StartupDiscoveryHub
-                  currentStartup={CURRENT_STARTUP}
-                  problems={problems}
-                  userRole={userRole}
                   onOpenStartupProfile={handleOpenStartupProfile}
                 />
               )
