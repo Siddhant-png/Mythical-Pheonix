@@ -9,6 +9,7 @@ export type NavTab =
   | 'discovery' 
   | 'profiles' 
   | 'dept-upload' 
+  | 'proposals'
   | 'account';
 
 interface HeaderProps {

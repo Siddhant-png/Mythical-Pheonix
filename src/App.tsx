@@ -40,6 +40,99 @@ import {
 
 import { CheckCircle2 } from 'lucide-react';
 
+interface GovernmentProposalReviewPanelProps {
+  proposals: SolutionProposal[];
+  onApproveProposal: (proposalId: string) => void;
+}
+
+const GovernmentProposalReviewPanel: React.FC<GovernmentProposalReviewPanelProps> = ({
+  proposals,
+  onApproveProposal,
+}) => {
+  if (proposals.length === 0) {
+    return (
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Government Review</p>
+            <h2 className="mt-2 text-2xl font-black text-slate-900">Proposed Solutions</h2>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+          <p className="text-sm font-semibold text-slate-600">No startup proposals have been submitted yet.</p>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Government Review</p>
+          <h2 className="mt-2 text-2xl font-black text-slate-900">Proposed Solutions</h2>
+        </div>
+        <span className="rounded-full bg-slate-900 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+          {proposals.length} pending
+        </span>
+      </div>
+
+      <div className="mt-6 space-y-4">
+        {proposals.map((proposal) => (
+          <article key={proposal.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              <div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+                  {proposal.problemTitle}
+                </div>
+                <h3 className="mt-2 text-lg font-black text-slate-900">{proposal.proposalTitle}</h3>
+                <p className="mt-1 text-sm text-slate-600">Submitted by {proposal.organizationName}</p>
+              </div>
+
+              <span
+                className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${
+                  proposal.status === 'APPROVED_FOR_PROCUREMENT'
+                    ? 'bg-emerald-100 text-emerald-800'
+                    : 'bg-amber-100 text-amber-800'
+                }`}
+              >
+                {proposal.status === 'APPROVED_FOR_PROCUREMENT' ? 'Approved' : 'Under Review'}
+              </span>
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Executive Summary</p>
+                <p className="mt-2 text-sm leading-6 text-slate-700">{proposal.executiveSummary}</p>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Proposed Solution</p>
+                <p className="mt-2 text-sm leading-6 text-slate-700">{proposal.proposedSolution}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+              <div className="text-[11px] text-slate-500">Submitted on {proposal.submittedAt}</div>
+
+              {proposal.status !== 'APPROVED_FOR_PROCUREMENT' && (
+                <button
+                  type="button"
+                  onClick={() => onApproveProposal(proposal.id)}
+                  className="inline-flex items-center rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white transition hover:bg-slate-700"
+                >
+                  Accept Proposal
+                </button>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 export function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('problems');
 
@@ -147,6 +240,18 @@ export function App() {
   const handleSubmitProposal = (proposal: SolutionProposal) => {
     setProposals(previousProposals => [proposal, ...previousProposals]);
     showToast('Proposal submitted for government review.');
+  };
+
+  const handleApproveProposal = (proposalId: string) => {
+    setProposals(previousProposals =>
+      previousProposals.map(proposal =>
+        proposal.id === proposalId
+          ? { ...proposal, status: 'APPROVED_FOR_PROCUREMENT' }
+          : proposal
+      )
+    );
+
+    showToast('Proposal accepted for procurement review.');
   };
 
   // Application submission handler
@@ -345,6 +450,13 @@ export function App() {
               />
             )}
 
+            {activeTab === 'proposals' && userRole === 'dept' && (
+              <GovernmentProposalReviewPanel
+                proposals={proposals}
+                onApproveProposal={handleApproveProposal}
+              />
+            )}
+
             {/* Self Account & Detailed Profile Page */}
             {activeTab === 'account' && (
               <SelfAccountProfile
@@ -374,6 +486,7 @@ export function App() {
                   setSelectedStartupId(null);
                 }}
                 activeCollabCount={collaborations.length}
+                userRole={userRole}
               />
             </div>
           )}
