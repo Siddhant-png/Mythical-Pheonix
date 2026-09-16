@@ -69,7 +69,7 @@ export interface SolutionOutcome {
   createdAt: string;
 }
 
-export type ProposalStatus = 'SUBMITTED' | 'UNDER_REVIEW' | 'SANDBOX_PILOT' | 'APPROVED_FOR_PROCUREMENT';
+export type ProposalStatus = 'SUBMITTED' | 'UNDER_REVIEW' | 'SANDBOX_PILOT' | 'APPROVED_FOR_PROCUREMENT' | 'REJECTED';
 
 export interface SolutionProposal {
   id: string;

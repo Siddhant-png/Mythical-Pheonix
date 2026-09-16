@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { 
+import {
+  Building2,
+  SearchCheck,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  LayoutGrid
 } from 'lucide-react';
 import { NavTab } from './Header';
 
@@ -9,10 +12,21 @@ interface LeftNavSidebarProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   onOpenStartupProfile?: (startupId: string) => void;
+  searchQuery?: string;
+  setSearchQuery?: any;
+  selectedSector?: string;
+  setSelectedSector?: any;
+  selectedStatus?: string;
+  setSelectedStatus?: any;
+  maxBudget?: number;
+  setMaxBudget?: any;
+  collabOnly?: boolean;
+  setCollabOnly?: any;
+  onResetFilters?: () => void;
 }
 
-export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({ 
-  activeTab, 
+export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
+  activeTab,
   setActiveTab,
   onOpenStartupProfile
 }) => {
@@ -20,10 +34,10 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
   const [isInnovationsOpen, setIsInnovationsOpen] = useState(true);
 
   const topNavItems = [
-    { id: 'problems', label: 'Home', activeTabTarget: 'problems' as NavTab },
-    { id: 'categories', label: 'All Categories', activeTabTarget: 'categories' as NavTab },
-    { id: 'feed', label: 'Solution Outcomes', activeTabTarget: 'feed' as NavTab },
-    { id: 'discovery', label: 'Startup Discovery', activeTabTarget: 'discovery' as NavTab },
+    { id: 'problems', label: 'Home', icon: Building2, activeTabTarget: 'problems' as NavTab },
+    { id: 'categories', label: 'All Categories', icon: LayoutGrid, activeTabTarget: 'categories' as NavTab },
+    { id: 'feed', label: 'Solution Outcomes', icon: LayoutGrid, activeTabTarget: 'feed' as NavTab },
+    { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
   ];
 
   const followedStartups = [
@@ -48,11 +62,10 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
             <button
               key={item.id}
               onClick={() => setActiveTab(item.activeTabTarget)}
-              className={`w-full flex items-center px-3 py-2 rounded-md text-xs font-semibold ${
-                isActive
+              className={`w-full flex items-center px-3 py-2 rounded-md text-xs font-semibold ${isActive
                   ? 'bg-slate-200 text-slate-900 font-bold'
                   : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-              }`}
+                }`}
             >
               <span className="truncate">{item.label}</span>
             </button>
@@ -61,11 +74,10 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
         <button
           onClick={() => setActiveTab('dept-upload')}
-          className={`w-full flex items-center px-3 py-2 rounded-md text-xs font-semibold ${
-            activeTab === 'dept-upload'
+          className={`w-full flex items-center px-3 py-2 rounded-md text-xs font-semibold ${activeTab === 'dept-upload'
               ? 'bg-slate-200 text-slate-900 font-bold'
               : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-          }`}
+            }`}
         >
           <span className="truncate">Post Challenge / RFP</span>
         </button>
@@ -75,7 +87,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
       {/* Followed Startups */}
       <div className="space-y-1">
-        <div 
+        <div
           onClick={() => setIsStartupsOpen(!isStartupsOpen)}
           className="flex items-center justify-between px-2 py-1 cursor-pointer text-[10px] font-bold text-slate-500 uppercase tracking-wider"
         >
@@ -104,7 +116,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
 
       {/* Followed Innovations */}
       <div className="space-y-1">
-        <div 
+        <div
           onClick={() => setIsInnovationsOpen(!isInnovationsOpen)}
           className="flex items-center justify-between px-2 py-1 cursor-pointer text-[10px] font-bold text-slate-500 uppercase tracking-wider"
         >

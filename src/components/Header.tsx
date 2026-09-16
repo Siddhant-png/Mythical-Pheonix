@@ -2,18 +2,22 @@ import React from 'react';
 import { LogIn } from 'lucide-react';
 import { UserRole, AuthUser } from '../types';
 
-export type NavTab = 
-  | 'problems' 
+export type NavTab =
+  | 'problems'
   | 'categories'
   | 'feed'
-  | 'discovery' 
-  | 'profiles' 
-  | 'dept-upload' 
+  | 'discovery'
+  | 'profiles'
+  | 'dept-upload'
+  | 'proposals'
   | 'account';
 
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
+  userRole: UserRole;
+  setUserRole: (role: UserRole) => void;
+  activeCollabCount: number;
   currentUser: AuthUser | null;
   onOpenAuthModal: () => void;
   onLogout: () => void;
@@ -38,10 +42,10 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveTab('problems')}>
-            <img 
-              src="/logo-transparent.png" 
-              alt="Converge" 
-              className="h-8 w-auto object-contain" 
+            <img
+              src="/logo-transparent.png"
+              alt="Converge"
+              className="h-8 w-auto object-contain"
             />
             <h1 className="text-lg font-bold font-heading text-slate-900 tracking-tight">
               Converge
@@ -52,11 +56,10 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Circular Profile Button (Self Account Page) */}
             <button
               onClick={onOpenMyProfile}
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
-                activeTab === 'account'
+              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${activeTab === 'account'
                   ? 'bg-slate-900 text-white'
                   : 'bg-slate-200 text-slate-700'
-              }`}
+                }`}
             >
               <span>{userInitials}</span>
             </button>

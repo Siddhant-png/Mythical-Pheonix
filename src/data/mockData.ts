@@ -1,4 +1,4 @@
-import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption } from '../types';
+import { Problem, Startup, Manufacturer, Collaboration, Application, Pilot, Procurement, ScaleAdoption, SolutionProposal } from '../types';
 
 export interface UserInterest {
   id: string;
@@ -1111,5 +1111,42 @@ export const INITIAL_SCALE_ADOPTIONS: ScaleAdoption[] = [
     adoptedOn: '2026-09-07',
     addonContractValue: 3100000, // ₹31 Lakhs
     deploymentLocation: 'Godavari Riverbank Municipal Supply Pipeline'
+  }
+];
+
+export const INITIAL_PROPOSALS: SolutionProposal[] = [
+  {
+    id: 'prop-101',
+    problemId: 'prob-101',
+    problemTitle: 'AI-Powered Computer Vision for Automated Pothole & Road Quality Indexing',
+    proposalTitle: 'Drishti Edge Road Quality AI Telemetry System',
+    organizationName: 'Drishti Edge Technologies Pvt Ltd',
+    executiveSummary: 'Edge AI computer vision platform mounted on public transit buses to automatically detect and index road potholes in real time.',
+    problemUnderstanding: 'Covers over 300,000 km of state highways using automated vehicle telemetry without manual inspection overhead.',
+    proposedSolution: 'IP67 Modular Jetson Orin Nano camera units connected to GIS central command dashboard with auto-generated repair tickets.',
+    implementationApproach: 'Phase 1 pilot on 50 MSRTC buses in Pune & Nashik divisions over 8 weeks.',
+    expectedOutcome: '100% automated road coverage with under 2-meter GPS accuracy for pothole repair dispatches.',
+    timeline: '8 Weeks Pilot',
+    demoLink: 'https://example.com/demo-drishti',
+    supportingDocuments: ['DPIIT-Cert.pdf', 'Technical-Architecture.pdf'],
+    status: 'SUBMITTED',
+    submittedAt: '2026-09-14'
+  },
+  {
+    id: 'prop-102',
+    problemId: 'prob-102',
+    problemTitle: 'LoRaWAN Smart Acoustic Sensor for Drinking Water Pipeline Leakage Localization',
+    proposalTitle: 'AquaPulse Acoustic Leakage Localization & GIS Telemetry',
+    organizationName: 'AquaPulse Sensing Technologies',
+    executiveSummary: 'Smart acoustic hydro-sensors deployed along municipal water trunks with LoRaWAN gateways for zero-touch leak localization.',
+    problemUnderstanding: 'Detects non-revenue water loss (NRW) in municipal supply pipelines before surface rupture occurs.',
+    proposedSolution: 'Ultra-low-power acoustic transducers paired with GIS mapping portal and automated pressure valve controls.',
+    implementationApproach: 'Sandbox pilot deployment across 15 km primary water trunk in Thane district.',
+    expectedOutcome: 'Reduction of NRW water loss by 35% within 60 days of deployment.',
+    timeline: '6 Weeks Sandbox',
+    demoLink: 'https://example.com/demo-aquapulse',
+    supportingDocuments: ['ISO-TestReport.pdf', 'DPIIT-AquaPulse.pdf'],
+    status: 'SANDBOX_PILOT',
+    submittedAt: '2026-09-10'
   }
 ];

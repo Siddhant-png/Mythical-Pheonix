@@ -1,7 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { Search, X, ArrowRight } from 'lucide-react';
+import { Startup, Problem, UserRole } from '../types';
 
 interface StartupDiscoveryHubProps {
+  currentStartup: Startup;
+  problems: Problem[];
+  userRole: UserRole;
+
+  onSelectProblemForApplication?: (
+    problemId: string,
+    isCollab: boolean,
+    bidAmount: number,
+    summary: string
+  ) => void;
+
   onOpenStartupProfile?: (startupId: string) => void;
 }
 
@@ -118,9 +130,9 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
           <p className="text-sm text-slate-300 mt-3">{selectedStartup.description}</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
             {[
-              ['Sector', selectedStartup.sector], 
-              ['Stage', selectedStartup.stage], 
-              ['Location', selectedStartup.location], 
+              ['Sector', selectedStartup.sector],
+              ['Stage', selectedStartup.stage],
+              ['Location', selectedStartup.location],
               ['Upvotes', `${selectedStartup.upvotes}`]
             ].map(([label, value]) => (
               <div key={label} className="rounded-xl bg-white/10 p-3">
