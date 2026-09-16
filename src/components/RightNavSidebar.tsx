@@ -1,13 +1,17 @@
 import React from 'react';
 import { NavTab } from './Header';
+import { UserRole } from '../types';
 
 interface RightNavSidebarProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
   activeCollabCount: number;
+  userRole?: UserRole;
 }
 
-export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, setActiveTab }) => {
+export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, setActiveTab, userRole }) => {
+  const isGovernmentView = userRole === 'dept';
+
   return (
     <aside className="w-full font-body sticky top-[72px] space-y-3">
       <div className="bg-white rounded-md border border-slate-200 p-3 space-y-2">
@@ -25,17 +29,6 @@ export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, set
             }`}
           >
             <span className="truncate">Post Challenge / RFP</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('proposals')}
-            className={`w-full flex items-center px-3 py-2 rounded-md text-xs font-semibold ${
-              activeTab === 'proposals'
-                ? 'bg-slate-900 text-white font-bold'
-                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-            }`}
-          >
-            <span className="truncate">Proposed Solutions</span>
           </button>
 
           <button
@@ -59,6 +52,19 @@ export const RightNavSidebar: React.FC<RightNavSidebarProps> = ({ activeTab, set
           >
             <span className="truncate">Browse Categories</span>
           </button>
+
+          {isGovernmentView && (
+            <button
+              onClick={() => setActiveTab('proposals')}
+              className={`w-full flex items-center px-3 py-2 rounded-lg text-xs font-semibold ${
+                activeTab === 'proposals'
+                  ? 'bg-slate-900 text-white font-bold'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+              }`}
+            >
+              <span className="truncate">Proposed Solutions</span>
+            </button>
+          )}
         </nav>
       </div>
     </aside>

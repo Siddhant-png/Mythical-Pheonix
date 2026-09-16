@@ -521,6 +521,7 @@ export function App() {
                   setSelectedStartupId(null);
                 }}
                 activeCollabCount={collaborations.length}
+                userRole={userRole}
               />
             </div>
           )}
