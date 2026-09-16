@@ -45,6 +45,7 @@ interface HeaderProps {
   activeCollabCount: number;
   currentUser: AuthUser | null;
   onOpenAuthModal: () => void;
+  onLogout: () => void;
   onOpenMyProfile: () => void;
 }
 
@@ -56,6 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeCollabCount,
   currentUser,
   onOpenAuthModal,
+  onLogout,
   onOpenMyProfile
 }) => {
   const userInitials = currentUser?.name
@@ -89,16 +91,6 @@ export const Header: React.FC<HeaderProps> = ({
           {/* User Persona & Authentication Bar */}
           <div className="flex items-center space-x-3 flex-wrap gap-y-2">
 
-            {/* Auth Modal Trigger */}
-            <button
-              onClick={onOpenAuthModal}
-              className="inline-flex items-center space-x-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3 py-2 rounded-xl border border-slate-200 transition shrink-0"
-              title="Verify DPIIT Credentials / Log In"
-            >
-              <LogIn className="w-3.5 h-3.5 text-govblue-800" />
-              <span className="hidden sm:inline">Verify / Auth</span>
-            </button>
-
             {/* Circular Profile Button (Self Account Page) */}
             <button
               onClick={onOpenMyProfile}
@@ -109,6 +101,15 @@ export const Header: React.FC<HeaderProps> = ({
                 }`}
             >
               <span>{userInitials}</span>
+            </button>
+
+            <button
+              onClick={currentUser ? onLogout : onOpenAuthModal}
+              className="inline-flex items-center space-x-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3 py-2 rounded-xl border border-slate-200 transition shrink-0"
+              title={currentUser ? 'Log out' : 'Log in'}
+            >
+              {!currentUser && <LogIn className="w-3.5 h-3.5 text-govblue-800" />}
+              <span>{currentUser ? 'Logout' : 'Log in'}</span>
             </button>
           </div>
         </div>

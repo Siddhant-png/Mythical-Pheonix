@@ -154,6 +154,12 @@ export function App() {
     showToast(`Welcome ${user.name}! Verified as ${user.verificationBadge}`);
   };
 
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setAuthModalOpen(true);
+    showToast('You have been logged out.');
+  };
+
   // Collaboration handler
   const handleAddNewCollaboration = (newCollab: Collaboration) => {
     setCollaborations(previousCollaborations => [
@@ -361,6 +367,7 @@ export function App() {
         activeCollabCount={collaborations.length}
         currentUser={currentUser}
         onOpenAuthModal={() => setAuthModalOpen(true)}
+        onLogout={handleLogout}
         onOpenMyProfile={handleOpenMyProfile}
       />
 
