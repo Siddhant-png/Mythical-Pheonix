@@ -36,6 +36,7 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
   const topNavItems = [
     { id: 'problems', label: 'Home', icon: Building2, activeTabTarget: 'problems' as NavTab },
     { id: 'categories', label: 'All Categories', icon: LayoutGrid, activeTabTarget: 'categories' as NavTab },
+    { id: 'feed', label: 'Solution Outcomes', icon: LayoutGrid, activeTabTarget: 'feed' as NavTab },
     { id: 'discovery', label: 'Startup Discovery', icon: SearchCheck, activeTabTarget: 'discovery' as NavTab },
   ];
 
