@@ -16,13 +16,10 @@ import { StandardTemplatesVault } from './views/StandardTemplatesVault';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
 import { CivicShortsFeed } from './views/CivicShortsFeed';
-import { Messages } from './views/Messages';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
 import { CategoryExplorer } from './views/CategoryExplorer';
 
 import {
-  fetchUserInterestsFromApi,
-  saveUserInterestsToApi,
   fetchProblemsFromApi
 } from './services/api';
 import { ProcurementDraft } from './components/procurement/ProcurementCreationForm';
@@ -75,20 +72,9 @@ export function App() {
   const [maxBudget, setMaxBudget] = useState(10000000);
   const [collabOnly, setCollabOnly] = useState(false);
 
-  // User Selected Domain Interests State
-  const [selectedInterestIds, setSelectedInterestIds] = useState<string[]>([
-    'ai-vision',
-    'agri-drones',
-    'medtech',
-    'clean-water'
-  ]);
-
   // Load backend data on mount
   useEffect(() => {
     async function initBackendData() {
-      const interests = await fetchUserInterestsFromApi();
-      setSelectedInterestIds(interests);
-
       const loadedProblems = await fetchProblemsFromApi();
       if (loadedProblems.length > 0) {
         setProblems(loadedProblems);
@@ -96,20 +82,6 @@ export function App() {
     }
     initBackendData();
   }, []);
-
-  const handleToggleInterest = (id: string) => {
-    setSelectedInterestIds(prev => {
-      const isSelected = prev.includes(id);
-      const next = isSelected ? prev.filter(item => item !== id) : [...prev, id];
-      saveUserInterestsToApi(next);
-      showToast(
-        isSelected
-          ? 'Interest removed from Left Navigation Bar.'
-          : 'Interest added to Left Navigation Bar!'
-      );
-      return next;
-    });
-  };
 
   const handleResetFilters = () => {
     setSearchQuery('');
@@ -155,6 +127,14 @@ export function App() {
   const [scaleAdoptions, setScaleAdoptions] = useState<ScaleAdoption[]>(
     INITIAL_SCALE_ADOPTIONS
   );
+
+  useEffect(() => {
+    fetchProblemsFromApi().then((fetched) => {
+      if (fetched && fetched.length > 0) {
+        setProblems(fetched);
+      }
+    });
+  }, []);
 
   // Notification toast
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -416,7 +396,6 @@ export function App() {
               collabOnly={collabOnly}
               setCollabOnly={setCollabOnly}
               onResetFilters={handleResetFilters}
-              selectedInterestIds={selectedInterestIds}
             />
           </div>
 
@@ -515,8 +494,6 @@ export function App() {
             {activeTab === 'templates' && (
               <StandardTemplatesVault userRole={userRole} />
             )}
-            {/* Messages */}
-            {activeTab === 'messages' && <Messages />}
 
             {/* Tiers */}
             {activeTab === 'tiers' && (
@@ -561,8 +538,6 @@ export function App() {
                   setActiveTab(tab);
                   setSelectedStartupId(null);
                 }}
-                selectedInterestIds={selectedInterestIds}
-                onToggleInterest={handleToggleInterest}
               />
             )}
           </div>

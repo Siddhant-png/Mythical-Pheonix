@@ -9,54 +9,59 @@ import {
 } from '../types';
 
 export const TIER_DEFINITIONS: TierDefinition[] = [
-  { tier: 'IDEA', level: 1, label: 'Idea / Problem Solving', description: 'A solution has been submitted against a government problem.', requirement: 'Submitted application' },
-  { tier: 'PILOT_READY', level: 2, label: 'Pilot Ready', description: 'The solution has been selected for a monitored sandbox pilot.', requirement: 'Pilot approved or running' },
-  { tier: 'PILOT_VALIDATED', level: 3, label: 'Pilot Validated', description: 'The pilot has completed evaluation successfully.', requirement: 'Pilot status is PASSED' },
-  { tier: 'PROCUREMENT_READY', level: 4, label: 'Procurement Ready', description: 'The validated solution meets the direct procurement threshold.', requirement: 'Passed pilot with score of 80 or higher' },
-  { tier: 'PROCURRED', level: 5, label: 'Procured', description: 'A government purchase order has been issued.', requirement: 'Linked procurement order' },
-  { tier: 'SCALED', level: 6, label: 'Scaled / Adopted', description: 'Additional departments or locations have adopted the solution.', requirement: 'At least one scale adoption' }
+  { tier: 'RANK_1', level: 1, label: 'Rank 1 (Top Tier)', description: 'Highest community upvoted solution in the platform.', requirement: '>= 1,000 Upvotes' },
+  { tier: 'RANK_2', level: 2, label: 'Rank 2 (High Tier)', description: 'High community endorsement and active support.', requirement: '500 - 999 Upvotes' },
+  { tier: 'RANK_3', level: 3, label: 'Rank 3 (Mid Tier)', description: 'Moderate community upvotes and field traction.', requirement: '250 - 499 Upvotes' },
+  { tier: 'RANK_4', level: 4, label: 'Rank 4 (Growing)', description: 'Growing community interest and pilot entries.', requirement: '100 - 249 Upvotes' },
+  { tier: 'RANK_5', level: 5, label: 'Rank 5 (Emerging)', description: 'Initial community upvotes and entry stage.', requirement: '< 100 Upvotes' }
 ];
+
+export function getRankFromUpvotes(upvotes: number = 0): StartupTier {
+  if (upvotes >= 1000) return 'RANK_1';
+  if (upvotes >= 500) return 'RANK_2';
+  if (upvotes >= 250) return 'RANK_3';
+  if (upvotes >= 100) return 'RANK_4';
+  return 'RANK_5';
+}
 
 export const calculateStartupTier = (
   application: Application | undefined,
   pilot: Pilot | undefined,
   procurement: Procurement | undefined,
-  adoptions: ScaleAdoption[]
+  adoptions: ScaleAdoption[],
+  upvotes: number = 750
 ): StartupTierStatus => {
-  const completed: StartupTier[] = [];
+  const currentTier = getRankFromUpvotes(upvotes);
 
-  if (application) completed.push('IDEA');
+  const levelMap: Record<StartupTier, number> = {
+    RANK_1: 1,
+    RANK_2: 2,
+    RANK_3: 3,
+    RANK_4: 4,
+    RANK_5: 5
+  };
 
-  const pilotReady = Boolean(pilot && (
-    application?.status === 'PILOT_APPROVED' ||
-    pilot.status === 'RUNNING' ||
-    pilot.status === 'EVALUATION_PENDING' ||
-    pilot.status === 'PASSED'
-  ));
-  if (pilotReady) completed.push('PILOT_READY');
+  const currentLevel = levelMap[currentTier];
 
-  const pilotValidated = pilot?.status === 'PASSED';
-  if (pilotValidated) completed.push('PILOT_VALIDATED');
+  const completed: StartupTier[] = TIER_DEFINITIONS
+    .filter(d => d.level >= currentLevel)
+    .map(d => d.tier);
 
-  const procurementReady = Boolean(pilotValidated && (pilot?.aggregateScore || 0) >= 80);
-  if (procurementReady) completed.push('PROCUREMENT_READY');
-
-  if (procurement) completed.push('PROCURRED');
-  if (adoptions.length > 0) completed.push('SCALED');
-
-  const currentTier = completed.length > 0 ? completed[completed.length - 1] : null;
-  const completedSet = new Set(completed);
   const stateByTier = TIER_DEFINITIONS.reduce<Record<StartupTier, 'COMPLETED' | 'CURRENT' | 'UPCOMING'>>((states, definition) => {
-    states[definition.tier] = completedSet.has(definition.tier) ? 'COMPLETED' : 'UPCOMING';
+    if (definition.tier === currentTier) {
+      states[definition.tier] = 'CURRENT';
+    } else if (definition.level > currentLevel) {
+      states[definition.tier] = 'COMPLETED';
+    } else {
+      states[definition.tier] = 'UPCOMING';
+    }
     return states;
   }, {} as Record<StartupTier, 'COMPLETED' | 'CURRENT' | 'UPCOMING'>);
-
-  if (currentTier) stateByTier[currentTier] = 'CURRENT';
 
   return {
     currentTier,
     completedTiers: completed,
-    upcomingTiers: TIER_DEFINITIONS.map(definition => definition.tier).filter(tier => !completedSet.has(tier)),
+    upcomingTiers: TIER_DEFINITIONS.map(d => d.tier).filter(t => t !== currentTier),
     stateByTier,
     evidence: {
       applicationId: application?.id,

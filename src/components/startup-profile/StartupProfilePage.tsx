@@ -45,10 +45,10 @@ export const StartupProfilePage: React.FC<StartupProfilePageProps> = ({ profile,
       tone: 'sky' as const
     },
     {
-      label: 'Readiness',
-      value: `${profile.stats.readinessScore}/100`,
-      subtext: 'Public sector readiness',
-      tone: 'slate' as const
+      label: 'Upvotes',
+      value: `${profile.stats.upvotes || 0}`,
+      subtext: 'Community rank votes',
+      tone: 'amber' as const
     }
   ];
 
@@ -131,8 +131,8 @@ export const StartupProfilePage: React.FC<StartupProfilePageProps> = ({ profile,
           >
             <div className="space-y-3 text-sm text-slate-700">
               <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-3">
-                <span className="font-semibold">Public readiness</span>
-                <span className="font-black text-emerald-700">{profile.stats.readinessScore}/100</span>
+                <span className="font-semibold">Community Upvotes</span>
+                <span className="font-black text-amber-600">{profile.stats.upvotes || 0}</span>
               </div>
               <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-3">
                 <span className="font-semibold">Innovation stack</span>
@@ -166,8 +166,8 @@ export const StartupProfilePage: React.FC<StartupProfilePageProps> = ({ profile,
                 </a>
               )}
               <div className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-700">
-                <div className="flex items-center gap-2"><TrendingUp className="h-4 w-4 text-emerald-600" /> <span className="font-semibold">Readiness score</span></div>
-                <div className="mt-2 text-2xl font-black text-slate-900">{profile.stats.readinessScore}/100</div>
+                <div className="flex items-center gap-2"><TrendingUp className="h-4 w-4 text-amber-600" /> <span className="font-semibold">Total Upvotes</span></div>
+                <div className="mt-2 text-2xl font-black text-slate-900">{profile.stats.upvotes || 0}</div>
               </div>
             </div>
           </ProfileSection>

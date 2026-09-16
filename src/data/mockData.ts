@@ -393,6 +393,498 @@ export const INITIAL_PROBLEMS: Problem[] = [
       { metric: 'Satellite Inundation Model Refresh', minTarget: '<= 30 minutes', weightage: 35 },
       { metric: 'Solar-Powered Battery Backup', minTarget: '>= 14 Days', weightage: 25 }
     ]
+  },
+  {
+    id: 'prob-110',
+    deptId: 'dept-maha-forest',
+    deptName: 'Forest Department & Wildlife Conservation, Maharashtra',
+    title: 'AI Thermal Vision & Seismic Sensor Array for Early Human-Elephant Conflict Mitigation',
+    description: 'Solar-powered perimeter sensor towers with edge AI thermal imaging and ground seismic vibration telemetry to detect wild elephant herd movements near village borders and auto-trigger audio deterrents.',
+    sector: 'Smart Automation & AI',
+    budgetCeiling: 5800000, // ₹58 Lakhs
+    deadline: '2026-11-10',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized IoT or AI startup with proven edge vision models or joint consortium with solar/sensor hardware manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-12',
+    heroImage: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:30 mins',
+    videoTitle: 'Forest Dept Briefing: Thermal Vision & Seismic Telemetry in Wildlife Corridors',
+    targetBeneficiaries: [
+      { title: 'Forest Border Villagers', desc: 'Prevents crop destruction and fatal nocturnal encounters in border agricultural lands.' },
+      { title: 'Range Forest Officers (RFO)', desc: 'Instant geo-fenced SMS alerts detailing herd direction and movement velocity.' },
+      { title: 'Wildlife Conservation Cell', desc: 'Non-invasive tracking mapping migratory corridors across Sindhudurg & Kolhapur.' }
+    ],
+    whyNeeded: 'Unpredicted elephant herd crossings into agricultural fields in southern Maharashtra cause severe crop damage and loss of human life annually, triggering intense human-wildlife friction.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Harvest season requires immediate perimeter telemetry deployment in high-conflict forest beats.',
+    severityScore: 9.3,
+    publicImpactMetrics: [
+      { label: 'Crop Damage Cut', value: '75%', subtext: 'Targeted reduction in village boundary breaches' },
+      { label: 'Alert Trigger Speed', value: '< 30 Seconds', subtext: 'Instant siren & SMS dispatch to villagers' },
+      { label: 'Corridor Coverage', value: '180 km', subtext: 'Perimeter monitoring along reserve boundaries' }
+    ],
+    keywords: ['#ThermalAI', '#WildlifeTelemetry', '#SeismicSensors', '#ForestDept', '#HumanElephantConflict'],
+    kpiBenchmarks: [
+      { metric: 'Thermal Night AI Detection Accuracy', minTarget: '>= 94%', weightage: 40 },
+      { metric: 'Seismic Footfall Signal Range', minTarget: '>= 150 meters', weightage: 35 },
+      { metric: 'Solar Battery Standby Autonomy', minTarget: '>= 5 Days', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-111',
+    deptId: 'dept-maha-pollution',
+    deptName: 'Maharashtra Pollution Control Board (MPCB)',
+    title: 'Autonomous Solar River-Surface Skimmer & Microplastic Monitoring Buoy',
+    description: 'Self-navigating catamaran buoy equipped with optical particle counters, oil-slick absorption belts, and satellite telemetry to map industrial chemical discharge and microplastics in Mula-Mutha river basin.',
+    sector: 'Clean Energy & Water',
+    budgetCeiling: 6400000, // ₹64 Lakhs
+    deadline: '2026-10-20',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized CleanTech startup with autonomous vessel telemetry or consortium with marine equipment OEMs.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-08-30',
+    heroImage: 'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:05 mins',
+    videoTitle: 'MPCB Environmental Challenge: Autonomous River Skimmer & Real-Time Chemical Telemetry',
+    targetBeneficiaries: [
+      { title: 'Riverfront Urban Residents', desc: 'Reduces foul odor, foam formation, and toxic floating debris along urban river stretches.' },
+      { title: 'MPCB Environmental Auditors', desc: 'Live GIS mapping identifying illegal nocturnal industrial chemical dumping spots.' },
+      { title: 'Downstream Water Treatment Plants', desc: 'Early warning alerts before chemical surges reach municipal drinking water intakes.' }
+    ],
+    whyNeeded: 'Untreated industrial effluents and macro-plastics clog urban riverways, deteriorating water quality indices and harming aquatic biodiversity.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Post-monsoon river restoration requires real-time automated effluent tracking.',
+    severityScore: 9.2,
+    publicImpactMetrics: [
+      { label: 'Surface Debris Collected', value: '2.4 Tons/Day', subtext: 'Target skimming capacity per fleet' },
+      { label: 'Illegal Dumping Flagged', value: '100% Traceable', subtext: 'GPS time-stamped chemical telemetry' },
+      { label: 'Solar Autonomous Run', value: '12 Hours/Day', subtext: 'Continuous zero-emission operation' }
+    ],
+    keywords: ['#CleanTech', '#RiverSkimmer', '#WaterTelemetry', '#MPCB', '#MicroplasticMonitoring'],
+    kpiBenchmarks: [
+      { metric: 'Chemical Discharge Telemetry Latency', minTarget: '< 2 minutes', weightage: 40 },
+      { metric: 'Autonomous Navigation Obstacle Avoidance', minTarget: '>= 98%', weightage: 35 },
+      { metric: 'Solar Charge Autonomy', minTarget: '>= 10 Hours', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-112',
+    deptId: 'dept-maha-urban-waste',
+    deptName: 'Swachh Maharashtra Mission & Municipal Administration',
+    title: 'IoT Fill-Level Telemetry & Automated Methane Sensor Network for Secondary Waste Transfer Stations',
+    description: 'Ruggedized ultrasonic bin telemetry nodes with gas monitoring and AI route optimization for municipal waste collection vehicles to prevent landfill fires and overflow.',
+    sector: 'Smart Mobility & Logistics',
+    budgetCeiling: 4200000, // ₹42 Lakhs
+    deadline: '2026-12-05',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized IoT telemetry startup or joint venture with municipal hardware manufacturers.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-09-14',
+    heroImage: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:20 mins',
+    videoTitle: 'Swachh Mission Brief: Ultrasonic Fill Telemetry & Methane Early Warning in Waste Hubs',
+    targetBeneficiaries: [
+      { title: 'Municipal Waste Logistics Teams', desc: 'Dynamic pickup dispatch saving up to 30% in vehicle diesel consumption.' },
+      { title: 'Neighborhood Communities', desc: 'Eliminates bin overflows, foul odors, and fly breeding near secondary dump yards.' },
+      { title: 'Municipal Fire Officers', desc: 'Methane gas build-up warnings preventing catastrophic landfill fires.' }
+    ],
+    whyNeeded: 'Unmonitored garbage transfer stations frequently overflow, while decaying organic waste generates hazardous methane hotspots that ignite stubborn landfill blazes.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Summer heat accentuates methane buildup and requires automated fill-level routing.',
+    severityScore: 8.9,
+    publicImpactMetrics: [
+      { label: 'Logistics Fuel Saved', value: '30%', subtext: 'Through AI-optimized pickup routes' },
+      { label: 'Landfill Fire Incidents', value: 'Zero Target', subtext: 'Early methane venting alert' },
+      { label: 'Bin Telemetry Nodes', value: '1,200 Bins', subtext: 'City-wide transfer station coverage' }
+    ],
+    keywords: ['#SmartWaste', '#IoTBins', '#MethaneDetection', '#SwachhBharat', '#RouteOptimization'],
+    kpiBenchmarks: [
+      { metric: 'Ultrasonic Fill Level Precision', minTarget: '<= 2.0 cm', weightage: 40 },
+      { metric: 'Methane Gas Detection Threshold', minTarget: '>= 50 PPM', weightage: 35 },
+      { metric: 'Battery Lifespan in Harsh Enclosures', minTarget: '>= 3 Years', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-113',
+    deptId: 'dept-maha-power',
+    deptName: 'Maharashtra State Electricity Distribution Co. Ltd (MSEDCL)',
+    title: 'AI Transformer Health Diagnostics & Acoustic Partial Discharge Telemetry Sensor',
+    description: 'Non-invasive acoustic and thermal imaging sensors mounted on distribution transformers to detect insulation breakdown, partial discharge, and imminent oil overload before grid blackouts.',
+    sector: 'Clean Energy & Water',
+    budgetCeiling: 8800000, // ₹88 Lakhs
+    deadline: '2026-11-28',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized Smart Grid startup or joint consortium with power equipment OEM manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-04',
+    heroImage: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:30 mins',
+    videoTitle: 'MSEDCL Grid Challenge: Acoustic Partial Discharge & Thermal Transformer Telemetry',
+    targetBeneficiaries: [
+      { title: 'Electricity Consumers & Farmers', desc: 'Prevents sudden agricultural feeder blackouts and transformer burnouts during peak pumping hours.' },
+      { title: 'Substation Maintenance Engineers', desc: 'Predictive maintenance dashboard flagging failing units 7 days before physical explosion.' },
+      { title: 'State Power Distribution Co.', desc: 'Saves millions in emergency transformer replacement and revenue loss.' }
+    ],
+    whyNeeded: 'Distribution transformers frequently explode during summer load peaks due to unnoticed internal arcing and oil degradation, disrupting power supply to rural communities.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Preventing catastrophic distribution transformer failures ahead of high-demand agricultural seasons.',
+    severityScore: 9.4,
+    publicImpactMetrics: [
+      { label: 'Transformer Outages Cut', value: '80%', subtext: 'Prevented burnout catastrophic events' },
+      { label: 'Early Failure Notice', value: '7 Days Ahead', subtext: 'Predictive acoustic telemetry alert' },
+      { label: 'Repair Cost Saved', value: '₹18 Cr', subtext: 'Annual MSEDCL capital savings' }
+    ],
+    keywords: ['#SmartGrid', '#PartialDischarge', '#TransformerAI', '#MSEDCL', '#PowerTelemetry'],
+    kpiBenchmarks: [
+      { metric: 'Acoustic Arcing Detection Sensitivity', minTarget: '>= 95%', weightage: 40 },
+      { metric: 'Thermal Hotspot Sensor Accuracy', minTarget: '<= 0.5 °C', weightage: 35 },
+      { metric: 'High Voltage Surge Immunity', minTarget: 'Passed IEEE Spec', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-114',
+    deptId: 'dept-maha-ayush',
+    deptName: 'AYUSH & Public Health Department, Govt of Maharashtra',
+    title: 'Handheld Non-Invasive Anemia & Malnutrition Screener for Anganwadi Centers',
+    description: 'Optical multispectral fingertip scanner for instant non-invasive hemoglobin estimation and child stunting telemetry without blood sampling, designed for rural Anganwadi workers.',
+    sector: 'MedTech & Public Health',
+    budgetCeiling: 4900000, // ₹49 Lakhs
+    deadline: '2026-11-18',
+    status: 'OPEN',
+    eligibilityCriteria: 'CDSCO compliantprototype or DPIIT MedTech startup with clinical trial data.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-08-25',
+    heroImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:40 mins',
+    videoTitle: 'Anganwadi Health Tech: Non-Invasive Hemoglobin Scanning & Child Malnutrition AI',
+    targetBeneficiaries: [
+      { title: 'Pregnant Women & Young Children', desc: 'Pain-free, needleless screening eliminating bio-hazard waste and fear of blood prick.' },
+      { title: 'Anganwadi Workers & Sevika', desc: 'Instant 10-second readout synced automatically to Poshan Abhiyaan database.' },
+      { title: 'District Child Development Officers', desc: 'Identifies severely acute malnourished (SAM) children for immediate nutritional intervention.' }
+    ],
+    whyNeeded: 'Over 54% of adolescent girls and pregnant women in rural Maharashtra suffer from undiagnosed anemia due to reluctance toward invasive needle pricks and needle shortages at local health camps.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Accelerating non-invasive anemia screening under Poshan Abhiyaan targets.',
+    severityScore: 9.0,
+    publicImpactMetrics: [
+      { label: 'Screening Time per Child', value: '10 Seconds', subtext: 'Instant needleless optical result' },
+      { label: 'Anemia Detection Rate', value: '3x Higher', subtext: 'Comprehensive door-to-door Anganwadi screening' },
+      { label: 'Biohazard Waste', value: 'Zero Pricks', subtext: '100% non-invasive multispectral optics' }
+    ],
+    keywords: ['#MedTech', '#NonInvasiveAnemia', '#PoshanAbhiyaan', '#AnganwadiTech', '#PublicHealth'],
+    kpiBenchmarks: [
+      { metric: 'Hemoglobin Estimation Accuracy (vs Lab Standard)', minTarget: '>= 93%', weightage: 45 },
+      { metric: 'Battery Operability on Full Charge', minTarget: '>= 12 Hours', weightage: 30 },
+      { metric: 'CDSCO Safety Compliance', minTarget: 'Certified', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-115',
+    deptId: 'dept-maha-cyber',
+    deptName: 'Maharashtra Cyber Security Cell & Home Department',
+    title: 'Deepfake Detection & AI Synthetic Audio Analysis Engine for Public Cybercrime Portals',
+    description: 'Real-time deepfake video authentication and voice-biometric anti-spoofing engine integrated into state law enforcement portals to flag AI-generated financial fraud and extortion media.',
+    sector: 'Smart Automation & AI',
+    budgetCeiling: 9200000, // ₹92 Lakhs
+    deadline: '2026-12-10',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized CyberSecurity / AI startup or joint consortium with forensics software developers.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-09-15',
+    heroImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:50 mins',
+    videoTitle: 'MahaCyber Security Challenge: Deepfake Video Authentication & Synthetic Audio Forensics',
+    targetBeneficiaries: [
+      { title: 'Citizens & Financial Fraud Victims', desc: 'Rapid verification of suspicious video calls or voice notes impersonating family members.' },
+      { title: 'State Cyber Police Investigators', desc: 'Automated forensic report generation admissible in court proceedings.' },
+      { title: 'Financial Institutions & Banks', desc: 'Prevents synthetic voice spoofing during digital KYC video verifications.' }
+    ],
+    whyNeeded: 'Surging generative AI capabilities are misused by cyber criminals to craft realistic deepfake video calls and cloned voice messages for financial extortion and identity fraud.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Rapid rise in AI-synthesized cyber fraud requires automated forensic screening.',
+    severityScore: 9.6,
+    publicImpactMetrics: [
+      { label: 'Deepfake Detection Accuracy', value: '97.4%', subtext: 'Benchmarked on multi-modal synthetic media' },
+      { label: 'Forensic Analysis Latency', value: '< 5 Seconds', subtext: 'Real-time media stream authentication' },
+      { label: 'Cyber Helpline Integration', value: '1930 Portal', subtext: 'Direct state cybercrime cell hook' }
+    ],
+    keywords: ['#DeepfakeDetection', '#CyberForensics', '#AIAuthentication', '#MahaCyber', '#VoiceBiometrics'],
+    kpiBenchmarks: [
+      { metric: 'Face-Swap & Lip-Sync Artifact Detection', minTarget: '>= 96%', weightage: 40 },
+      { metric: 'Synthetic Voice Clone Detection (AAC/MP3)', minTarget: '>= 95%', weightage: 35 },
+      { metric: 'Court Admissible Forensic Metadata Log', minTarget: '100% SHA-256 Signed', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-116',
+    deptId: 'dept-maha-fire',
+    deptName: 'State Fire Services & Disaster Management Authority, Maharashtra',
+    title: 'Autonomous Indoor Firefighting & Toxic Gas Inspection Drone Payload for Industrial Chemical Parks',
+    description: 'Heavy-lift indoor thermal guidance drone equipped with non-conductive aerosol suppressant nozzles and multi-gas sniffer telemetry for hazardous industrial chemical plant fires.',
+    sector: 'Disaster Management',
+    budgetCeiling: 8500000, // ₹85 Lakhs
+    deadline: '2026-12-15',
+    status: 'OPEN',
+    eligibilityCriteria: 'DGCA type certified heavy drone prototype or consortium between UAV tech startups and fire safety equipment manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-16',
+    heroImage: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:15 mins',
+    videoTitle: 'Fire Services Challenge: Indoor Aerosol Suppression & Toxic Gas Sniffer Drone',
+    targetBeneficiaries: [
+      { title: 'Industrial Fire Rescue Squads', desc: 'Allows remote entry into toxic smoke-filled chemical storage warehouses without risking firefighter lives.' },
+      { title: 'MIDC Chemical Industrial Parks', desc: 'Rapid localized suppression preventing multi-factory chemical chain reactions.' },
+      { title: 'State Environmental Protection Agency', desc: 'Real-time telemetry of benzene and ammonia gas dispersion plumes.' }
+    ],
+    whyNeeded: 'Chemical plant blazes generate toxic gases and extreme thermal radiation, making human firefighter entry impossible during initial critical containment windows.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'High frequency of industrial warehouse blazes demands automated stand-off drone response.',
+    severityScore: 9.7,
+    publicImpactMetrics: [
+      { label: 'Firefighter Exposure Risk', value: 'Zero Hazard', subtext: '100% remote standoff operation' },
+      { label: 'Response Deployment Time', value: '< 90 Seconds', subtext: 'Immediate localized aerosol discharge' },
+      { label: 'Toxic Gas Telemetry', value: '6 Gases', subtext: 'Real-time VOC and ammonia monitoring' }
+    ],
+    keywords: ['#FirefightingDrone', '#ToxicGasTelemetry', '#MIDCSafety', '#AerosolSuppression', '#DisasterTech'],
+    kpiBenchmarks: [
+      { metric: 'Thermal Camera Obstacle Penetration in Dense Smoke', minTarget: '>= 95%', weightage: 40 },
+      { metric: 'Payload Capacity for Aerosol Canisters', minTarget: '>= 15 kg', weightage: 35 },
+      { metric: 'Heat Resistance Enclosure Rating', minTarget: '300 °C for 10 mins', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-117',
+    deptId: 'dept-maha-fisheries',
+    deptName: 'Department of Fisheries & Maritime Development, Maharashtra',
+    title: 'Solar IoT Sonar & Buoy Telemetry Network for Coastal Artisan Fishermen Safety & Fish Finders',
+    description: 'Compact boat-mounted LoRaWAN sonar unit with emergency distress beacon and ocean current telemetry to assist coastal fishermen in locating shoals and navigating squalls.',
+    sector: 'Agriculture & Allied',
+    budgetCeiling: 5400000, // ₹54 Lakhs
+    deadline: '2026-11-25',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized Maritime IoT startup or consortium with marine electronics manufacturers.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-09-02',
+    heroImage: 'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1617155093730-a8bf47be792d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:50 mins',
+    videoTitle: 'Fisheries Dept Briefing: Solar LoRaWAN Sonar & Coastal Safety Telemetry',
+    targetBeneficiaries: [
+      { title: 'Artisan Coastal Fishermen', desc: 'Increases daily catch efficiency while providing 1-click SOS distress signals during sudden sea squalls.' },
+      { title: 'Fisheries Cooperative Societies', desc: 'Live market pricing and landing zone telemetry broadcasted directly to boat units.' },
+      { title: 'Coastal Police & Coast Guard', desc: 'Real-time GPS tracking preventing international maritime boundary infractions.' }
+    ],
+    whyNeeded: 'Small artisan fishing boats lack affordable marine radar and sonar, risking capsizing during unpredicted Arabian Sea weather changes.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Cyclonic storm season demands reliable coastal boat SOS telemetry.',
+    severityScore: 9.1,
+    publicImpactMetrics: [
+      { label: 'Catch Yield Increase', value: '+35%', subtext: 'Targeted fish shoal acoustic localization' },
+      { label: 'Distress Signal Reach', value: '30 Nautical Miles', subtext: 'Mesh LoRaWAN boat telemetry' },
+      { label: 'Artisan Boats Target', value: '4,200 Vessels', subtext: 'State-wide coastal fleet adoption' }
+    ],
+    keywords: ['#MaritimeIoT', '#FisheriesSafety', '#LoRaWANSonar', '#CoastalTelemetry', '#AgriTech'],
+    kpiBenchmarks: [
+      { metric: 'Fish Shoal Depth Detection Range', minTarget: '>= 80 meters', weightage: 40 },
+      { metric: 'SOS Satellite / LoRa Transmission Latency', minTarget: '< 15 seconds', weightage: 35 },
+      { metric: 'IP68 Marine Corrosion Resistance', minTarget: 'Salt-Water Tested', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-118',
+    deptId: 'dept-maha-metro',
+    deptName: 'Maha Metro Rail Corporation Ltd (MMRCL)',
+    title: 'AI Ultrasonic & Laser Track Fracture Telemetry System for Urban Metro Lines',
+    description: 'Vehicular autonomous rail scanner providing non-destructive ultrasonic defect detection and laser track gauge alignment audits to prevent derailments.',
+    sector: 'Smart Mobility & Logistics',
+    budgetCeiling: 9600000, // ₹96 Lakhs
+    deadline: '2026-12-20',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized RailTech / AI startup or joint consortium with railway track hardware manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-10',
+    heroImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:40 mins',
+    videoTitle: 'Maha Metro Engineering Challenge: Ultrasonic Rail Fracture Telemetry & Laser Alignment',
+    targetBeneficiaries: [
+      { title: 'Urban Metro Commuters', desc: 'Guarantees highest safety standards and smooth high-speed transit operations.' },
+      { title: 'Metro Maintenance Engineers', desc: 'Eliminates night-time manual walking track inspections with automated defect mapping.' },
+      { title: 'Urban Transport Authorities', desc: 'Extends rail track lifespan through early micro-fracture grinding schedules.' }
+    ],
+    whyNeeded: 'Manual track inspections miss microscopic internal rail fractures caused by continuous high-frequency transit loads, posing severe safety risks.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Expanding metro corridor operations require automated nocturnal track integrity audits.',
+    severityScore: 9.8,
+    publicImpactMetrics: [
+      { label: 'Track Defect Detection', value: '100% Sub-surface', subtext: 'Ultrasonic micro-fracture accuracy' },
+      { label: 'Inspection Speed', value: '40 km/h', subtext: 'Continuous automated rail vehicle scan' },
+      { label: 'Maintenance Cost Cut', value: '₹14 Cr', subtext: 'Targeted preventive grinding savings' }
+    ],
+    keywords: ['#MetroSafety', '#UltrasonicRailScan', '#TrackFractureTelemetry', '#SmartMobility', '#MMRCL'],
+    kpiBenchmarks: [
+      { metric: 'Micro-fracture Detection Resolution', minTarget: '<= 0.5 mm', weightage: 40 },
+      { metric: 'Scan Speed without Signal Loss', minTarget: '>= 35 km/h', weightage: 35 },
+      { metric: 'Laser Track Gauge Precision', minTarget: '<= 0.1 mm', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-119',
+    deptId: 'dept-maha-ayurveda',
+    deptName: 'Directorate of AYUSH & Medicinal Plant Board, Maharashtra',
+    title: 'Handheld Near-Infrared (NIR) Spectrometer for Rapid Chemical Standardization of Herbal Medicines',
+    description: 'Point-of-sale optical spectral analyzer for instant active ingredient assay and heavy metal adulteration detection in raw botanical herbs and Ayurvedic formulations.',
+    sector: 'MedTech & Public Health',
+    budgetCeiling: 6200000, // ₹62 Lakhs
+    deadline: '2026-11-30',
+    status: 'OPEN',
+    eligibilityCriteria: 'CDSCO / AYUSH compliant prototype or DPIIT recognized MedTech startup.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-08-28',
+    heroImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '03:45 mins',
+    videoTitle: 'AYUSH Department Briefing: Handheld Optical Spectroscopy in Herbal Quality Standardization',
+    targetBeneficiaries: [
+      { title: 'Ayurvedic Medicine Consumers', desc: 'Protects patients from adulterated, heavy-metal contaminated herbal products.' },
+      { title: 'AYUSH Quality Inspectors', desc: 'Instant 15-second spectral fingerprint verification right at pharmacy counters.' },
+      { title: 'Medicinal Plant Farmers', desc: 'Verifies active alkaloid content for premium pricing in wholesale markets.' }
+    ],
+    whyNeeded: 'Adulteration and chemical variability in raw herbal ingredients degrade the therapeutic efficacy of traditional Ayurvedic medicines.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Strict AYUSH quality standardization enforcement across retail state pharmacies.',
+    severityScore: 9.0,
+    publicImpactMetrics: [
+      { label: 'Assay Result Time', value: '15 Seconds', subtext: 'Vs 5 days lab HPLC analysis' },
+      { label: 'Adulterant Detection Rate', value: '98%', subtext: 'Identifies synthetic dyes and heavy metals' },
+      { label: 'Testing Cost Reduction', value: '90%', subtext: 'Point-of-care optical spectroscopy' }
+    ],
+    keywords: ['#AYUSH', '#MedTech', '#NIRSpectroscopy', '#HerbalStandardization', '#QualityAssay'],
+    kpiBenchmarks: [
+      { metric: 'Alkaloid Spectral Fingerprint Accuracy', minTarget: '>= 95%', weightage: 45 },
+      { metric: 'Heavy Metal Adulterant Detection Limit', minTarget: '<= 10 PPM', weightage: 30 },
+      { metric: 'Battery Standby for Field Audits', minTarget: '>= 8 Hours', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-120',
+    deptId: 'dept-maha-solar-agri',
+    deptName: 'Maharashtra Energy Development Agency (MEDA)',
+    title: 'Smart IoT Controller & MPPT Efficiency Monitoring for Mukhyamantri Solar Ag-Pump Scheme',
+    description: 'Cellular-connected remote telemetry unit with automatic cleaning trigger and pump dry-run protection for solar irrigation pumps across Marathwada farming blocks.',
+    sector: 'Clean Energy & Water',
+    budgetCeiling: 7800000, // ₹78 Lakhs
+    deadline: '2026-12-08',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized CleanTech / IoT startup or joint consortium with solar pump OEMs.',
+    preferredMode: 'SOLO_OR_COLLAB',
+    postedDate: '2026-09-08',
+    heroImage: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:10 mins',
+    videoTitle: 'MEDA Solar Ag Challenge: IoT Controller & Remote MPPT Telemetry in Marathwada',
+    targetBeneficiaries: [
+      { title: 'Marathwada Farmers', desc: 'Prevents pump motor burnouts due to dry-running and maximizes solar water output.' },
+      { title: 'MEDA District Solar Engineers', desc: 'Centralized live telemetry flagging dust-soiled panels and inverter faults.' },
+      { title: 'State Power Utilities', desc: 'Supports net-metered surplus solar power feeding back into rural feeder lines.' }
+    ],
+    whyNeeded: 'Dust accumulation and unmonitored dry-running lower solar agri-pump efficiencies by up to 40% in drought-prone agricultural belts.',
+    urgencyLevel: 'HIGH',
+    urgencyReason: 'Maximated solar pumping efficiency during peak crop watering cycles.',
+    severityScore: 9.2,
+    publicImpactMetrics: [
+      { label: 'Water Output Gain', value: '+28%', subtext: 'Through MPPT tracking & dust alert' },
+      { label: 'Pump Burnout Reduction', value: '95%', subtext: 'Instant dry-run shutoff protection' },
+      { label: 'Solar Ag-Pumps Monitored', value: '25,000 Units', subtext: 'Targeted state telemetry deployment' }
+    ],
+    keywords: ['#CleanEnergy', '#SolarAgPump', '#MEDATelemetry', '#IoTMotorProtection', '#MarathwadaAgri'],
+    kpiBenchmarks: [
+      { metric: 'MPPT Tracking Efficiency', minTarget: '>= 98.5%', weightage: 40 },
+      { metric: 'Dry-Run Shutoff Response Time', minTarget: '< 2 seconds', weightage: 35 },
+      { metric: 'Cellular Telemetry Uptime in Rural Area', minTarget: '>= 99%', weightage: 25 }
+    ]
+  },
+  {
+    id: 'prob-121',
+    deptId: 'dept-maha-smartcity',
+    deptName: 'Pune & Thane Smart City Development Corporation Ltd',
+    title: 'Edge AI Acoustic Gunshot & Industrial Explosion Detection Sensor Network',
+    description: 'Triangulated acoustic microphone nodes deployable on streetlight poles to pinpoint firearms discharge, transformer blasts, and gas cylinder explosions in real-time with sub-10 meter GPS accuracy.',
+    sector: 'Smart Automation & AI',
+    budgetCeiling: 8900000, // ₹89 Lakhs
+    deadline: '2026-12-18',
+    status: 'OPEN',
+    eligibilityCriteria: 'DPIIT recognized Acoustic AI / Defense Tech startup or joint consortium with smart lighting manufacturers.',
+    preferredMode: 'COLLABORATION_RECOMMENDED',
+    postedDate: '2026-09-14',
+    heroImage: 'https://images.unsplash.com/photo-1508873696983-2df515122519?w=1200&auto=format&fit=crop&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1508873696983-2df515122519?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&auto=format&fit=crop&q=80'
+    ],
+    videoDuration: '04:25 mins',
+    videoTitle: 'Smart City Safety Challenge: Triangulated Acoustic AI Explosion & Gunshot Location',
+    targetBeneficiaries: [
+      { title: 'Police Control Rooms (PCR)', desc: 'Instant 3-second alert detailing exact coordinates and sound classification.' },
+      { title: 'Urban Residents & Emergency Rescuers', desc: 'Accelerates emergency response during urban gas explosions and active shooter events.' },
+      { title: 'Smart City Command Centers (ICCC)', desc: 'Automated pan-tilt-zoom (PTZ) camera positioning to incident origin.' }
+    ],
+    whyNeeded: 'Delayed emergency reporting during urban gas cylinder explosions and violent incidents leads to severe casualty escalation.',
+    urgencyLevel: 'CRITICAL',
+    urgencyReason: 'Rapid integration into municipal Integrated Command & Control Centers (ICCC).',
+    severityScore: 9.5,
+    publicImpactMetrics: [
+      { label: 'Location Pinpoint Accuracy', value: '< 8 Meters', subtext: 'Triangulated multi-node acoustic AI' },
+      { label: 'Dispatch Alert Latency', value: '< 3 Seconds', subtext: 'Instant ICCC & PCR emergency pop-up' },
+      { label: 'False Alarm Suppression', value: '96%', subtext: 'Filters out fireworks & backfires' }
+    ],
+    keywords: ['#AcousticAI', '#SmartCities', '#GunshotDetection', '#ICCCIntegration', '#UrbanSafety'],
+    kpiBenchmarks: [
+      { metric: 'Acoustic Explosion & Gunshot Classification', minTarget: '>= 95%', weightage: 40 },
+      { metric: 'Triangulation GPS Localization Precision', minTarget: '<= 10 meters', weightage: 35 },
+      { metric: 'Weatherproof Ingress Rating', minTarget: 'IP67 Certified', weightage: 25 }
+    ]
   }
 ];
 

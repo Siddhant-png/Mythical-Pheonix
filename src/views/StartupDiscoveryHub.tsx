@@ -4,22 +4,18 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Award, 
-  ExternalLink, 
-  Sparkles, 
   Building2, 
-  FileText, 
   Sliders, 
-  DollarSign, 
-  Clock, 
   CreditCard, 
-  Layers, 
-  Check, 
-  UserCheck, 
   Zap,
-  Filter,
-  X
+  X,
+  ThumbsUp,
+  TrendingUp,
+  Star
 } from 'lucide-react';
-import { Startup, Problem, Application, UserRole } from '../types';
+import { Startup, Problem, UserRole } from '../types';
+import { getRankFromUpvotes, TIER_DEFINITIONS } from '../utils/tierProgress';
+import { TierBadge } from '../components/tier/TierBadge';
 
 interface StartupDiscoveryHubProps {
   currentStartup: Startup;
@@ -52,12 +48,12 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
   const [selectedStartup, setSelectedStartup] = useState<any | null>(null);
 
   // Local demo data for the Startup Discovery panel.
-  const discoveryStartups = [
-    { id: 'startup-1', name: 'Drishti Edge Technologies Pvt Ltd', sector: 'AI & Computer Vision', stage: 'Growth', location: 'Pune, Maharashtra', dpiitVerified: true, description: 'Edge AI and computer vision solutions for infrastructure inspection and public-sector deployments.', score: 95, tags: ['Edge AI', 'Computer Vision', 'IoT'] },
-    { id: 'startup-2', name: 'AquaPulse Sensing Technologies', sector: 'CleanTech', stage: 'Early', location: 'Mumbai, Maharashtra', dpiitVerified: true, description: 'Smart acoustic sensing and LoRaWAN technology for detecting water pipeline leakage.', score: 89, tags: ['LoRaWAN', 'Smart Sensors', 'Water'] },
-    { id: 'startup-3', name: 'CivicGrid Analytics', sector: 'GovTech', stage: 'Growth', location: 'Nagpur, Maharashtra', dpiitVerified: false, description: 'Data analytics and citizen feedback tools for improving municipal service delivery.', score: 82, tags: ['Analytics', 'CivicTech', 'Dashboards'] },
-    { id: 'startup-4', name: 'GreenRoute Mobility', sector: 'CleanTech', stage: 'Early', location: 'Nashik, Maharashtra', dpiitVerified: true, description: 'Fleet optimization and charging intelligence for electric public transportation.', score: 86, tags: ['EV', 'Mobility', 'Optimization'] }
-  ];
+  const [discoveryStartups, setDiscoveryStartups] = useState([
+    { id: 'startup-1', name: 'Drishti Edge Technologies Pvt Ltd', sector: 'AI & Computer Vision', stage: 'Growth', location: 'Pune, Maharashtra', dpiitVerified: true, description: 'Edge AI and computer vision solutions for infrastructure inspection and public-sector deployments.', upvotes: 1250, tags: ['Edge AI', 'Computer Vision', 'IoT'] },
+    { id: 'startup-2', name: 'AquaPulse Sensing Technologies', sector: 'CleanTech', stage: 'Early', location: 'Mumbai, Maharashtra', dpiitVerified: true, description: 'Smart acoustic sensing and LoRaWAN technology for detecting water pipeline leakage.', upvotes: 840, tags: ['LoRaWAN', 'Smart Sensors', 'Water'] },
+    { id: 'startup-3', name: 'CivicGrid Analytics', sector: 'GovTech', stage: 'Growth', location: 'Nagpur, Maharashtra', dpiitVerified: false, description: 'Data analytics and citizen feedback tools for improving municipal service delivery.', upvotes: 420, tags: ['Analytics', 'CivicTech', 'Dashboards'] },
+    { id: 'startup-4', name: 'GreenRoute Mobility', sector: 'CleanTech', stage: 'Early', location: 'Nashik, Maharashtra', dpiitVerified: true, description: 'Fleet optimization and charging intelligence for electric public transportation.', upvotes: 180, tags: ['EV', 'Mobility', 'Optimization'] }
+  ]);
 
   const filteredStartups = useMemo(() => discoveryStartups.filter((startup) => {
     const search = discoverySearch.toLowerCase();
@@ -65,7 +61,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
     const matchesSector = discoverySector === 'all' || startup.sector === discoverySector;
     const matchesStage = discoveryStage === 'all' || startup.stage === discoveryStage;
     return matchesSearch && matchesSector && matchesStage;
-  }), [discoverySearch, discoverySector, discoveryStage]);
+  }), [discoverySearch, discoverySector, discoveryStage, discoveryStartups]);
 
   // DPIIT Verification Simulator state
   const [dpiitInput, setDpiitInput] = useState('DIPP-MH-2023-98442');
@@ -81,17 +77,11 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
     gemFastTrackEligible: true,
     taxHolidayStatus: 'Approved (Sec 80-IAC)',
     techDomains: ['Computer Vision', 'Deep Learning', 'Edge AI', 'IoT Telemetry'],
-    readinessScore: 95
+    upvotes: 1250
   });
 
-  // Expert Evaluation Matrix state
-  const [evalScores, setEvalScores] = useState<Record<string, { innovation: number; team: number; feasibility: number; cost: number; dpiit: number }>>({
-    'prop-1': { innovation: 28, team: 23, feasibility: 22, cost: 14, dpiit: 10 },
-    'prop-2': { innovation: 24, team: 20, feasibility: 19, cost: 12, dpiit: 10 }
-  });
-
-  // Mock proposals for evaluation panel
-  const sampleProposals = [
+  // Proposal Upvote Matrix state
+  const [sampleProposals, setSampleProposals] = useState([
     {
       id: 'prop-1',
       problemTitle: 'AI-Powered Computer Vision for Automated Pothole & Road Quality Indexing',
@@ -100,7 +90,8 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
       submittedDate: '2026-08-26',
       techStack: 'Edge AI, Jetson Orin Nano, IP67 Modular Enclosure',
       status: 'SHORTLISTED FOR SANDBOX',
-      isCollab: true
+      isCollab: true,
+      upvotes: 1250
     },
     {
       id: 'prop-2',
@@ -110,12 +101,13 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
       submittedDate: '2026-08-22',
       techStack: 'Acoustic Transducers, LoRaWAN Gateway, GIS Portal',
       status: 'SANDBOX APPROVED',
-      isCollab: false
+      isCollab: false,
+      upvotes: 840
     }
-  ];
+  ]);
 
   // Escrow Disbursement Milestones
-  const [escrowMilestones, setEscrowMilestones] = useState([
+  const [escrowMilestones] = useState([
     {
       id: 'm1',
       title: 'Milestone 1: Sandbox Testbed Setup & Hardware Calibration',
@@ -164,40 +156,37 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
         gemFastTrackEligible: true,
         taxHolidayStatus: 'Active & Verified',
         techDomains: ['Artificial Intelligence', 'Smart Sensors', 'Embedded Edge'],
-        readinessScore: 92
+        upvotes: 1250
       });
     }, 800);
   };
 
-  const handleScoreChange = (propId: string, category: string, val: number) => {
-    setEvalScores(prev => ({
-      ...prev,
-      [propId]: {
-        ...prev[propId],
-        [category]: val
-      }
-    }));
+  const handleAddProposalUpvotes = (propId: string, count: number) => {
+    setSampleProposals(prev => prev.map(p => p.id === propId ? { ...p, upvotes: p.upvotes + count } : p));
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-10 font-body">
-      <div className="bg-gradient-to-r from-govblue-900 via-govblue-800 to-slate-950 text-white rounded-[28px] p-7 sm:p-10 shadow-[0_20px_60px_rgba(11,37,69,0.2)] relative overflow-hidden border border-govblue-700/80">
-        <div className="max-w-3xl relative z-10">
-          <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-[11px] font-bold text-emerald-100 mb-4 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-            <span>Startup discovery & screening architecture</span>
+    <div className="mx-auto max-w-7xl space-y-6 font-body pb-12 select-none">
+      {/* HEADER HERO */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-govblue-950 via-slate-900 to-emerald-950 p-6 sm:p-8 text-white shadow-xl">
+        <div className="relative z-10 max-w-3xl space-y-3">
+          <div className="inline-flex items-center space-x-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-300">
+            <Award className="w-4 h-4 text-emerald-400" />
+            <span>5-Tier Upvote Ranking Hub</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] font-heading leading-[1.05] max-w-2xl">
-            DPIIT verification, expert scoring, and protected milestones.
+
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Startup Discovery & Rank Hierarchy
           </h2>
-          <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300 leading-relaxed">
-            Ensure 100% legal compliance and speed. Instant DPIIT verification waives prior turnover requirements under GFR Rule 149, while expert panels evaluate proposals on transparent 100-point matrices and milestone payments remain protected by escrow triggers.
+
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+            Ranked purely into 5 tiers based on community upvotes. Explore DPIIT verified startups, upvote rankings, and milestone-backed pilot escrows.
           </p>
         </div>
       </div>
 
-      {/* Sub-Navigation Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
+      {/* SUB-NAV TABS */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
         <button
           onClick={() => setActiveSubTab('discovery')}
           className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold transition ${
@@ -231,7 +220,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
           }`}
         >
           <Sliders className="w-4 h-4 text-amber-400" />
-          <span>Expert Evaluation & Scoring Matrix</span>
+          <span>Upvote Ranking & Evaluation</span>
         </button>
 
         <button
@@ -255,7 +244,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
               <div>
                 <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block">AI-powered startup directory</span>
                 <h3 className="text-xl font-extrabold text-slate-900">Discover & Screen Startups</h3>
-                <p className="text-xs text-slate-500 mt-1">Search verified and emerging startups by sector, stage, and readiness score.</p>
+                <p className="text-xs text-slate-500 mt-1">Search verified and emerging startups by sector, stage, upvotes, and rank.</p>
               </div>
               <div className="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2">{filteredStartups.length} startups found</div>
             </div>
@@ -282,27 +271,38 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
               <div className="text-center py-12 text-sm text-slate-500">No startups match your filters.</div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filteredStartups.map((startup) => (
-                  <div key={startup.id} className="border border-slate-200 rounded-2xl p-5 hover:border-emerald-300 transition space-y-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0"><Building2 className="w-5 h-5 text-emerald-700" /></div>
-                        <div><h4 className="text-sm font-extrabold text-slate-900">{startup.name}</h4><p className="text-xs text-slate-500 mt-1">{startup.location}</p></div>
+                {filteredStartups.map((startup) => {
+                  const rankTier = getRankFromUpvotes(startup.upvotes);
+                  return (
+                    <div key={startup.id} className="border border-slate-200 rounded-2xl p-5 hover:border-emerald-300 transition space-y-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-3">
+                          <div className="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0"><Building2 className="w-5 h-5 text-emerald-700" /></div>
+                          <div><h4 className="text-sm font-extrabold text-slate-900">{startup.name}</h4><p className="text-xs text-slate-500 mt-1">{startup.location}</p></div>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <div className="flex items-center space-x-1 justify-end text-xs font-black text-emerald-700 font-mono">
+                            <ThumbsUp className="w-3.5 h-3.5 fill-emerald-100" />
+                            <span>{startup.upvotes.toLocaleString()}</span>
+                          </div>
+                          <div className="mt-1">
+                            <TierBadge tier={rankTier} compact />
+                          </div>
+                        </div>
                       </div>
-                      <span className="text-lg font-black text-emerald-700">{startup.score}</span>
+                      <p className="text-xs text-slate-600 leading-relaxed">{startup.description}</p>
+                      <div className="flex flex-wrap gap-1.5">{startup.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold">{tag}</span>)}</div>
+                      <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100"><span className="text-[10px] font-bold text-slate-500">{startup.dpiitVerified ? '✓ DPIIT verified' : 'Verification pending'} · {startup.stage}</span>
+                      <button
+                        type="button"
+                        onClick={() => onOpenStartupProfile?.(startup.id)}
+                        className="text-xs font-bold text-emerald-700 hover:text-emerald-900"
+                      >
+                        View profile →
+                      </button></div>
                     </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">{startup.description}</p>
-                    <div className="flex flex-wrap gap-1.5">{startup.tags.map((tag) => <span key={tag} className="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold">{tag}</span>)}</div>
-                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-100"><span className="text-[10px] font-bold text-slate-500">{startup.dpiitVerified ? '✓ DPIIT verified' : 'Verification pending'} · {startup.stage}</span>
-                    <button
-  type="button"
-  onClick={() => onOpenStartupProfile?.(startup.id)}
-  className="text-xs font-bold text-emerald-700 hover:text-emerald-900"
->
-  View profile →
-</button></div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -311,7 +311,20 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
             <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-lg">
               <div className="flex items-start justify-between gap-4"><div><span className="text-[10px] uppercase tracking-wider text-emerald-300 font-bold">Startup profile</span><h3 className="text-xl font-extrabold mt-1">{selectedStartup.name}</h3></div><button onClick={() => setSelectedStartup(null)} aria-label="Close profile"><X className="w-5 h-5" /></button></div>
               <p className="text-sm text-slate-300 mt-3">{selectedStartup.description}</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">{[['Sector', selectedStartup.sector], ['Stage', selectedStartup.stage], ['Location', selectedStartup.location], ['Readiness', `${selectedStartup.score}/100`]].map(([label, value]) => <div key={label} className="rounded-xl bg-white/10 p-3"><span className="block text-[10px] text-slate-400 uppercase font-bold">{label}</span><span className="block text-xs font-bold mt-1">{value}</span></div>)}</div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
+                {[
+                  ['Sector', selectedStartup.sector], 
+                  ['Stage', selectedStartup.stage], 
+                  ['Location', selectedStartup.location], 
+                  ['Upvotes', `${selectedStartup.upvotes}`],
+                  ['Rank', TIER_DEFINITIONS.find(d => d.tier === getRankFromUpvotes(selectedStartup.upvotes))?.label || 'Rank 5']
+                ].map(([label, value]) => (
+                  <div key={label} className="rounded-xl bg-white/10 p-3">
+                    <span className="block text-[10px] text-slate-400 uppercase font-bold">{label}</span>
+                    <span className="block text-xs font-bold mt-1">{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -400,8 +413,14 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
                   </div>
 
                   <div className="text-right bg-emerald-50 border border-emerald-200 p-3 rounded-xl shrink-0">
-                    <span className="text-[10px] text-emerald-800 font-bold uppercase block">Readiness Score</span>
-                    <span className="text-2xl font-black text-emerald-700">{verifiedResult.readinessScore}/100</span>
+                    <span className="text-[10px] text-emerald-800 font-bold uppercase block">Community Upvotes</span>
+                    <div className="flex items-center justify-end space-x-1">
+                      <ThumbsUp className="w-4 h-4 text-emerald-700 fill-emerald-200" />
+                      <span className="text-2xl font-black text-emerald-700">{verifiedResult.upvotes.toLocaleString()}</span>
+                    </div>
+                    <div className="mt-1">
+                      <TierBadge tier={getRankFromUpvotes(verifiedResult.upvotes)} compact />
+                    </div>
                   </div>
                 </div>
 
@@ -432,7 +451,7 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Once a sandbox pilot achieves a verified score of ≥80%, Converge automatically pushes the product passport and pre-approved PO pricing directly into the national <strong>GeM Innovation Runway Catalog</strong>.
+                    Once a startup reaches <strong>Rank 1 or Rank 2 (≥500 Upvotes)</strong>, Converge automatically pushes the product passport and pre-approved PO pricing directly into the national <strong>GeM Innovation Runway Catalog</strong>.
                   </p>
                 </div>
               </div>
@@ -441,24 +460,36 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
         </div>
       )}
 
-      {/* SUB TAB 2: EXPERT EVALUATION & SCORING MATRIX */}
+      {/* SUB TAB 2: UPVOTE RANKING & EVALUATION MATRIX */}
       {activeSubTab === 'eval-panel' && (
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-bold text-slate-900">Expert Panel Side-by-Side Scoring Matrix</h3>
-                <p className="text-xs text-slate-500">Evaluators rate submitted startup proposals against 100-point standardized criteria</p>
+                <h3 className="text-base font-bold text-slate-900">Upvote-Based 5-Tier Evaluation Matrix</h3>
+                <p className="text-xs text-slate-500">Startup ranking is determined strictly by community upvotes into 5 distinct ranks</p>
               </div>
-              <span className="text-xs bg-amber-100 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-300">
-                Nodal Panel Active
+              <span className="text-xs bg-emerald-100 text-emerald-900 font-bold px-3 py-1 rounded-full border border-emerald-300 flex items-center space-x-1">
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Upvote Rank Live</span>
               </span>
+            </div>
+
+            {/* Rank Legend Bar */}
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+              {TIER_DEFINITIONS.map(d => (
+                <div key={d.tier} className="bg-white p-2.5 rounded-xl border border-slate-200 text-center space-y-1">
+                  <span className="text-[10px] font-black text-slate-400 uppercase block">Rank {d.level}</span>
+                  <span className="text-xs font-extrabold text-slate-900 block">{d.label.split(' ')[1] || d.label}</span>
+                  <span className="text-[10px] font-bold text-emerald-700 block font-mono">{d.requirement}</span>
+                </div>
+              ))}
             </div>
 
             <div className="space-y-6">
               {sampleProposals.map((prop) => {
-                const scores = evalScores[prop.id] || { innovation: 25, team: 20, feasibility: 20, cost: 15, dpiit: 10 };
-                const totalScore = scores.innovation + scores.team + scores.feasibility + scores.cost + scores.dpiit;
+                const rankTier = getRankFromUpvotes(prop.upvotes);
+                const rankDef = TIER_DEFINITIONS.find(d => d.tier === rankTier);
 
                 return (
                   <div key={prop.id} className="border border-slate-200 bg-slate-50/50 rounded-2xl p-5 space-y-4">
@@ -471,79 +502,48 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
                         <span className="text-xs text-slate-600 font-medium">Applicant: {prop.applicantName}</span>
                       </div>
 
-                      <div className="flex items-center space-x-3 bg-white p-3 rounded-xl border border-slate-200">
+                      <div className="flex items-center space-x-3 bg-white p-3 rounded-xl border border-slate-200 shrink-0">
                         <div className="text-right">
-                          <span className="text-[10px] text-slate-400 font-bold uppercase block">Panel Score</span>
-                          <span className="text-xl font-black text-govblue-900">{totalScore} / 100</span>
+                          <span className="text-[10px] text-slate-400 font-bold uppercase block">Community Upvotes</span>
+                          <div className="flex items-center space-x-1 justify-end">
+                            <ThumbsUp className="w-4 h-4 text-emerald-600 fill-emerald-100" />
+                            <span className="text-xl font-black text-emerald-700">{prop.upvotes.toLocaleString()}</span>
+                          </div>
                         </div>
+                        <TierBadge tier={rankTier} />
                       </div>
                     </div>
 
-                    {/* Interactive Slider Score Controls for Nodal Officer */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 text-xs">
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
-                        <span className="font-bold text-slate-700 block text-[11px]">Technical Novelty (Max 30)</span>
-                        <input
-                          type="range"
-                          min="10"
-                          max="30"
-                          value={scores.innovation}
-                          onChange={(e) => handleScoreChange(prop.id, 'innovation', Number(e.target.value))}
-                          className="w-full accent-govblue-900 cursor-pointer"
-                        />
-                        <div className="text-right font-bold text-govblue-900">{scores.innovation} Pts</div>
+                    {/* Interactive Upvote Endorsements */}
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                      <div className="text-xs text-slate-600">
+                        <span className="font-bold text-slate-800">Current Rank: </span>
+                        <span className="text-emerald-700 font-bold">{rankDef?.label}</span>
+                        <span className="text-slate-400 ml-2">({rankDef?.description})</span>
                       </div>
 
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
-                        <span className="font-bold text-slate-700 block text-[11px]">Team Competency (Max 25)</span>
-                        <input
-                          type="range"
-                          min="10"
-                          max="25"
-                          value={scores.team}
-                          onChange={(e) => handleScoreChange(prop.id, 'team', Number(e.target.value))}
-                          className="w-full accent-govblue-900 cursor-pointer"
-                        />
-                        <div className="text-right font-bold text-govblue-900">{scores.team} Pts</div>
-                      </div>
-
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
-                        <span className="font-bold text-slate-700 block text-[11px]">Sandbox Feasibility (Max 25)</span>
-                        <input
-                          type="range"
-                          min="10"
-                          max="25"
-                          value={scores.feasibility}
-                          onChange={(e) => handleScoreChange(prop.id, 'feasibility', Number(e.target.value))}
-                          className="w-full accent-govblue-900 cursor-pointer"
-                        />
-                        <div className="text-right font-bold text-govblue-900">{scores.feasibility} Pts</div>
-                      </div>
-
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
-                        <span className="font-bold text-slate-700 block text-[11px]">Cost Efficiency (Max 15)</span>
-                        <input
-                          type="range"
-                          min="5"
-                          max="15"
-                          value={scores.cost}
-                          onChange={(e) => handleScoreChange(prop.id, 'cost', Number(e.target.value))}
-                          className="w-full accent-govblue-900 cursor-pointer"
-                        />
-                        <div className="text-right font-bold text-govblue-900">{scores.cost} Pts</div>
-                      </div>
-
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-1">
-                        <span className="font-bold text-slate-700 block text-[11px]">DPIIT Bonus (Max 10)</span>
-                        <input
-                          type="range"
-                          min="0"
-                          max="10"
-                          value={scores.dpiit}
-                          onChange={(e) => handleScoreChange(prop.id, 'dpiit', Number(e.target.value))}
-                          className="w-full accent-emerald-600 cursor-pointer"
-                        />
-                        <div className="text-right font-bold text-emerald-700">+{scores.dpiit} Pts</div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs font-bold text-slate-500 mr-1">Cast Upvotes:</span>
+                        <button
+                          onClick={() => handleAddProposalUpvotes(prop.id, 10)}
+                          className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition flex items-center space-x-1"
+                        >
+                          <ThumbsUp className="w-3 h-3" />
+                          <span>+10</span>
+                        </button>
+                        <button
+                          onClick={() => handleAddProposalUpvotes(prop.id, 50)}
+                          className="px-3 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 font-bold text-xs rounded-xl border border-emerald-300 transition flex items-center space-x-1"
+                        >
+                          <ThumbsUp className="w-3.5 h-3.5" />
+                          <span>+50</span>
+                        </button>
+                        <button
+                          onClick={() => handleAddProposalUpvotes(prop.id, 100)}
+                          className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center space-x-1"
+                        >
+                          <span>+100 Boost</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -612,5 +612,3 @@ export const StartupDiscoveryHub: React.FC<StartupDiscoveryHubProps> = ({
     </div>
   );
 };
-
-

@@ -23,7 +23,7 @@ export const STARTUP_PROFILES: StartupProfileData[] = [
       consortiums: 4,
       poWins: 3,
       scaleAdoptions: 6,
-      readinessScore: 94
+      upvotes: 1420
     },
     highlights: [
       { id: 'd1', label: 'DPIIT Verified', type: 'DPIIT' },
@@ -150,7 +150,7 @@ export const STARTUP_PROFILES: StartupProfileData[] = [
       consortiums: 2,
       poWins: 2,
       scaleAdoptions: 4,
-      readinessScore: 91
+      upvotes: 890
     },
     highlights: [
       { id: 'a1', label: 'DPIIT Verified', type: 'DPIIT' },
@@ -268,7 +268,7 @@ export const STARTUP_PROFILES: StartupProfileData[] = [
       consortiums: 3,
       poWins: 1,
       scaleAdoptions: 2,
-      readinessScore: 88
+      upvotes: 420
     },
     highlights: [
       { id: 'g1', label: 'DPIIT Verified', type: 'DPIIT' },

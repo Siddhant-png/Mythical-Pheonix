@@ -229,18 +229,17 @@ export interface ScaleAdoption {
 }
 
 export type StartupTier =
-  | 'IDEA'
-  | 'PILOT_READY'
-  | 'PILOT_VALIDATED'
-  | 'PROCUREMENT_READY'
-  | 'PROCURRED'
-  | 'SCALED';
+  | 'RANK_1'
+  | 'RANK_2'
+  | 'RANK_3'
+  | 'RANK_4'
+  | 'RANK_5';
 
 export type TierProgressState = 'COMPLETED' | 'CURRENT' | 'UPCOMING';
 
 export interface TierDefinition {
   tier: StartupTier;
-  level: 1 | 2 | 3 | 4 | 5 | 6;
+  level: 1 | 2 | 3 | 4 | 5;
   label: string;
   description: string;
   requirement: string;
@@ -324,7 +323,7 @@ export interface StartupProfileStats {
   consortiums: number;
   poWins: number;
   scaleAdoptions: number;
-  readinessScore: number;
+  upvotes: number;
 }
 
 export interface StartupProfileData {

@@ -35,7 +35,6 @@ export type NavTab =
   | 'tiers' 
   | 'procurement' 
   | 'templates' 
-  | 'messages' 
   | 'account';
 
 interface HeaderProps {
@@ -64,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
     : 'AD';
 
   return (
-    <header className="sticky top-0 z-40 bg-brand-panel border-b border-brand-border shadow-sm font-body">
+    <header className="sticky top-0 z-40 bg-[#E6E1F4] border-b border-[#CAB9E3] shadow-xs font-body">
       {/* Top Bar - Misty Lavender */}
       <div className="h-1.5 w-full bg-[#CAB9E3]"></div>
 
@@ -73,22 +72,17 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           {/* Logo & Brand Identity */}
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => setActiveTab('problems')}>
-            <div className="relative h-11 w-11 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
+            <div className="relative h-11 w-11 flex items-center justify-center">
               <img 
                 src="/logo-transparent.png" 
                 alt="Converge Brand Logo" 
-                className="h-full w-auto object-contain filter drop-shadow-[0_4px_12px_rgba(30,58,138,0.2)]" 
+                className="h-full w-auto object-contain filter drop-shadow-[0_4px_12px_rgba(49,43,65,0.15)]" 
               />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-black tracking-tight font-heading bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#6d28d9] bg-clip-text text-transparent">
-                  Converge
-                </h1>
-              </div>
-              <p className="text-[11px] text-slate-500 font-medium">
-                Public Innovation, Sandbox & Accelerated Procurement Architecture
-              </p>
+              <h1 className="text-xl font-black tracking-tight font-heading text-[#312B41]">
+                Converge
+              </h1>
             </div>
           </div>
 
@@ -109,13 +103,12 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenMyProfile}
               title="Open My Full Account Profile"
-              className={`relative w-10 h-10 rounded-full flex items-center justify-center font-black text-xs transition-all duration-200 shadow-md ${activeTab === 'account'
-                  ? 'bg-slate-900 text-white ring-4 ring-saffron-400 ring-offset-2 scale-105'
-                  : 'bg-gradient-to-br from-govblue-900 via-slate-900 to-govblue-800 text-white hover:ring-2 hover:ring-saffron-400 hover:scale-105'
+              className={`relative w-10 h-10 rounded-full flex items-center justify-center font-black text-xs shadow-md ${activeTab === 'account'
+                  ? 'bg-slate-900 text-white ring-4 ring-saffron-400 ring-offset-2'
+                  : 'bg-gradient-to-br from-govblue-900 via-slate-900 to-govblue-800 text-white hover:ring-2 hover:ring-saffron-400'
                 }`}
             >
               <span>{userInitials}</span>
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" title="Verified Session Active" />
             </button>
           </div>
         </div>
@@ -200,17 +193,6 @@ export const Header: React.FC<HeaderProps> = ({
             <Scale className="w-4 h-4 text-amber-300" />
             <span>Standard Templates & Legal Vault</span>
           </button>
-          <button
-  onClick={() => setActiveTab('messages')}
-  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all shrink-0 ${
-    activeTab === 'messages'
-      ? 'bg-govblue-900 text-white shadow'
-      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-  }`}
->
-  <MessageCircle className="w-4 h-4 text-emerald-400" />
-  <span>Messages</span>
-</button>
           <button
             onClick={() => setActiveTab('tiers')}
             className={`px-3 py-1.5 rounded-lg font-bold shrink-0 ${activeTab === 'tiers' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700'}`}
