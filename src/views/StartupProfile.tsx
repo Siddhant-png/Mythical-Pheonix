@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowLeft,
   ExternalLink,
@@ -6,7 +6,9 @@ import {
   MapPin,
   ShieldCheck,
   Star,
-  Users
+  Users,
+  UserPlus,
+  Check
 } from 'lucide-react';
 
 
@@ -224,6 +226,8 @@ export function StartupProfile({
     (startupId === 'greenroute-mobility' && profile.id === 'startup-4')
   ) || startupProfiles[0];
 
+  const [isFollowing, setIsFollowing] = useState(false);
+
   if (!startup) {
     return (
       <div className="rounded-3xl bg-white p-8 text-center shadow-sm">
@@ -302,6 +306,27 @@ export function StartupProfile({
             </div>
 
             <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setIsFollowing(!isFollowing)}
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold border transition ${
+                  isFollowing
+                    ? 'bg-slate-100 text-slate-800 border-slate-300'
+                    : 'bg-slate-900 text-white border-slate-900'
+                }`}
+              >
+                {isFollowing ? (
+                  <>
+                    <Check className="h-4 w-4 text-emerald-600" />
+                    <span>Following</span>
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="h-4 w-4" />
+                    <span>Follow</span>
+                  </>
+                )}
+              </button>
+
               {startup.website && (
                 <a
                   href={startup.website}

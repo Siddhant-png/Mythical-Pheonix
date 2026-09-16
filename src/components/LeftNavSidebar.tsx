@@ -103,7 +103,6 @@ export const LeftNavSidebar: React.FC<LeftNavSidebarProps> = ({
                 key={st.id}
                 onClick={() => {
                   onOpenStartupProfile?.(st.id);
-                  setActiveTab('profiles');
                 }}
                 className="w-full flex items-center px-2 py-1.5 rounded text-xs text-slate-700 hover:bg-slate-100 cursor-pointer"
               >

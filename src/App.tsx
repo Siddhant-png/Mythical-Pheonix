@@ -318,6 +318,7 @@ export function App() {
   // Open startup profile
   const handleOpenStartupProfile = (startupId: string) => {
     setSelectedStartupId(startupId);
+    setActiveTab('profiles');
   };
 
   // Close startup profile
