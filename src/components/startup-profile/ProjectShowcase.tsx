@@ -50,7 +50,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects = [] 
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {visibleProjects.map((project) => (
-            <article key={project.id} className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
+            <article key={project.id} className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:border-slate-300">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-emerald-300">

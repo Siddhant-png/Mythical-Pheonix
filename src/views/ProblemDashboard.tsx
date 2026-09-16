@@ -248,73 +248,42 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto space-y-6 font-body">
-      {/* Hero Showcase Banner with Official Brand Logo */}
-      <div className="bg-[#E6E1F4] rounded-2xl px-5 py-4 sm:px-6 sm:py-4 text-[#312B41] shadow-md relative overflow-hidden border border-[#CAB9E3] border-t-4 border-t-[#CAB9E3]">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#CAB9E3]/40 rounded-full blur-2xl pointer-events-none"></div>
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center space-x-3.5">
-            <div className="w-11 h-11 shrink-0 flex items-center justify-center">
-              <img src="/logo-transparent.png" alt="Converge Logo" className="w-full h-full object-contain filter drop-shadow-md" />
-            </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-extrabold tracking-[-0.03em] font-heading text-[#312B41]">
-                Converge Innovation & Procurement Portal
-              </h2>
-              <p className="text-xs text-[#6F6785] font-medium">
-                Bridging startups, OEM manufacturers, and government procurement delivery under GFR Rule 149.
-              </p>
-            </div>
+      {/* Active Filter Chips indicator */}
+      {(selectedSector || searchQuery || selectedStatus || collabOnly || maxBudget < 10000000) && (
+        <div className="flex flex-wrap items-center justify-between gap-2 bg-[#E6E1F4] p-3 px-4 rounded-xl border border-[#CAB9E3]">
+          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+            <span className="text-[11px] font-bold text-[#6F6785]">Active Filters:</span>
+            {selectedSector && (
+              <span className="bg-[#312B41] text-white font-bold text-[10px] px-2 py-0.5 rounded-full">
+                {selectedSector}
+              </span>
+            )}
+            {searchQuery && (
+              <span className="bg-white/90 text-[#312B41] font-bold text-[10px] px-2 py-0.5 rounded-full border border-[#CAB9E3]">
+                "{searchQuery}"
+              </span>
+            )}
+            {selectedStatus && (
+              <span className="bg-white/90 text-[#312B41] font-bold text-[10px] px-2 py-0.5 rounded-full border border-[#CAB9E3]">
+                {selectedStatus}
+              </span>
+            )}
+            {collabOnly && (
+              <span className="bg-amber-100 text-amber-900 font-bold text-[10px] px-2 py-0.5 rounded-full">
+                Consortium Only
+              </span>
+            )}
           </div>
-        </div>
-      </div>
-
-      {/* Problem Cards Catalog - Full Width */}
-      <div className="space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-white/80 p-4 rounded-2xl border border-slate-200/80 shadow-xs">
-          <div>
-            <h3 className="text-xl font-extrabold tracking-[-0.03em] text-slate-900 font-heading">
-              Active state tenders & challenges
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Showing {filteredProblems.length} available opportunities
-            </p>
-          </div>
-
-          {/* Active Filter Chips indicator */}
-          {(selectedSector || searchQuery || selectedStatus || collabOnly || maxBudget < 10000000) && (
-            <div className="flex flex-wrap items-center gap-1.5 text-xs">
-              <span className="text-[11px] font-bold text-slate-400">Filters:</span>
-              {selectedSector && (
-                <span className="bg-slate-900 text-white font-bold text-[10px] px-2 py-0.5 rounded-full">
-                  {selectedSector}
-                </span>
-              )}
-              {searchQuery && (
-                <span className="bg-slate-100 text-slate-800 font-bold text-[10px] px-2 py-0.5 rounded-full border border-slate-200">
-                  "{searchQuery}"
-                </span>
-              )}
-              {selectedStatus && (
-                <span className="bg-slate-100 text-slate-800 font-bold text-[10px] px-2 py-0.5 rounded-full border border-slate-200">
-                  {selectedStatus}
-                </span>
-              )}
-              {collabOnly && (
-                <span className="bg-amber-100 text-amber-900 font-bold text-[10px] px-2 py-0.5 rounded-full">
-                  Consortium Only
-                </span>
-              )}
-              {onResetFilters && (
-                <button
-                  onClick={onResetFilters}
-                  className="text-[10px] text-red-600 font-bold hover:underline ml-1"
-                >
-                  Clear All
-                </button>
-              )}
-            </div>
+          {onResetFilters && (
+            <button
+              onClick={onResetFilters}
+              className="text-[11px] text-red-600 font-bold hover:underline"
+            >
+              Clear All Filters
+            </button>
           )}
         </div>
+      )}
 
         {filteredProblems.length === 0 ? (
           <div className="bg-white rounded-2xl border border-slate-200/90 p-12 text-center shadow-xs">
@@ -349,8 +318,6 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
             })}
           </div>
         )}
-      </div>
-
 
       {/* Application / Specs Detail Modal */}
       {applicationModalOpen && selectedProblem && (

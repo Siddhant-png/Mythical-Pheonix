@@ -31,16 +31,6 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import { AuthUser, Startup, Problem, Collaboration, Pilot, Procurement, UserRole } from '../types';
-import { MASTER_INTERESTS } from '../data/mockData';
-
-const ICON_MAP: Record<string, any> = {
-  Bot,
-  Sprout,
-  HeartPulse,
-  Droplets,
-  Truck,
-  ShieldAlert
-};
 
 interface SelfAccountProfileProps {
   currentUser: AuthUser | null;
@@ -52,8 +42,6 @@ interface SelfAccountProfileProps {
   userRole: UserRole;
   setUserRole: (role: UserRole) => void;
   onNavigate: (tab: any) => void;
-  selectedInterestIds?: string[];
-  onToggleInterest?: (id: string) => void;
 }
 
 export const SelfAccountProfile: React.FC<SelfAccountProfileProps> = ({
@@ -65,9 +53,7 @@ export const SelfAccountProfile: React.FC<SelfAccountProfileProps> = ({
   procurements,
   userRole,
   setUserRole,
-  onNavigate,
-  selectedInterestIds = ['ai-vision', 'agri-drones', 'medtech', 'clean-water'],
-  onToggleInterest
+  onNavigate
 }) => {
   const [activeSection, setActiveSection] = useState<'credentials' | 'bids' | 'sandboxes' | 'ndas' | 'settings'>('credentials');
   const [copiedKey, setCopiedKey] = useState(false);
@@ -120,7 +106,6 @@ export const SelfAccountProfile: React.FC<SelfAccountProfileProps> = ({
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
           
           <div className="relative z-10 flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs text-amber-300 font-bold border border-white/10">
-            <Sparkles className="w-3.5 h-3.5" />
             <span>Official Government Account Passport</span>
           </div>
 
@@ -325,70 +310,7 @@ export const SelfAccountProfile: React.FC<SelfAccountProfileProps> = ({
               </div>
             </div>
 
-            {/* Choose & Customize Your Domain Interests Card */}
-            <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-xs space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                <div>
-                  <div className="flex items-center space-x-2">
-                    <Sparkles className="w-4 h-4 text-saffron-500" />
-                    <h3 className="text-base font-extrabold text-slate-900">Customize Your Domain Interests</h3>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Select sectors to highlight in your left navigation bar for instant challenge filtering.
-                  </p>
-                </div>
-                <span className="text-xs bg-slate-900 text-white font-extrabold px-3 py-1.5 rounded-full shrink-0">
-                  {selectedInterestIds.length} Active Interests Selected
-                </span>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {MASTER_INTERESTS.map((item) => {
-                  const isChecked = selectedInterestIds.includes(item.id);
-                  const Icon = ICON_MAP[item.iconName] || Bot;
-                  return (
-                    <div
-                      key={item.id}
-                      onClick={() => onToggleInterest?.(item.id)}
-                      className={`p-4 rounded-2xl border-2 cursor-pointer transition-all duration-150 flex flex-col justify-between space-y-3 ${
-                        isChecked
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-md scale-[1.01]'
-                          : 'bg-white text-slate-800 border-slate-200 hover:border-slate-400 hover:bg-slate-50'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className={`w-9 h-9 rounded-xl ${isChecked ? 'bg-white/10 text-white' : item.bg} flex items-center justify-center shrink-0`}>
-                          <Icon className={`w-5 h-5 ${isChecked ? 'text-saffron-400' : item.color}`} />
-                        </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${
-                          isChecked
-                            ? 'bg-saffron-500 border-saffron-500 text-slate-950 font-black text-xs'
-                            : 'border-slate-300 bg-white'
-                        }`}>
-                          {isChecked && '✓'}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="font-extrabold text-xs leading-snug">{item.label}</div>
-                        <p className={`text-[11px] mt-1 line-clamp-2 ${isChecked ? 'text-slate-300' : 'text-slate-500'}`}>
-                          {item.desc}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-200/20 text-[10px]">
-                        <span className={`font-bold ${isChecked ? 'text-amber-300' : 'text-slate-400'}`}>
-                          {item.count} Active Challenges
-                        </span>
-                        <span className={`font-bold px-2 py-0.5 rounded ${isChecked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-100 text-slate-600'}`}>
-                          {isChecked ? '✓ Showing on Left Nav' : '+ Add Interest'}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
 
             {/* Official Exemption Passport */}
             <div className="bg-gradient-to-r from-govblue-950 via-slate-900 to-govblue-900 text-white rounded-2xl p-6 shadow-sm space-y-4">

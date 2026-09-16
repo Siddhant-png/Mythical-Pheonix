@@ -108,7 +108,6 @@ export const ProfileSummaryCard: React.FC<{
 
         <div className="mt-5 flex flex-wrap items-center gap-4 text-xs text-slate-600">
           <div className="inline-flex items-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
             <span className="font-semibold">{profile.tagline}</span>
           </div>
           <div className="inline-flex items-center gap-1.5">

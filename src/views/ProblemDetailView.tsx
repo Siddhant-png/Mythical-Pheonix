@@ -161,7 +161,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
           <img 
             src={heroImage} 
             alt={problem.title} 
-            className="w-full h-full object-cover object-center opacity-85 hover:scale-105 transition-transform duration-700"
+            className="w-full h-full object-cover object-center opacity-85"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
 
@@ -259,15 +259,6 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
             </div>
 
             <div className="flex items-center space-x-3">
-              {!activeCollab && (
-                <button
-                  onClick={() => onOpenCollabHub(problem)}
-                  className="flex items-center space-x-1.5 text-xs font-bold text-saffron-800 bg-saffron-50 hover:bg-saffron-100 border border-saffron-200 px-4 py-2.5 rounded-xl transition shadow-sm"
-                >
-                  <Users className="w-4 h-4 text-saffron-700" />
-                  <span>Team Up with Manufacturer</span>
-                </button>
-              )}
               <button
                 onClick={() => onApply(problem)}
                 className="flex items-center space-x-2 text-xs font-bold text-white bg-govblue-900 hover:bg-govblue-800 px-6 py-2.5 rounded-xl shadow-md transition"
@@ -318,13 +309,13 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
             <img 
               src={heroImage} 
               alt="Video Thumbnail" 
-              className="w-full h-full object-cover opacity-75 group-hover:opacity-90 group-hover:scale-105 transition duration-500"
+              className="w-full h-full object-cover opacity-75 group-hover:opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
             {/* Play Button Center Overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-[#CAB9E3] text-[#312B41] flex items-center justify-center shadow-xl group-hover:scale-110 transition duration-300">
+              <div className="w-16 h-16 rounded-full bg-[#CAB9E3] text-[#312B41] flex items-center justify-center shadow-xl">
                 <Play className="w-8 h-8 fill-current ml-1" />
               </div>
             </div>
@@ -395,7 +386,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                   onClick={() => setSelectedGalleryImg(img)}
                   className="relative h-24 rounded-xl overflow-hidden border border-[#CAB9E3] cursor-pointer group shadow-xs"
                 >
-                  <img src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
+                  <img src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition"></div>
                   <span className="absolute bottom-1 right-1 text-[10px] bg-slate-900/80 text-white px-1.5 py-0.5 rounded backdrop-blur-sm">
                     Photo #{idx+1}
@@ -519,9 +510,8 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
 
                   <button
                     onClick={() => setUrgencyModalOpen(true)}
-                    className="flex items-center space-x-1.5 px-4 py-2.5 bg-red-900 hover:bg-red-800 text-white font-bold text-xs rounded-xl shadow-md transition transform hover:scale-105"
+                    className="flex items-center space-x-1.5 px-4 py-2.5 bg-red-900 hover:bg-red-800 text-white font-bold text-xs rounded-xl shadow-md transition"
                   >
-                    <Star className="w-4 h-4 text-amber-400 fill-current" />
                     <span>{votedRating !== null ? `Your Vote: ${votedRating}/10 ✓` : 'Validate Urgency Score'}</span>
                   </button>
                 </div>
@@ -690,7 +680,6 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
           </div>
 
           <div className="bg-govblue-50 border border-govblue-200 rounded-2xl p-5 flex items-start space-x-3 text-xs">
-            <Sparkles className="w-5 h-5 text-govblue-800 shrink-0 mt-0.5" />
             <div>
               <div className="font-bold text-govblue-900 text-sm">Automated Scorecard Integration</div>
               <p className="text-govblue-800 mt-0.5 leading-relaxed">

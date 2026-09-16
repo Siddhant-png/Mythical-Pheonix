@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Bookmark,
-  Flag,
-  Heart,
-  MessageCircle,
   Plus,
-  Share2,
+  ThumbsDown,
+  ThumbsUp,
   X
 } from 'lucide-react';
 import { UserRole } from '../types';
@@ -155,9 +152,7 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
   onNavigateToTenders: _onNavigateToTenders
 }) => {
   const [activeShortIndex, setActiveShortIndex] = useState(0);
-  const [likedShortIds, setLikedShortIds] = useState<string[]>([]);
-  const [savedShortIds, setSavedShortIds] = useState<string[]>([]);
-  const [shareToastVisible, setShareToastVisible] = useState(false);
+  const [userVotes, setUserVotes] = useState<Record<string, 'up' | 'down'>>({});
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -165,7 +160,17 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
   const [hashtags, setHashtags] = useState('');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const currentShort = civicShorts[activeShortIndex];
+  const handleVote = (shortId: string, direction: 'up' | 'down') => {
+    setUserVotes(current => {
+      const activeVote = current[shortId];
+      if (activeVote === direction) {
+        const next = { ...current };
+        delete next[shortId];
+        return next;
+      }
+      return { ...current, [shortId]: direction };
+    });
+  };
 
   const scrollToShort = (index: number) => {
     const nextIndex = Math.max(0, Math.min(civicShorts.length - 1, index));
@@ -203,28 +208,6 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
     window.addEventListener('keydown', handleKeyboardNavigation);
     return () => window.removeEventListener('keydown', handleKeyboardNavigation);
   }, [activeShortIndex]);
-
-  const toggleLike = (shortId: string) => {
-    setLikedShortIds(current => current.includes(shortId)
-      ? current.filter(id => id !== shortId)
-      : [...current, shortId]);
-  };
-
-  const toggleSave = (shortId: string) => {
-    setSavedShortIds(current => current.includes(shortId)
-      ? current.filter(id => id !== shortId)
-      : [...current, shortId]);
-  };
-
-  const shareShort = async () => {
-    try {
-      await navigator.clipboard.writeText(`https://sih-converge.vercel.app/civic-shorts/${currentShort.id}`);
-    } catch {
-      // Clipboard access can be unavailable in local development previews.
-    }
-    setShareToastVisible(true);
-    window.setTimeout(() => setShareToastVisible(false), 2000);
-  };
 
   const submitPost = (event: React.FormEvent) => {
     event.preventDefault();
@@ -311,8 +294,8 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
         onScroll={event => console.log('[CivicShortsFeed] scroll', event.currentTarget.scrollTop)}
       >
         {civicShorts.map((short, index) => {
-          const liked = likedShortIds.includes(short.id);
-          const saved = savedShortIds.includes(short.id);
+          const userVote = userVotes[short.id];
+          const score = short.likes + (userVote === 'up' ? 1 : userVote === 'down' ? -1 : 0);
 
           return (
             <section
@@ -376,40 +359,32 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
                   </div>
                 </div>
 
-                <div className="absolute bottom-[80px] right-[-4px] z-30 flex w-20 flex-col items-center gap-4">
+                <div className="absolute bottom-[80px] right-[-4px] z-30 flex w-20 flex-col items-center justify-center gap-4">
                   <div className="flex flex-col items-center gap-1">
-                    <button aria-label="Like short" onClick={() => toggleLike(short.id)} className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105 ${liked ? 'text-rose-400' : ''}`}>
-                      <Heart className={`h-5 w-5 ${liked ? 'fill-current' : ''}`} />
+                    <button
+                      type="button"
+                      aria-label="Upvote short"
+                      onClick={() => handleVote(short.id, 'up')}
+                      className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] active:scale-95 ${
+                        userVote === 'up' ? 'border-emerald-400 bg-emerald-500/40 text-emerald-300' : 'hover:bg-white/25'
+                      }`}
+                    >
+                      <ThumbsUp className={`h-5 w-5 ${userVote === 'up' ? 'fill-current' : ''}`} />
                     </button>
-                    <span className="text-[11px] font-bold drop-shadow-md">{formatCount(short.likes + (liked ? 1 : 0))}</span>
+                    <span className="text-[12px] font-extrabold drop-shadow-md">{formatCount(score)}</span>
                   </div>
 
                   <div className="flex flex-col items-center gap-1">
-                    <button aria-label="Comment on short" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
-                      <MessageCircle className="h-5 w-5" />
+                    <button
+                      type="button"
+                      aria-label="Downvote short"
+                      onClick={() => handleVote(short.id, 'down')}
+                      className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] active:scale-95 ${
+                        userVote === 'down' ? 'border-rose-400 bg-rose-500/40 text-rose-300' : 'hover:bg-white/25'
+                      }`}
+                    >
+                      <ThumbsDown className={`h-5 w-5 ${userVote === 'down' ? 'fill-current' : ''}`} />
                     </button>
-                    <span className="text-[11px] font-bold drop-shadow-md">{formatCount(short.comments)}</span>
-                  </div>
-
-                  <div className="flex flex-col items-center gap-1">
-                    <button aria-label="Share short" onClick={shareShort} className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
-                      <Share2 className="h-5 w-5" />
-                    </button>
-                    <span className="text-[11px] font-bold drop-shadow-md">Share</span>
-                  </div>
-
-                  <div className="flex flex-col items-center gap-1">
-                    <button aria-label="Save short" onClick={() => toggleSave(short.id)} className={`flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105 ${saved ? 'text-amber-300' : ''}`}>
-                      <Bookmark className={`h-5 w-5 ${saved ? 'fill-current' : ''}`} />
-                    </button>
-                    <span className="text-[11px] font-bold drop-shadow-md">Save</span>
-                  </div>
-
-                  <div className="flex flex-col items-center gap-1">
-                    <button aria-label="Report short" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-lg backdrop-blur-[8px] transition hover:scale-105">
-                      <Flag className="h-5 w-5" />
-                    </button>
-                    <span className="text-[11px] font-bold drop-shadow-md">Report</span>
                   </div>
                 </div>
               </article>
@@ -420,28 +395,22 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
 
       <button
         type="button"
-        aria-label="Post a Civic Short"
-        title="Post a Civic Short"
+        aria-label="Post a Solution Short"
+        title="Post a Solution Short"
         onClick={() => setPostModalOpen(true)}
-        className="civic-upload-button z-40 flex items-center gap-2 whitespace-nowrap rounded-full bg-amber-400 px-4 py-3 text-xs font-black text-slate-950 shadow-[0_0_24px_rgba(251,191,36,0.45)] transition hover:scale-105 hover:bg-amber-300"
+        className="civic-upload-button z-40 flex items-center gap-2 whitespace-nowrap rounded-full bg-amber-400 px-4 py-3 text-xs font-black text-slate-950 shadow-[0_0_24px_rgba(251,191,36,0.45)] hover:bg-amber-300"
       >
         <Plus className="h-5 w-5" />
-        <span>Upload Civic Short</span>
+        <span>Upload Solution Short</span>
       </button>
-
-      {shareToastVisible && (
-        <div className="absolute bottom-20 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2.5 text-xs font-bold text-white shadow-xl">
-          Link copied!
-        </div>
-      )}
 
       {postModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/70 p-3 backdrop-blur-sm sm:p-4">
           <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
             <div className="flex items-center justify-between bg-govblue-900 p-5 text-white">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300">Civic Shorts</span>
-                <h3 className="mt-0.5 text-base font-bold">Post a Civic Short</h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300">Solution Shorts</span>
+                <h3 className="mt-0.5 text-base font-bold">Post a Solution Short</h3>
               </div>
               <button type="button" aria-label="Close post form" onClick={() => setPostModalOpen(false)}>
                 <X className="h-5 w-5" />
@@ -451,7 +420,7 @@ export const CivicShortsFeed: React.FC<CivicShortsFeedProps> = ({
             <form onSubmit={submitPost} className="space-y-4 p-5 text-xs">
               <div>
                 <label className="mb-1 block font-bold text-slate-800" htmlFor="short-title">Title</label>
-                <input id="short-title" value={title} onChange={event => setTitle(event.target.value)} placeholder="Give your civic short a title" className="w-full rounded-xl border border-slate-200 p-2.5 font-bold" required />
+                <input id="short-title" value={title} onChange={event => setTitle(event.target.value)} placeholder="Give your solution short a title" className="w-full rounded-xl border border-slate-200 p-2.5 font-bold" required />
               </div>
               <div>
                 <label className="mb-1 block font-bold text-slate-800" htmlFor="short-description">Description</label>
