@@ -1,16 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ArrowLeft,
-  ExternalLink,
-  Linkedin,
-  MapPin,
-  ShieldCheck,
-  Star,
-  Users,
-  UserPlus,
-  Check
-} from 'lucide-react';
-
 
 interface StartupProject {
   id: string;
@@ -250,10 +238,9 @@ export function StartupProfile({
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
       >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Startup Discovery
+        ← Back to Startup Discovery
       </button>
 
       {/* Profile Header */}
@@ -282,8 +269,7 @@ export function StartupProfile({
                   </h1>
 
                   {startup.dpiitVerified && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
-                      <ShieldCheck className="h-4 w-4" />
+                    <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
                       DPIIT Verified
                     </span>
                   )}
@@ -294,12 +280,10 @@ export function StartupProfile({
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-4 text-sm text-slate-500">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    {startup.location}
-                  </span>
-
+                  <span>{startup.location}</span>
+                  <span>·</span>
                   <span>{startup.sector}</span>
+                  <span>·</span>
                   <span>Founded {startup.foundedYear}</span>
                 </div>
               </div>
@@ -308,23 +292,13 @@ export function StartupProfile({
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setIsFollowing(!isFollowing)}
-                className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold border transition ${
+                className={`rounded-xl px-4 py-3 text-sm font-bold border transition ${
                   isFollowing
                     ? 'bg-slate-100 text-slate-800 border-slate-300'
                     : 'bg-slate-900 text-white border-slate-900'
                 }`}
               >
-                {isFollowing ? (
-                  <>
-                    <Check className="h-4 w-4 text-emerald-600" />
-                    <span>Following</span>
-                  </>
-                ) : (
-                  <>
-                    <UserPlus className="h-4 w-4" />
-                    <span>Follow</span>
-                  </>
-                )}
+                {isFollowing ? 'Following' : 'Follow'}
               </button>
 
               {startup.website && (
@@ -332,10 +306,9 @@ export function StartupProfile({
                   href={startup.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white"
+                  className="rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white"
                 >
                   Website
-                  <ExternalLink className="h-4 w-4" />
                 </a>
               )}
 
@@ -344,9 +317,8 @@ export function StartupProfile({
                   href={startup.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700"
+                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700"
                 >
-                  <Linkedin className="h-4 w-4" />
                   LinkedIn
                 </a>
               )}
@@ -382,9 +354,8 @@ export function StartupProfile({
             {startup.founders.map(founder => (
               <span
                 key={founder}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700"
+                className="inline-flex items-center rounded-full bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-700"
               >
-                <Users className="h-4 w-4" />
                 {founder}
               </span>
             ))}
@@ -478,10 +449,9 @@ export function StartupProfile({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white"
+                    className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white"
                   >
                     Live Demo
-                    <ExternalLink className="h-3 w-3" />
                   </a>
                 )}
 
@@ -490,10 +460,9 @@ export function StartupProfile({
                     href={project.repositoryUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700"
+                    className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700"
                   >
                     Source Code
-                    <ExternalLink className="h-3 w-3" />
                   </a>
                 )}
               </div>
