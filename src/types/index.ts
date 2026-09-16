@@ -55,6 +55,40 @@ export interface CivicIdeaPost {
   createdAt: string;
 }
 
+export interface SolutionOutcome {
+  id: string;
+  problemId: string;
+  problemTitle: string;
+  title: string;
+  description: string;
+  creatorName: string;
+  demoUrl?: string;
+  videoName?: string;
+  likes: number;
+  dislikes: number;
+  createdAt: string;
+}
+
+export type ProposalStatus = 'SUBMITTED' | 'UNDER_REVIEW' | 'SANDBOX_PILOT' | 'APPROVED_FOR_PROCUREMENT';
+
+export interface SolutionProposal {
+  id: string;
+  problemId: string;
+  problemTitle: string;
+  proposalTitle: string;
+  organizationName: string;
+  executiveSummary: string;
+  problemUnderstanding: string;
+  proposedSolution: string;
+  implementationApproach: string;
+  expectedOutcome: string;
+  timeline: string;
+  demoLink: string;
+  supportingDocuments: string[];
+  status: ProposalStatus;
+  submittedAt: string;
+}
+
 export interface Department {
   id: string;
   name: string;

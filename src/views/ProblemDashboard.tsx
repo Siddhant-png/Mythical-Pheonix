@@ -12,10 +12,11 @@ import {
   X,
   FileBadge
 } from 'lucide-react';
-import { Problem, Startup, Collaboration } from '../types';
+import { Problem, Startup, Collaboration, SolutionOutcome, SolutionProposal } from '../types';
 import { ProblemCard } from '../components/ProblemCard';
 import { FilterSidebar } from '../components/FilterSidebar';
 import { ProblemDetailView } from './ProblemDetailView';
+import { ResponseSubmissionModal } from '../components/ResponseSubmissionModal';
 
 interface ProblemDashboardProps {
   problems: Problem[];
@@ -23,6 +24,8 @@ interface ProblemDashboardProps {
   currentStartup: Startup;
   onOpenCollabHub: (problem?: Problem) => void;
   onSubmitApplication: (problemId: string, isCollab: boolean, bidAmount: number, summary: string) => void;
+  onSubmitOutcome: (outcome: SolutionOutcome) => void;
+  onSubmitProposal: (proposal: SolutionProposal) => void;
   // Filter state passed from parent / left navbar
   searchQuery?: string;
   selectedSector?: string;
@@ -38,6 +41,8 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
   currentStartup,
   onOpenCollabHub,
   onSubmitApplication,
+  onSubmitOutcome,
+  onSubmitProposal,
   searchQuery = '',
   selectedSector = '',
   selectedStatus = '',
@@ -51,6 +56,7 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
   const [bidAmount, setBidAmount] = useState<number>(3500000);
   const [proposalSummary, setProposalSummary] = useState('');
   const [applicationSubmittedSuccess, setApplicationSubmittedSuccess] = useState(false);
+  const [responseMode, setResponseMode] = useState<'outcome' | 'proposal' | null>(null);
 
   // Filter problems
   const filteredProblems = problems.filter((p) => {
@@ -96,8 +102,26 @@ export const ProblemDashboard: React.FC<ProblemDashboardProps> = ({
           currentStartup={currentStartup}
           onBack={() => setDetailViewProblem(null)}
           onApply={(p) => handleApplyClick(p)}
+          onPostOutcome={() => setResponseMode('outcome')}
+          onSubmitProposal={() => setResponseMode('proposal')}
           onOpenCollabHub={onOpenCollabHub}
         />
+
+        {responseMode && (
+          <ResponseSubmissionModal
+            mode={responseMode}
+            problem={detailViewProblem}
+            onClose={() => setResponseMode(null)}
+            onSubmitOutcome={outcome => {
+              onSubmitOutcome(outcome);
+              setResponseMode(null);
+            }}
+            onSubmitProposal={proposal => {
+              onSubmitProposal(proposal);
+              setResponseMode(null);
+            }}
+          />
+        )}
 
         {/* Application / Specs Detail Modal */}
         {applicationModalOpen && selectedProblem && (

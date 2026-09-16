@@ -5,6 +5,7 @@ import { UserRole, AuthUser } from '../types';
 export type NavTab = 
   | 'problems' 
   | 'categories'
+  | 'feed'
   | 'discovery' 
   | 'profiles' 
   | 'dept-upload' 

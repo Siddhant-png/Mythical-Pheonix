@@ -50,6 +50,8 @@ interface ProblemDetailViewProps {
   currentStartup: Startup;
   onBack: () => void;
   onApply: (problem: Problem) => void;
+  onPostOutcome: (problem: Problem) => void;
+  onSubmitProposal: (problem: Problem) => void;
   onOpenCollabHub: (problem: Problem) => void;
 }
 
@@ -59,6 +61,8 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
   currentStartup,
   onBack,
   onApply,
+  onPostOutcome,
+  onSubmitProposal,
   onOpenCollabHub
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'kpis' | 'eligibility' | 'consortium'>('overview');
@@ -83,7 +87,6 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
   const [voterRole, setVoterRole] = useState<string>('DPIIT Certified Startup');
   const [voterReason, setVoterReason] = useState<string>('');
   const [urgencyModalOpen, setUrgencyModalOpen] = useState(false);
-  const [voteToastMessage, setVoteToastMessage] = useState<string | null>(null);
 
   const getSectorMeta = (sector: string) => {
     switch (sector) {
@@ -109,23 +112,10 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
     setVoteCount(newTotalVotes);
     setVotedRating(userRating);
     setUrgencyModalOpen(false);
-    setVoteToastMessage(`Urgency score (${userRating}/10) registered! Community Priority recalculated to ${newAvg}/10.`);
-    setTimeout(() => setVoteToastMessage(null), 4500);
   };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 font-body pb-16 relative">
-      {/* Toast Notification */}
-      {voteToastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-3 bg-slate-900 text-white border border-amber-400/60 px-5 py-3.5 rounded-2xl shadow-2xl text-xs">
-          <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
-          <div>
-            <div className="font-bold text-amber-300">Urgency Score Recorded</div>
-            <div className="text-slate-300 text-[11px]">{voteToastMessage}</div>
-          </div>
-        </div>
-      )}
-
       {/* Top Header Navigation */}
       <div className="flex items-center justify-between">
         <button
@@ -258,14 +248,17 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
               <span>Submission Deadline: <strong className="text-slate-900">{problem.deadline}</strong></span>
             </div>
 
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={() => onApply(problem)}
-                className="flex items-center space-x-2 text-xs font-bold text-white bg-govblue-900 hover:bg-govblue-800 px-6 py-2.5 rounded-xl shadow-md transition"
-              >
-                <Send className="w-4 h-4" />
-                <span>Submit Tender Application</span>
-              </button>
+            <div className="grid w-full gap-3 sm:w-auto sm:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 sm:min-w-[210px]">
+                <div className="text-xs font-extrabold text-slate-900">Have an idea?</div>
+                <div className="mt-1 text-[11px] text-slate-500">Share a quick demo with the community.</div>
+                <button onClick={() => onPostOutcome(problem)} className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-amber-400 px-3 py-2 text-xs font-extrabold text-slate-950 transition hover:bg-amber-300"><Sparkles className="h-3.5 w-3.5" />Post Outcome</button>
+              </div>
+              <div className="rounded-xl border border-govblue-100 bg-govblue-50 p-3 sm:min-w-[230px]">
+                <div className="text-xs font-extrabold text-slate-900">Want your solution evaluated?</div>
+                <div className="mt-1 text-[11px] text-slate-500">Send a detailed proposal for government review.</div>
+                <button onClick={() => onSubmitProposal(problem)} className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-govblue-900 px-3 py-2 text-xs font-extrabold text-white transition hover:bg-govblue-800"><Send className="h-3.5 w-3.5" />Submit Proposal</button>
+              </div>
             </div>
           </div>
         </div>
@@ -355,8 +348,6 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                 onClick={() => {
                   if (navigator.clipboard) {
                     navigator.clipboard.writeText(window.location.href);
-                    setVoteToastMessage('Tender link copied to clipboard!');
-                    setTimeout(() => setVoteToastMessage(null), 3000);
                   }
                 }}
                 className="flex items-center space-x-1 hover:text-[#312B41] transition"
@@ -403,8 +394,14 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
         </div>
       </div>
 
-      {/* Tabs Navigation */}
-      <div className="border-b border-slate-200 flex space-x-4 sm:space-x-8 text-sm font-semibold">
+      {/* Public problem brief */}
+      <div className="grid gap-5 lg:grid-cols-3">
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 lg:col-span-2"><h2 className="border-b border-slate-100 pb-3 font-heading text-lg font-bold text-slate-900">The Problem</h2><p className="mt-4 text-sm leading-relaxed text-slate-700">{problem.description}</p></section>
+        <section className="rounded-2xl border border-slate-200 bg-slate-50 p-6"><h2 className="font-heading text-lg font-bold text-slate-900">Government's Requirement</h2><p className="mt-3 text-sm leading-relaxed text-slate-700">{problem.description}</p></section>
+        <section className="rounded-2xl border border-amber-200 bg-amber-50 p-6 lg:col-span-3"><h2 className="font-heading text-lg font-bold text-amber-950">Why This Matters</h2><p className="mt-3 text-sm leading-relaxed text-amber-900">{problem.whyNeeded || urgencyReason}</p></section>
+      </div>
+
+      {false && (<div className="border-b border-slate-200 flex space-x-4 sm:space-x-8 text-sm font-semibold">
         <button
           onClick={() => setActiveTab('overview')}
           className={`pb-3.5 pt-1 border-b-2 transition flex items-center space-x-2 ${
@@ -452,10 +449,10 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
           <Handshake className="w-4 h-4" />
           <span>Consortium & M-NDA</span>
         </button>
-      </div>
+      </div>)}
 
       {/* Tab 1: Overview, Who Needs Solutions & Why It Is Important */}
-      {activeTab === 'overview' && (
+      {false && activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left 2 Cols: Main Narrative, Why Needed & Beneficiaries */}
           <div className="lg:col-span-2 space-y-6">
@@ -563,7 +560,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                   Expected Quantified Public Impact & Societal ROI
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {problem.publicImpactMetrics.map((m, idx) => (
+                  {problem.publicImpactMetrics?.map((m, idx) => (
                     <div key={idx} className="bg-emerald-50/60 border border-emerald-200 rounded-xl p-4 text-center">
                       <div className="text-2xl font-black text-emerald-800">{m.value}</div>
                       <div className="text-xs font-bold text-slate-800 mt-1">{m.label}</div>
@@ -603,19 +600,10 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                 </div>
               </div>
 
-              <div className="pt-2">
-                <button 
-                  onClick={() => onApply(problem)}
-                  className="w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs transition shadow-md flex items-center justify-center space-x-1.5"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Official Tender Application</span>
-                </button>
-              </div>
             </div>
 
-            {/* Documentation Checklist */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 text-xs shadow-xs">
+            {/* Documentation Checklist retained for non-public workflows, hidden here. */}
+            {false && (<div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 text-xs shadow-xs">
               <div className="font-bold text-slate-800 flex items-center space-x-1.5">
                 <FileBadge className="w-4 h-4 text-govblue-800" />
                 <span>Required Attachment Package</span>
@@ -638,13 +626,13 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
                   <span>Executed M-NDA (if Consortium)</span>
                 </li>
               </ul>
-            </div>
+            </div>)}
           </div>
         </div>
       )}
 
       {/* Tab 2: KPIs */}
-      {activeTab === 'kpis' && (
+      {false && activeTab === 'kpis' && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
           <div>
             <h3 className="text-lg font-bold text-slate-900 font-heading">
@@ -691,7 +679,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
       )}
 
       {/* Tab 3: Eligibility */}
-      {activeTab === 'eligibility' && (
+      {false && activeTab === 'eligibility' && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
           <div>
             <h3 className="text-lg font-bold text-slate-900 font-heading">
@@ -734,7 +722,7 @@ export const ProblemDetailView: React.FC<ProblemDetailViewProps> = ({
       )}
 
       {/* Tab 4: Consortium */}
-      {activeTab === 'consortium' && (
+      {false && activeTab === 'consortium' && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-6">
           <div>
             <h3 className="text-lg font-bold text-slate-900 font-heading">
