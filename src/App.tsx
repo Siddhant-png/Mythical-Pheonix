@@ -9,6 +9,7 @@ import { ProblemDashboard } from './views/ProblemDashboard';
 import { DepartmentPostProblem } from './views/DepartmentPostProblem';
 import { StartupDiscoveryHub } from './views/StartupDiscoveryHub';
 import { StartupProfile } from './views/StartupProfile';
+import { CivicShortsFeed } from './views/CivicShortsFeed';
 import { SelfAccountProfile } from './views/SelfAccountProfile';
 import { CategoryExplorer } from './views/CategoryExplorer';
 
@@ -43,6 +44,8 @@ import {
   ProcurementStatus,
   UserRole,
   AuthUser
+  ,SolutionOutcome
+  ,SolutionProposal
 } from './types';
 
 import { CheckCircle2 } from 'lucide-react';
@@ -112,6 +115,8 @@ export function App() {
   const [pilots, setPilots] = useState<Pilot[]>(INITIAL_PILOTS);
 
   const [applications, setApplications] = useState<Application[]>(INITIAL_APPLICATIONS);
+  const [outcomes, setOutcomes] = useState<SolutionOutcome[]>([]);
+  const [proposals, setProposals] = useState<SolutionProposal[]>([]);
 
   const [procurements, setProcurements] = useState<Procurement[]>(
     INITIAL_PROCUREMENTS
@@ -172,6 +177,16 @@ export function App() {
     showToast(
       `Challenge "${newProblem.title.slice(0, 30)}..." published!`
     );
+  };
+
+  const handleSubmitOutcome = (outcome: SolutionOutcome) => {
+    setOutcomes(previousOutcomes => [outcome, ...previousOutcomes]);
+    showToast('Outcome posted to Solution Outcomes.');
+  };
+
+  const handleSubmitProposal = (proposal: SolutionProposal) => {
+    setProposals(previousProposals => [proposal, ...previousProposals]);
+    showToast('Proposal submitted for government review.');
   };
 
   // Application submission handler
@@ -416,12 +431,23 @@ export function App() {
                   setActiveTab('dept-upload');
                 }}
                 onSubmitApplication={handleSubmitApplication}
+                onSubmitOutcome={handleSubmitOutcome}
+                onSubmitProposal={handleSubmitProposal}
                 searchQuery={searchQuery}
                 selectedSector={selectedSector}
                 selectedStatus={selectedStatus}
                 maxBudget={maxBudget}
                 collabOnly={collabOnly}
                 onResetFilters={handleResetFilters}
+              />
+            )}
+
+            {activeTab === 'feed' && (
+              <CivicShortsFeed
+                userRole={userRole}
+                currentUserName={currentUser?.name || 'Anonymous Citizen'}
+                outcomes={outcomes}
+                onNavigateToTenders={() => setActiveTab('problems')}
               />
             )}
 
