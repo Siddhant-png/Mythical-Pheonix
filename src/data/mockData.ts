@@ -1129,6 +1129,7 @@ export const INITIAL_PROPOSALS: SolutionProposal[] = [
     timeline: '8 Weeks Pilot',
     demoLink: 'https://example.com/demo-drishti',
     supportingDocuments: ['DPIIT-Cert.pdf', 'Technical-Architecture.pdf'],
+    patentIpId: 'IN-PAT-2024-88491-MH',
     status: 'SUBMITTED',
     submittedAt: '2026-09-14'
   },
@@ -1146,6 +1147,7 @@ export const INITIAL_PROPOSALS: SolutionProposal[] = [
     timeline: '6 Weeks Sandbox',
     demoLink: 'https://example.com/demo-aquapulse',
     supportingDocuments: ['ISO-TestReport.pdf', 'DPIIT-AquaPulse.pdf'],
+    patentIpId: 'IPO-DES-2023-9912',
     status: 'SANDBOX_PILOT',
     submittedAt: '2026-09-10'
   }

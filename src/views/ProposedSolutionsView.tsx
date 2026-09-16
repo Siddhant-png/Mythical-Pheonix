@@ -86,7 +86,14 @@ export const ProposedSolutionsView: React.FC<ProposedSolutionsViewProps> = ({
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 block uppercase">Challenge: {proposal.problemTitle}</span>
                     <h3 className="text-sm font-bold text-slate-900 mt-0.5">{proposal.proposalTitle}</h3>
-                    <span className="text-xs text-slate-600 font-semibold">Submitted by: {proposal.organizationName}</span>
+                    <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                      <span className="text-xs text-slate-600 font-semibold">Submitted by: {proposal.organizationName}</span>
+                      {proposal.patentIpId && (
+                        <span className="text-[10px] bg-slate-100 text-slate-800 font-mono font-bold px-2 py-0.5 rounded border border-slate-200">
+                          IP / Patent: {proposal.patentIpId}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[11px] text-slate-400 font-mono">{proposal.submittedAt}</span>

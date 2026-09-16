@@ -85,8 +85,10 @@ export interface SolutionProposal {
   timeline: string;
   demoLink: string;
   supportingDocuments: string[];
+  patentIpId?: string;
   status: ProposalStatus;
   submittedAt: string;
+  bidAmount?: number;
 }
 
 export interface Department {
